@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Dokumente
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/form_V1-0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+<!-- Menubar -->
+{% block menubar %}
+{% endblock menubar %}
+<!-- END Menubar -->
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section class="form">
+    <form method="POST"  enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="group row">
+            <p class="title">Sind sie sich sicher, dass sie folgendes Objekt löschen wollen?</p>
+            <div class="item">
+                <p>ID</p>
+                <input id="id_id" type="text" name="id" value="{{ queryset.id }}">
+            </div>
+            <div class="item">
+                <p>Slug</p>
+                <input id="id_slug" type="text" name="slug" value="{{ queryset.slug }}">
+            </div>
+            <div class="item">
+                <p>Name</p>
+                <input id="id_label" type="text" name="label" value="{{ queryset.label }}">
+            </div>
+        </div>
+        <div class="submit">
+            <a class="return" href="{% url modellist %}">Abbrechen</a>
+            <input type="submit" name="submit" id="id_submit" value="Löschen">
+        </div>
+    </form>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}

@@ -1,0 +1,172 @@
+/********************************************************
+*
+Theme Name:     Offer
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Offer
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Offer General
+2. Offer Window max-width: 576px
+3. Offer Window min-width: 576px & max-width: 768px
+4. Offer Window min-width: 768px & max-width: 992px
+5. Offer Window min-width: 992px & max-width: 1200px
+6. Offer Window min-width: 1200px
+*/
+/********************************************************
+* Offer Window General                                  *
+********************************************************/
+.input-line {
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+    border: 2px solid;
+}
+
+.input-line .input-item {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-content: center;
+}
+
+.input-line .input-item label, input , select, span {
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    border-style: none;
+    border-radius: 10px;
+}
+.input-line .input-item label, span {
+    color: white;
+}
+.input-line .input-item input , select {
+    flex-grow: 2;
+    flex-shrink: 2;
+    color: black;
+    background-color:white;
+}
+
+.input-line .input-item pre {
+    display: block;
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    flex-grow: 2;
+    flex-shrink: 4;
+    background-color: white;
+    color: black;
+    font-size: 1rem;
+    width:100%;
+}
+
+.submit-line {
+    margin: 0rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.submit-line .break {
+    margin: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.submit-line .break:hover {
+    background-color:red;
+    color:black;
+}
+
+.submit-line .submit {
+    margin: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.submit-line .submit:hover {
+    background-color: green;
+    color:black;
+}
+
+/********************************************************
+* Offer Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    .input-line {
+        font-size: 2rem;
+    }
+
+    table {
+        font-size: 1.5rem;
+    }
+}
+/********************************************************
+* Offer Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    .input-line {
+        font-size: 1.5rem;
+    }
+
+    table {
+        font-size: 1.5rem;
+    }
+}
+/********************************************************
+* Offer Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    .input-line {
+        font-size: 1.5rem;
+    }
+
+    table {
+        font-size: 1.5rem;
+    }
+}
+/********************************************************
+* Offer Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    .input-line {
+        font-size: 1.25rem;
+    }
+
+    table {
+        font-size: 1rem;
+    }
+}
+/********************************************************
+* Offer Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .input-line {
+        font-size: 1rem;
+    }
+
+    table {
+        font-size: 1rem;
+    }
+}

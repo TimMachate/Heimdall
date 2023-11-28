@@ -1,0 +1,302 @@
+/********************************************************
+*
+Theme Name:     Section
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Section
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Section General
+2. Section Window max-width: 576px
+3. Section Window min-width: 576px & max-width: 768px
+4. Section Window min-width: 768px & max-width: 992px
+5. Section Window min-width: 992px & max-width: 1200px
+6. Section Window min-width: 1200px
+*/
+/********************************************************
+* Section Window General                                  *
+********************************************************/
+section.main {
+    margin: 1rem;
+    padding: 2rem 3rem 2rem 3rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    min-width: 500px;
+    min-height: 200px;
+}
+
+section.main form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 100%;
+}
+
+section.main form input {
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    flex-basis: 100%;
+    border-style: none;
+    border-radius: 0;
+}
+
+section.main form button {
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    align-self: center;
+    border-style: none;
+    border-radius: 0;
+    background-color: white;
+    font-weight: bolder;
+    color: black;
+}
+
+section.main form button:hover {
+    background-color: green;
+}
+
+/*******************************************************/
+section.items {
+    margin:0;
+    padding:0.5rem 0rem 0rem 0rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+section.items div.dropdown {
+    margin: 0.25rem 1rem 0.25rem 1rem;
+    padding: 0rem;
+    flex-shrink: 1;
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+section.items div.dropdown div.label {
+    padding:0.25rem 2rem 0.25rem 2rem;
+    font-size:2rem;
+    font-weight:bold;
+    color: white;
+    white-space: nowrap;
+    background-color: black;
+}
+
+section.items div.dropdown div.value {
+    padding:0.25rem 2rem 0.25rem 2rem;
+    font-size:1.5rem;
+    text-align:center;
+    color: white;
+    background-color: rgba(10,10,10,1);
+}
+
+section.items div.dropdown ul.dropdown-content {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    min-width: 200px;
+    max-height: 400px;
+    margin: 0;
+    padding: 1rem;
+    list-style: none;
+    background: rgba(20,20,20,1);
+    z-index: 4;
+}
+
+section.items div.dropdown:hover ul.dropdown-content {
+    display: block;
+}
+
+section.items div.dropdown ul.dropdown-content li {
+    margin: 0.25rem;
+    padding: 0rem;
+}
+
+section.items div.dropdown ul.dropdown-content li a {
+    padding: 0.25rem;
+    font-size: 1;
+    color: white;
+    text-decoration: none;
+}
+
+/*******************************************************/
+section.input {
+    margin: 0;
+    padding: 0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section.input form  {
+    display:block;
+    margin: 0;
+    padding: 1rem;
+    width: 100%;
+}
+
+section.input form table.inputs {
+    margin: 0 auto;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    background-color: rgba(20,20,20,1);
+}
+
+section.input table.inputs caption {
+    margin: 0;
+    padding: 1rem;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+}
+
+section.input table.inputs tr {
+    margin: 0;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+}
+
+section.input table.inputs tr th {
+    text-align: left;
+}
+
+section.input table.inputs tr th label {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+section.input table.inputs tr td input {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    border-style: none;
+    width: 100%;
+}
+
+section.input table.inputs tr td select {
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    border-style: none;
+    width: 100%;
+}
+
+section.input table.inputs tr td textarea {
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: black;
+    border-style: none;
+    width: 100%;
+}
+
+section.input form div.submit {
+    margin: 0;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+section.input form div.submit a.return {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size:2rem;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(20,20,20,1);
+    text-decoration: none;
+}
+
+section.input form div.submit a.return:hover {
+    color: black;
+    background-color: red;
+}
+
+section.input form div.submit input {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size:2rem;
+    font-weight: bold;
+    color: white;
+    background-color: rgba(20,20,20,1);
+    text-decoration: none;
+    border-style: none;
+    cursor: pointer;
+}
+
+section.input form div.submit input:hover {
+    color: black;
+    background-color: green;
+}
+
+/********************************************************
+* Section Window min-width: 1200px                      *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    section.main form input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    section.main form input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    section.main form input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    section.main form input {
+        font-size: 1.5rem;
+    }
+}
+/********************************************************
+* Section Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    section.main {
+        margin: auto;
+        padding: 1rem 2rem 1rem 2rem;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+        min-width: 0px;
+        min-height: 0px;
+    }
+
+    section.main form input {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,117 @@
+{% load static %}
+<nav class="navbar navbar-expand-sm bg-dark sticky-top">
+    <div class="container-fluid">
+        <ul class="nav me-auto mb-0">
+
+            {% if perms.storagemanagement.view_storage %}
+            <!-- Overview -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_overview' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_overview }}">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </li>
+            <!-- END Overview -->
+            {% endif %}
+
+            {% if perms.storagemanagement.list_storage %}
+            <!-- List -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_list' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_list }}">
+                    <i class="fas fa-list"></i>
+                </a>
+            </li>
+            <!-- END List -->
+            {% endif %}
+
+            {% if perms.storagemanagement.table_storage %}
+            <!-- Table -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_table }}">
+                    <i class="fas fa-table"></i>
+                </a>
+            </li>
+            <!-- END Table -->
+            {% endif %}
+
+            {% if perms.storagemanagement.add_storage %}
+            <!-- Create -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_create' in request.resolver_match.url_name or 'storage_add' in request.resolver_match.url_name or 'storage_remove' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_create }}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </li>
+            <!-- END Create -->
+            {% endif %}
+
+            {% if perms.storagemanagement.detail_storage %}
+            {% if 'storage_delete' in request.resolver_match.url_name or 'storage_detail' in request.resolver_match.url_name or 'storage_update' in request.resolver_match.url_name and perms.storagemanagement.detail_storage %}
+            <!-- Detail -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_detail' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:storage_detail' storage=queryset.slug %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </li>
+            <!-- END Detail -->
+            {% endif %}
+            {% endif %}
+
+            {% if perms.storagemanagement.update_storage %}
+            {% if 'storage_delete' in request.resolver_match.url_name or 'storage_detail' in request.resolver_match.url_name or 'storage_update' in request.resolver_match.url_name and perms.storagemanagement.change_storage %}
+            <!-- Update -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_update' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:storage_update' storage=queryset.slug %}">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </li>
+            <!-- END Update -->
+            {% endif %}
+            {% endif %}
+
+            {% if perms.storagemanagement.delete_storage %}
+            {% if 'storage_delete' in request.resolver_match.url_name or 'storage_detail' in request.resolver_match.url_name or 'storage_update' in request.resolver_match.url_name and perms.storagemanagement.delete_storage %}
+            <!-- Delete -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_delete' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:storage_delete' storage=queryset.slug %}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+            <!-- END Delete -->
+            {% endif %}
+            {% endif %}
+
+        </ul>
+        <ul class="nav ms-auto mb-0">
+
+            {% if perms.storagemanagement.view_company %}
+            <!-- Company -->
+            <li class="nav-item">
+                <a class="btn {% if 'company_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:company_overview' %}">
+                    <i class="fas fa-industry"></i>
+                </a>
+            </li>
+            <!-- ENDE Company -->
+            {% endif %}
+
+            {% if perms.storagemanagement.view_companyitem %}
+            <!-- Company Item -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:companyitem_overview' %}">
+                    <i class="fas fa-cubes"></i>
+                </a>
+            </li>
+            <!-- ENDE Company Item -->
+            {% endif %}
+
+            {% if perms.storagemanagement.view_storage %}
+            <!-- Storage -->
+            <li class="nav-item">
+                <a class="btn {% if 'storage_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:storage_overview' %}">
+                    <i class="fas fa-warehouse"></i>
+                </a>
+            </li>
+            <!-- ENDE Storage -->
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>

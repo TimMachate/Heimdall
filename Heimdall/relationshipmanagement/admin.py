@@ -1,0 +1,6 @@
+from relationshipmanagement.company.admin import CompanyAdmin
+from relationshipmanagement.customer.admin import CustomerAdmin
+from relationshipmanagement.general.admin import GeneralAdmin
+from relationshipmanagement.person.admin import PersonAdmin
+from relationshipmanagement.supplier.admin import SupplierAdmin
+from relationshipmanagement.ware.admin import WareAdmin

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Title of the Site -->
+    <title>
+        {% block title %}
+            {{ company_name }}
+        {% endblock title %}
+    </title>
+    <!-- Links -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'BootStrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'FontAwesome/css/all.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'icons/maintenance.png' %}"/>
+    {% if user.is_authenticated %}
+    {% else %}
+    {% endif %}
+    {% block static %}
+    {% endblock static %}
+
+    <!-- Styles -->
+    {% block style %}
+        <style type="text/css">
+
+        </style>
+    {% endblock %}
+    {% block head %}
+    {{ form.media }}
+    {% endblock head %}
+</head>
+{% load static %}
+<body class="bg-secondary vh-100 overflow-none">
+
+    <div class="row m-0 p-0">
+        <!-- ---------------------------------------------------------------------------------------- -->
+        <!-- Navigationbar -->
+        <!-- ---------------------------------------------------------------------------------------- -->
+        {% if user.is_authenticated %}
+        {% block navbar %}
+            {% include "navbar_V5-0.html" %}
+        {% endblock navbar %}
+        {% else %}
+        {% endif %}
+        <!-- ---------------------------------------------------------------------------------------- -->
+        <!-- END Navigationbar -->
+        <!-- ---------------------------------------------------------------------------------------- -->
+
+        <main class="col m-0 p-0 vh-100 overflow-auto">
+            
+            <!-- ---------------------------------------------------------------------------------------- -->
+            <!-- Header -->
+            <!-- ---------------------------------------------------------------------------------------- -->
+            {% block header %}
+            {% include "header_V1-0.html" %}
+            {% endblock header %}
+            <!-- ---------------------------------------------------------------------------------------- -->
+            <!-- END Header -->
+            <!-- ---------------------------------------------------------------------------------------- -->
+
+            <!-- ---------------------------------------------------------------------------------------- -->
+            <!-- Content -->
+            <!-- ---------------------------------------------------------------------------------------- -->
+            {% if user.is_authenticated %}
+            <div class="col-xxl col-xl col-lg col-md-12 col-sm-12 col-12 ms-0 me-0 ps-0 pe-0">
+                <div class="row ms-0 me-0 ps-0 pe-0">
+                    <!-- Menubar -->
+                    {% block menubar %}
+                    {% endblock menubar %}
+                    <!-- END Menubar -->
+                    
+                    {% block content %}
+                    <section class="col">
+                        <form class="container my-3" method="POST" action="{% url 'main:logout_view' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="searchfield" id="id_searchfield" value="" placeholder="Eingabe/Suche">
+                                <button class="input-group-text btn btn-primary" type="submit">Bestätigen</button>
+                            </div>
+                        </form>
+                    </section>
+                    {% endblock %}
+                </div>
+            </div>
+            {% else %}
+            <section class="container my-auto" style="max-width: 600px;">
+                <form class="" action="{% url 'main:login_view' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="">
+                        {{ form.non_field_errors }}
+                    </div>
+                    <div class="pd-3 pb-3">
+                        <span>
+                            {{ form.username.errors }}
+                        </span>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            <input class="form-control" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" required id="id_username" placeholder="Benutzername">
+                        </div>
+                        <span class="Help">
+                            Eingabe des Benutzernamens
+                        </span>
+                    </div>
+                    <div class="pd-3 pb-3">
+                        <span>
+                            {{ form.password.errors }}
+                        </span>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            <input class="form-control" type="password" name="password" autocomplete="new-password" required id="id_password" placeholder="Passwort">
+                        </div>
+                        <span class="Help">Eingabe des Passwortes</span>
+                    </div>
+                    <div class="row justify-content-center pb-3">
+                        <div class="col text-center">
+                            <a role="button" class="btn btn-primary" href="#">
+                                Registrieren
+                            </a>
+                        </div>
+                        <div class="col text-center">
+                            <a role="button" class="btn btn-primary" href="#">
+                                Passwort vergessen?
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button class="btn btn-success ms-auto" type="submit">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </section>
+            {% endif %}
+            <!-- ---------------------------------------------------------------------------------------- -->
+            <!-- END Content -->
+            <!-- ---------------------------------------------------------------------------------------- -->
+        </main>
+    </div>
+    
+    
+    <!-- Messages -->
+    {% if messages %}
+    <div class="modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ message }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+                    <button type="button" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- END Messages -->
+    
+    {% block footer %}
+    <footer class="fluid-container fixed-bottom ps-3 pe-3 text-light bg-dark">
+        <div class="row">
+            <div class="col text-end">
+                &copy; 2021 MaTi | Created By Tim Machate
+            </div>
+        </div>
+    </footer>
+    {% endblock footer %}
+    <!-- Script -->
+    {% if user.is_authenticated %}
+    <!-- jQuery -->
+    <script src="{% static 'js/jQuery-3.7.0.js' %}"></script>
+    <!-- BOOTSTRAP 5.2 -->
+    <script src="{% static 'BootStrap/js/bootstrap.min.js' %}"></script>
+    <!-- DATATABLES -->
+    <script src="{% static 'DataTables/datatables.min.js' %}"></script>
+    <!-- DATATABLES EXTENDS -->
+    <script src="{% static 'DataTables/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script src="{% static 'DataTables/pdfmake-0.2.7/pdfmake.min.js' %}"></script>
+    <script src="{% static 'DataTables/pdfmake-0.2.7/vfs_fonts.js' %}"></script>
+    {% else %}
+    {% endif %}
+    {% block scripts %}
+    {% endblock scripts %}
+    <!-- END Script -->
+</body>
+</html>

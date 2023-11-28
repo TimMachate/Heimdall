@@ -1,0 +1,72 @@
+from django.urls import path
+
+from .views import (
+    VisualisationView,
+    VisualisationDetailView,
+    TabListView,
+    TabTableView,
+    TabDetailView,
+    TabCreateUpdateView,
+    TabDeleteView,
+    ItemGroupListView,
+    ItemGroupTableView,
+    ItemGroupDetailView,
+    ItemGroupCreateUpdateView,
+    ItemGroupDeleteView,
+    ItemListView,
+    ItemTableView,
+    ItemDetailView,
+    ItemCreateUpdateView,
+    ItemDeleteView,
+    TableListView,
+    TableTableView,
+    TableDetailView,
+    TableCreateUpdateView,
+    TableDeleteView,
+    TableItemListView,
+    TableItemTableView,
+    TableItemDetailView,
+    TableItemCreateUpdateView,
+    TableItemDeleteView,
+    )
+
+app_name = 'Visualisation'
+
+urlpatterns = [
+    path('',VisualisationView.as_view(), name='visualisation'),
+    path('<str:slug>/',VisualisationDetailView.as_view(), name='visualisation_detail'),
+    path('tab/list/',TabListView.as_view(), name='tab_list'),
+    path('tab/table/',TabTableView.as_view(), name='tab_table'),
+    path('tab/detail/<int:id>',TabDetailView.as_view(), name='tab_detail'),
+    path('tab/create/',TabCreateUpdateView.as_view(), name='tab_create'),
+    path('tab/update/<int:id>/',TabCreateUpdateView.as_view(), name='tab_update'),
+    path('tab/delete/<int:id>/',TabDeleteView.as_view(), name='tab_delete'),
+    # ItemGroup
+    path('itemgroup/list/',ItemGroupListView.as_view(), name='itemgroup_list'),
+    path('itemgroup/table/',ItemGroupTableView.as_view(), name='itemgroup_table'),
+    path('itemgroup/detail/<int:id>/',ItemGroupDetailView.as_view(), name='itemgroup_detail'),
+    path('itemgroup/create/',ItemGroupCreateUpdateView.as_view(), name='itemgroup_create'),
+    path('itemgroup/update/<int:id>/',ItemGroupCreateUpdateView.as_view(), name='itemgroup_update'),
+    path('itemgroup/delete/<int:id>/',ItemGroupDeleteView.as_view(), name='itemgroup_delete'),
+    # Item
+    path('item/list/',ItemListView.as_view(), name='item_list'),
+    path('item/table/',ItemTableView.as_view(), name='item_table'),
+    path('item/detail/<int:id>/',ItemDetailView.as_view(), name='item_detail'),
+    path('item/create/',ItemCreateUpdateView.as_view(), name='item_create'),
+    path('item/update/<int:id>/',ItemCreateUpdateView.as_view(), name='item_update'),
+    path('item/delete/<int:id>/',ItemDeleteView.as_view(), name='item_delete'),
+    # Table
+    path('table/list/',TableListView.as_view(), name='table_list'),
+    path('table/table/',TableTableView.as_view(), name='table_table'),
+    path('table/detail/<int:id>/',TableDetailView.as_view(), name='table_detail'),
+    path('table/create/',TableCreateUpdateView.as_view(), name='table_create'),
+    path('table/update/<int:id>/',TableCreateUpdateView.as_view(), name='table_update'),
+    path('table/delete/<int:id>/',TableDeleteView.as_view(), name='table_delete'),
+    # TableItem
+    path('tableitem/list/',TableItemListView.as_view(), name='tableitem_list'),
+    path('tableitem/table/',TableItemTableView.as_view(), name='tableitem_table'),
+    path('tableitem/detail/<int:id>/',TableItemDetailView.as_view(), name='tableitem_detail'),
+    path('tableitem/create/',TableItemCreateUpdateView.as_view(), name='tableitem_create'),
+    path('tableitem/update/<int:id>/',TableItemCreateUpdateView.as_view(), name='tableitem_update'),
+    path('tableitem/delete/<int:id>/',TableItemDeleteView.as_view(), name='tableitem_delete'),
+]

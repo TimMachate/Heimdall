@@ -1,0 +1,308 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Buchen
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "storagemanagement_booking_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        {% if 'remove' in request.resolver_match.url_name %}
+        <input class="btn btn-danger mt-3" type="submit" name="remove_value" value="Abbuchen">
+        {% else %}
+        {% endif %}
+        {% if 'create' in request.resolver_match.url_name or 'update' in request.resolver_match.url_name %}
+        <input class="btn btn-primary mt-3" type="submit" name="value" value="Bestätigen">
+        {% else %}
+        {% endif %}
+        {% if 'add' in request.resolver_match.url_name %}
+        <input class="btn btn-success mt-3" type="submit" name="add_value" value="Zubuchen">
+        {% else %}
+        {% endif %}
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+    <div class="container">
+
+        <div class="card mt-3">
+            <div class="card-body">
+
+                <!-- Values -->
+                <div class="row justify-content-between align-items-start">
+                    {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                    {% else %}
+                    <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_qrcode" target="_blank">
+                        {% load qr_code %}
+                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_qrcode size='m' image_format='png' %}" alt="Link to File" id="id_image_file_url">
+                    </a>
+                    {% endif %}
+                    <div class="col">
+                        <div class="row justify-content-between align-items-start">
+
+                            <h1 class="col card-title mt-3" id="reference_number">
+                                {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                                <span>Aktenzeichen</span>
+                                {% else %}
+                                <span id="id_reference_number"></span>
+                                {% endif %}
+                            </h1>
+                            <div class="col text-end">
+                                {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                            {% else %}
+                            <!-- Storage Item -->
+                            <div class="mt-3">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="{{ form.storageitem.id_for_label }}"><i class="fas fa-warehouse"></i></label>
+                                    <input class="form-control" type="text" value="" disabled id="id_storageitem">
+                                    <a class="input-group-text btn btn-primary" href="" id="id_storageitem_url_detail"><i class="fas fa-info"></i></a>
+                                </div>
+                            </div>
+                            <!-- END Storage Item -->
+                            {% endif %}
+
+                            {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                            {% else %}
+                            <!-- Create and Update -->
+                            <div class="mt-1">
+                                <div class="row">
+
+                                    <!-- Create -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="create">Erstellt</label>
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                            </div>
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Create -->
+
+                                    <!-- Update -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="update">Letztes Update</label> 
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                            </div>
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Update -->
+
+                                </div>
+                            </div>
+                            <!-- END Create and Update -->
+                            {% endif %}
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Values -->
+
+                <p class="card-text">
+
+                    <div class="mt-1">
+                        <div class="row">
+
+                            {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                            {% else %}
+                            <!-- Company -->
+                            <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="company"><i class="fas fa-industry"></i></label>
+                                    <input class="form-control" type="text" value="" disabled id="id_company">
+                                    <a class="input-group-text btn btn-primary" href="" id="id_company_url_detail"><i class="fas fa-info"></i></a>
+                                </div>
+                            </div>
+                            <!-- END Company -->
+                            {% endif %}
+
+                            <!-- CompanyItem -->
+                            <div class="col mt-1">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="{{ form.companyitem.id_for_label }}"><i class="fas fa-cube"></i></label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value="" disabled id="id_companyitem">
+                                    {% else %}
+                                    {{ form.companyitem }}
+                                    {% endif %}
+                                    {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                                    {% else %}
+                                    <a class="input-group-text btn btn-primary" href="" id="id_companyitem_url_detail"><i class="fas fa-info"></i></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- END CompanyItem -->
+
+                        </div>
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col mt-1">
+                                <label class="form-label" for="{{ form.amount.id_for_label }}">Menge</label>
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <input class="form-control" type="text" value="" disabled id="id_amount">
+                                {% else %}
+                                {{ form.amount }}
+                                {% endif %}
+                            </div>
+                            {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                            {% else %}
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-1">
+                                <label class="form-label" for="{{ form.unit.id_for_label }}">Einheit</label>
+                                <input class="form-control" type="text" value="" disabled id="id_unit">
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-1">
+                                <label class="form-label" for="{{ form.amount.id_for_label }}">Preis</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" value="" disabled id="id_price">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-euro-sign"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>                                
+                    </div>
+                    <!-- END Amount -->
+
+                    {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+                    {% else %}
+                    <!-- Value -->
+                    <div class="mt-1">
+                        <div class="row">
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-1">
+                                <label class="form-label" for="{{ form.stock.id_for_label }}">Bestand</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" value="" disabled id="id_stock">
+                                </div>
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-1">
+                            </div>
+                            <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 mt-1">
+                                <label class="form-label" for="{{ form.amount.id_for_label }}">Wert</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" value="" disabled id="id_value">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-euro-sign"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>                                
+                    </div>
+                    <!-- END Value -->
+                    {% endif %}
+
+                    <!-- Notice -->
+                    <div class="mt-3">
+                        <div class="input-group w-100">
+                            {% if queryset.notice %}
+                            <span class="input-group-text btn btn-danger disabled">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </span>
+                            {% endif %}
+                            <label class="form-control btn btn-secondary dropdown-btn text-start" for="notice">
+                                Bemerkung
+                            </label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="notice">
+                        <div class="dropdown-content mt-1">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                <div id="id_notice"></div>
+                            {% else %}
+                                {{ form.notice }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Notice -->
+
+                </p>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        {% if 'remove' in request.resolver_match.url_name %}
+        <input class="btn btn-danger mt-3" type="submit" name="remove_value" value="Abbuchen">
+        {% else %}
+        {% endif %}
+        {% if 'create' in request.resolver_match.url_name or 'update' in request.resolver_match.url_name %}
+        <input class="btn btn-primary mt-3" type="submit" name="value" value="Bestätigen">
+        {% else %}
+        {% endif %}
+        {% if 'add' in request.resolver_match.url_name %}
+        <input class="btn btn-success mt-3" type="submit" name="add_value" value="Zubuchen">
+        {% else %}
+        {% endif %}
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'js/transformTable.js' %}"></script>
+<script src="{% static 'storagemanagement_booking_updatedetail.js' %}"></script>
+<script>
+    booking_updatedetail("{% url 'storagemanagementAPI:booking_detail' booking=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

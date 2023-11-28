@@ -1,0 +1,83 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Bestellvorgänge
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title ">
+                    <a href="{% url 'storagemanagement:order_overview' %}" class="btn btn-lg btn-primary align-middle w-100">
+                        Bestellvorgänge
+                    </a>
+                </h3>
+                <div class="card-text">
+                    <div class="row">
+                        <div class="col mt-1">
+                            <a href="{% url 'storagemanagement:requestdata_overview' %}" class="btn btn-primary w-100">
+                                Anfragen
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-question"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ requestdata_open }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col mt-1">
+                            <a href="{% url 'storagemanagement:offer_overview' %}" class="btn btn-primary w-100">
+                                Angebote
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-file"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ offer_open }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col mt-1">
+                            <a href="{% url 'storagemanagement:order_overview' %}" class="btn btn-primary w-100">
+                                Bestellungen
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-truck"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ order_open }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

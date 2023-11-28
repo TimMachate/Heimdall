@@ -1,0 +1,42 @@
+<nav class="navbar" style="background-color:rgba(125,125,125,1)">
+    <label class="alarm-hover" for="nav_toggler">Zurück</label>
+    <!-- Add apps to navbar -->
+    <!-- Storage -->
+    {% for k,v in navbar.items %}
+        {% for level1key,level1value in v.items %}
+            {% if level1key in installed_apps %}
+            <div class ="navbar-item" style="background-color:rgba(150,150,150,1)">
+                <input class="dropdown-checkbox" type="checkbox" id="navbar-link-{{ level1key }}">
+                <div class ="dropdown-btn">
+                    <a class="success-hover" href="{% url level1value.url %}">{{ level1value.name }}</a>
+                    <label class="success-hover" for="navbar-link-{{ level1key }}" {% if not level1value.level2 %}style="display:none"{% endif %}>+</label>
+                </div>
+                {% if level1value.level2 %}
+                <div class="dropdown-content">
+                    {% for level2key,level2value in level1value.level2.items %}
+                    <div class="navbar-item" style="background-color:rgba(175,175,175,1)">
+                        <input class="dropdown-checkbox l2-consumables" type="checkbox" id="dropdown-link-{{ level2key }}">
+                        <div class="dropdown-btn">
+                            <a class="success-hover" href="{% url level2value.url %}">{{ level2value.name }}</a>
+                            <label class="success-hover" for="dropdown-link-{{ level2key }}">+</label>
+                        </div>
+                        <div class="dropdown-content">
+                            {% for level3key,level3value in level2value.level3.items %}
+                            <div class="navbar-item" style="background-color:rgba(200,200,200,1)">
+                                {% if level3value.kwargs %}
+                                <a class="success-hover" href="{% url level3value.url level3value.kwargs %}">{{ level3value.name }}</a>
+                                {% else %}
+                                <a class="success-hover" href="{% url level3value.url %}">{{ level3value.name }}</a>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+</nav>

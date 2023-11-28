@@ -1,0 +1,76 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Status Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "status/templates/status_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around" id="content">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 id="card-title-{{ obj.id }}" class="card-title"></h1>
+                    <p class="card-text">
+                        <div class="">
+                            <h5 class="input-group w-100 mb-3">
+                                <a class="btn btn-primary btn-lg form-control" href="" id="id_name-{{ obj.id }}">
+                                </a>
+                                <a class="btn btn-success btn-lg input-group-text" href="" id="id_status_url_data_create-{{ obj.id }}">
+                                    <i class="fas fa-plus"></i>
+                                </a>
+                            </h5>
+                            <div class="mb-3">
+                                <span>
+                                    Letzte Statusänderung
+                                </span>
+                                <div class="input-group w-100">
+                                    <span class="form-control text-center" id="id_stati_last-{{ obj.id }}">
+                                        &nbsp;
+                                    </span>
+                                    <a class="btn btn-primary input-group-text" href="" id="id_stati_last_url_detail-{{ obj.id }}">
+                                        <i class="fas fa-info"></i>
+                                    </a>
+                                </div>
+                                <div class="input-group w-100 mt-3">
+                                    
+                                    <span class="form-control text-start" id="id_device-{{ obj.id }}">
+                                        &nbsp;
+                                    </span>
+                                    <a class="btn btn-primary input-group-text" href="" id="id_device_url_detail-{{ obj.id }}">
+                                        <i class="fas fa-info"></i>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'status_overview.js' %}"></script>
+<script>
+    status_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

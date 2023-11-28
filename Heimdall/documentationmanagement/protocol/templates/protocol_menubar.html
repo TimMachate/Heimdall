@@ -1,0 +1,81 @@
+{% load static %}
+<nav class="navbar navbar-expand-sm bg-dark">
+    <div class="container-fluid">
+        <ul class="nav me-auto mb-0">
+            {% if perms.documentationmanagement.view_protocol %}
+            <!-- Overview -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_overview' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_overview' %}">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </li>
+            <!-- END Overview -->
+            {% endif %}
+            {% if perms.documentationmanagement.list_protocol %}
+            <!-- List -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_list' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_list' %}">
+                    <i class="fas fa-list"></i>
+                </a>
+            </li>
+            <!-- END List -->
+            {% endif %}
+            {% if perms.documentationmanagement.table_protocol %}
+            <!-- Table -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_table' %}">
+                    <i class="fas fa-table"></i>
+                </a>
+            </li>
+            <!-- END Table -->
+            {% endif %}
+            {% if perms.documentationmanagement.add_protocol %}
+            <!-- Create -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_create' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_create' %}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </li>
+            <!-- END Create -->
+            {% endif %}
+            {% if 'protocol_delete' in request.resolver_match.url_name or 'protocol_detail' in request.resolver_match.url_name or 'protocol_update' in request.resolver_match.url_name and perms.documentationmanagement.detail_protocol %}
+            <!-- Detail -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_detail' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_detail' protocol=queryset.slug %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </li>
+            <!-- END Detail -->
+            {% endif %}
+            {% if 'protocol_delete' in request.resolver_match.url_name or 'protocol_detail' in request.resolver_match.url_name or 'protocol_update' in request.resolver_match.url_name and perms.documentationmanagement.change_protocol %}
+            <!-- Update -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_update' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_update' protocol=queryset.slug %}">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </li>
+            <!-- END Update -->
+            {% endif %}
+            {% if 'protocol_delete' in request.resolver_match.url_name or 'protocol_detail' in request.resolver_match.url_name or 'protocol_update' in request.resolver_match.url_name and perms.documentationmanagement.delete_protocol %}
+            <!-- Delete -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocol_delete' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'documentationmanagement:protocol_delete' protocol=queryset.slug %}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+            <!-- END Delete -->
+            {% endif %}
+        </ul>
+        <ul class="nav ms-auto mb-0">
+            {% if perms.documentationmanagement.view_protocoldata %}
+            <!-- Data -->
+            <li class="nav-item">
+                <a class="btn {% if 'protocoldata_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% if request.resolver_match.kwargs.protocol %}{% url 'documentationmanagement:protocol_protocoldata_list' protocol=queryset.slug %}{% else %}{% url 'documentationmanagement:protocoldata_overview' %}{% endif %}">
+                    <i class="fas fa-database"></i>
+                </a>
+            </li>
+            <!-- ENDE Data -->
+            {% endif %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,244 @@
+{% extends "direction/templates/direction_list.html" %}
+
+{% block title %}
+    Betriebsanweisung
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="{% if 'create' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12{% else %}col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12{% endif %}">
+            <div class="row" style="height:100%">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row justify-content-between align-items-start">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_file" target="_blank">
+                                    <img src="" alt="Prozess Bild" id="id_image_file_url" width="150px">
+                                </a>
+                                {% endif %}
+                                <div class="col">
+                                    <div class="row justify-content-between align-items-start">
+                                        <h1 class="col card-title mt-3" id="reference_number">
+                                            {% if 'create' in request.resolver_match.url_name %}
+                                            <span>Aktenzeichen</span>
+                                            {% else %}
+                                            <span id="id_reference_number"></span>
+                                            {% endif %}
+                                        </h1>
+                                        <div class="col btn-group justify-self-end">
+                                            {% if 'create' in request.resolver_match.url_name %}
+                                            {% else %}
+                                                <button class="btn btn-primary">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                {% if 'detail' in request.resolver_match.url_name %}
+                                                    <a class="btn btn-primary" href="" id="id_url_update">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if 'update' in request.resolver_match.url_name %}
+                                                    <a class="btn btn-primary" href="" id="id_url_detail">
+                                                        <i class="fas fa-info"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <a class="btn btn-danger" href="" id="id_url_delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                                            {% if 'detail' in request.resolver_match.url_name %}
+                                            <input class="form-control" type="text" value="" disabled id="id_name">
+                                            {% else %}
+                                            {{ form.name }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text">Typ</span>
+                                            {% if 'detail' in request.resolver_match.url_name %}
+                                            <span class="form-control">Betriebsanweisung</span>
+                                            {% else %}
+                                            {{ form.type }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <div class="input-group">
+                                            <span class="input-group-text">Version</span>
+                                            <input class="form-control" type="text" value="" disabled id="id_version">
+                                        </div>
+                                        {% else %}
+                                        <div class="input-group">
+                                            <span class="input-group-text">Version</span>
+                                            {{ form.version_prefix }}
+                                            <span class="input-group-text" id="id_version_suffix"></span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    {% else %}
+                                    {{ form.file }}
+                                    {% endif %}
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="row">
+                {% if 'create' in request.resolver_match.url_name %}
+                {% else %}
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Erstellt
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Letztes Update
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Schlüsselwörter
+                    </h5>
+                    <p class="card-text">
+                        {% if 'detail' in request.resolver_match.url_name %}
+                        <div id="id_keywords">
+                        </div>
+                        {% else %}
+                        <div>
+                            {{ form.keywords }}
+                        </div>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    {{ formset.file_id.as_hidden }}
+                    <h5 class="card-title">
+                        Nächste Aktualisierung
+                        <span class="btn {% if queryset.content.status == 'alarm' %}btn-alarm{% elif queryset.content.status == 'warning' %}btn-warning{% else %}btn-success{% endif %}" id="id_termination"></span>
+                    </h5>
+                    <p class="card-text">
+                        <div class="row">
+                            <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                <label class="input-label" for="actualization">Aktualisierung</label>
+                                <div class="input-group w-100">
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" id="id_actualization" disabled>
+                                    {% else %}
+                                    {{ formset.actualization }}
+                                    {% endif %}
+                                    <span class="input-group-text">Tage</span>
+                                </div>
+                            </div>
+                            <div class="col-xxl-2 col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12 mt-3">
+                                <label class="input-label" for="warning">Warnung</label>
+                                <div class="input-group w-100">
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" id="id_warning" disabled>
+                                    {% else %}
+                                    {{ formset.warning }}
+                                    {% endif %}
+                                    <span class="input-group-text">Tage</span>
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'direction_updatedetail.js' %}"></script>
+<script>
+    direction_updatedetail("{% url 'documentationmanagementAPI:direction_detail' direction=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

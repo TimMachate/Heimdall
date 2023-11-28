@@ -1,0 +1,155 @@
+/********************************************************
+*
+Theme Name:     Contact
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Kontaktseite
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Contact General
+2. Contact Window max-width: 576px
+3. Contact Window min-width: 576px & max-width: 768px
+4. Contact Window min-width: 768px & max-width: 992px
+5. Contact Window min-width: 992px & max-width: 1200px
+6. Contact Window min-width: 1200px
+*/
+/********************************************************
+* Contact Window General                                  *
+********************************************************/
+section.contact {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: dense;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+section.contact .contact-data {
+    padding: 0rem 2rem 0rem 2rem;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: dense;
+    justify-content: space-around;
+    align-items: center;
+}
+
+section.contact .contact-map {
+    padding: 0rem 2rem 0rem 2rem;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: dense;
+    justify-content: space-around;
+    align-items: center;
+}
+
+section.contact .contact-data h1 {
+    color: white;
+}
+
+section.contact .contact-data p {
+    color: white;
+}
+
+section.contact .contact-data p span {
+    padding: 0rem 1rem 0rem 1rem;
+}
+
+section.contact .contact-data p span img {
+    filter: brightness(0) invert(1);
+}
+
+section.contact .contact-data .data {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-auto-flow: dense;
+    justify-content: start;
+    align-items: center;
+}
+
+section.contact button {
+    margin: 0.25rem 0rem 0.25rem 2rem;
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    color: white;
+    font-size: 2rem;
+    background-color: rgba(0,0,0,0.9);
+    border-radius: 0.5rem;
+    border-style: none;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-auto-flow: dense;
+    justify-content: space-between;
+    align-items: center;
+    justify-self: left;
+}
+
+section.contact button:hover {
+    background-color: green;
+    color: black;
+}
+
+section.contact .contactformular {
+    margin: 0rem 2rem 0rem 2rem;
+    display: none;
+}
+
+section.contact form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    grid-auto-flow: dense;
+    justify-content: space-around;
+    align-items: center;    
+    margin: 0.5rem 0rem 3rem 0rem;
+}
+
+section.contact form .input {
+    margin: 0.25rem 0rem 0.25rem 0rem;
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    font-size: 2rem;
+    border-style: none;
+    border-radius: 1rem;
+    justify-self: center;
+    width: 90%;
+}
+
+section.contact form .submit {
+    margin: 1rem 0rem 1rem 0rem;
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    font-size: 2rem;
+    border-style: none;
+    border-radius: 1rem;
+    justify-self: center;
+    width:60%;
+}
+
+section.contact form .submit:hover {
+    background-color: green;
+    color: black;
+}
+
+section.contact form p {
+    color: white;
+}
+
+section.contact form span {
+    color: white;
+}
+
+section.contact form span a {
+    color: white;
+    text-decoration: none;
+}
+
+section.contact .show {   
+    display: block;
+}

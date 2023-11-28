@@ -1,0 +1,123 @@
+{% extends "table/table.html" %}
+
+{% block title %}
+    Tab
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/form_V2-0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+<!-- Styles -->
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <form class="form-form" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        <div class="form-group">
+            {% for field in form.visible_fields %}
+            <div class="form-item {{ field.label.class }}">
+                {{ field.errors }}
+                <div class="form-label">
+                    {% if field.label.class %}
+                    <label for="{{ field.auto_id }}">{{ field.label.name }}</label>
+                    {% else %}
+                    <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                    {% endif %}
+                    <label class="icon" for="icon-{{ field.auto_id }}">
+                        <img src="{% static 'icons/information.png' %}" alt="Icon" width="18" height="18">
+                    </label>
+                </div>
+                <input class="checkbox" type="checkbox" id="icon-{{ field.auto_id }}" hidden>
+                <div class="form-item">
+                    {{ field.help_text }}
+                </div>
+                {{ field }}
+            </div>
+            {% endfor %}
+        </div>
+        {% if formset %}
+        <div class="form-formset">
+            <h1>
+                Items
+            </h1>
+            {{ formset.management_form }}
+            {% for form in formset %}
+                {{ form.non_field_errors }}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                <div class="form-group">
+                    <div style="display:flex;flex-direction: row;justify-content: space-between;align-items: center;">
+                        <a class="form-link" href="{% if form.id.value %}{% url 'Visualisation:tableitem_update' id=form.id.value %}{% else %}{% url 'Visualisation:tableitem_create' %}{% endif %}">
+                            {{ forloop.counter }}. Item {% if form.name.value %}<br> {{ form.name.value }}{% endif %}
+                        </a>
+                        <label for="formset-{{ forloop.counter }}" style="background-color:white;border-radius:10px;padding:0.5rem;color:black">
+                            V
+                        </label>
+                    </div>
+                    <input class="checkbox" type="checkbox" id="formset-{{ forloop.counter }}" hidden>
+                    {% for field in form.visible_fields %}
+                    <div class="form-item">
+                        {{ field.errors }}
+                        <div class="form-label">
+                            {% if field.label.class %}
+                            <label for="{{ field.auto_id }}">{{ field.label.name }}</label>
+                            {% else %}
+                            <label for="{{ field.auto_id }}">{{ field.label }}</label>
+                            {% endif %}
+                            <label class="icon" for="icon-{{ field.auto_id }}">
+                                <img src="{% static 'icons/information.png' %}" alt="Icon" width="18" height="18">
+                            </label>
+                        </div>
+                        <input type="checkbox" id="icon-{{ field.auto_id }}" hidden>
+                        <div class="form-item">
+                            {{ field.help_text }}
+                        </div>
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div class="buttons">
+            <a class="return" href="{% url 'Visualisation:visualisation' %}">Abbrechen</a>
+            {% if queryset %}
+            <label for="delete">
+                <img src="{% static 'icons/delete.png' %}" alt="Icon" width="18" height="18">
+                <span>Löschen</span>
+            </label>
+            <input type="checkbox" id="delete" name="delete" hidden>
+            <div class="modalbox">
+                <div class="content">
+                    Soll dieses Objekt wirklich gelöscht werden?
+                    <div>
+                        <label class="hover-error" for="delete">
+                        Abbrechen
+                        </label>
+                        {% if queryset.id %}
+                        <a class="hover-success" href="{% url 'Visualisation:table_delete' id=queryset.id %}">
+                            Bestätigen
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            <input type="submit" value="OK">
+        </div>
+    </form>
+</section>
+{% endblock content %}

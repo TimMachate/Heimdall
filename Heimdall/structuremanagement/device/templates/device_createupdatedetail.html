@@ -1,0 +1,674 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Geräte
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "device/templates/device_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="{% if 'create' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12{% else %}col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12{% endif %}">
+            <div class="row" style="height:100%">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row justify-content-between align-items-start">
+                                {% if queryset.picture_id %}
+                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center">
+                                    <img src="" alt="Prozess Bild" id="id_image_file_url" width="150px">
+                                </div>
+                                {% endif %}
+                                <div class="{% if queryset.picture_id %}col{% endif %}">
+                                    <div class="row justify-content-between align-items-start">
+                                        <h1 class="col card-title mt-3" id="id_reference_number">
+                                            {% if 'create' in request.resolver_match.url_name %}
+                                            <span>Aktenzeichen</span>
+                                            {% else %}
+                                            <span id="id_reference_number"></span>
+                                            {% endif %}
+                                        </h1>
+                                        <div class="col btn-group justify-self-end">
+                                            {% if 'create' in request.resolver_match.url_name %}
+                                            {% else %}
+                                                <button class="btn btn-primary">
+                                                    <i class="fas fa-cog"></i>
+                                                </button>
+                                                {% if 'detail' in request.resolver_match.url_name %}
+                                                    <a class="btn btn-primary" href="" id="id_url_update">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                {% endif %}
+                                                {% if 'update' in request.resolver_match.url_name %}
+                                                    <a class="btn btn-primary" href="" id="id_url_detail">
+                                                        <i class="fas fa-info"></i>
+                                                    </a>
+                                                {% endif %}
+                                                <a class="btn btn-danger" href="" id="id_url_delete">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="mt-3">
+                                            <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                                            {% if 'detail' in request.resolver_match.url_name %}
+                                            <input class="form-control" type="text" value="" disabled id="id_name">
+                                            {% else %}
+                                            {{ form.name }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                <h5 class="mt-3">Maschinenangaben</h5>
+                                <div class="row">
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Spannung</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_voltage">
+                                        {% else %}
+                                        {{ form.voltage }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Leistung</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_power">
+                                        {% else %}
+                                        {{ form.power }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Stückzahl</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_count">
+                                        {% else %}
+                                        {{ form.count }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <h5 class="mt-3">Herstellerangaben</h5>
+                                <div class="row">
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Hersteller</label>
+                                        {% if 'create' in request.resolver_match.url_name %}
+                                            {{ form.fabricator_id }}
+                                        {% else %}
+                                        <div class="input-group w-100">
+                                            {% if 'update' in request.resolver_match.url_name %}
+                                            {{ form.fabricator_id }}
+                                            {% else %}
+                                            <input class="form-control" type="text" value="" id="id_fabricator_id" disabled>
+                                            {% endif %}
+                                            <a class="input-group-text btn btn-primary" href="" target="_blank" id="id_fabricator_id_url_detail">
+                                                <i class="fas fa-info"></i>
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Herstellerbezeichnung</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_fabricator_label">
+                                        {% else %}
+                                        {{ form.fabricator_label }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Seriennummer</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_serial_number">
+                                        {% else %}
+                                        {{ form.serial_number }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-3 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                        <label class="form-label" for="fabricator">Herstellerjahr</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_year_of_manufacture">
+                                        {% else %}
+                                        {{ form.year_of_manufacture }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="row">
+                {% if 'create' in request.resolver_match.url_name %}
+                {% else %}
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Erstellt
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Letztes Update
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="row">
+            <div class="{% if 'detail' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3{% else %}col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 mt-3{% endif %}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <span id="id_processes_count">{{ queryset.processes_count }}</span> Prozesse
+                        </h5>
+                        <p class="card-text">
+                            <div class="row">
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="id_processes">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 1: Auflistung aller Prozesse
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Referenz</th>
+                                                <th scope="col">Name</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                            {% for process in queryset.processes.all %}
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ process.url_detail }}">
+                                                        {{ process.reference_number }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ process.url_detail }}">
+                                                        {{ process.name }}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="id_processdata">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 2: Auflistung der letzten Prozessdaten
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Begin</th>
+                                                <th scope="col">Ende</th>
+                                                <th scope="col">Prozess</th>
+                                                <th scope="col">Stückzahl</th>
+                                                <th scope="col">Auslastung</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                {% else %}
+                                {{ form.processes }}
+                                {% endif %}
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="{% if 'detail' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3{% else %}col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3{% endif %}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ queryset.status_count }} Status</h5>
+                        <p class="card-text">
+                            <div class="row">
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="status">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 3: Auflistung aller Status
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Referenz</th>
+                                                <th scope="col">Name</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                            {% for status in queryset.status.all %}
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ status.url_detail }}">
+                                                        {{ status.reference_number }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ status.url_detail }}">
+                                                        {{ status.name }}
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="process_data">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 4: Auflistung der letzten Statusänderungen
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Zeitpunkt</th>
+                                                <th scope="col">Referenz</th>
+                                                <th scope="col">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                {% else %}
+                                {{ form.status }}
+                                {% endif %}
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="{% if 'detail' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3{% else %}col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3{% endif %}">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ queryset.errors_count }} Fehler</h5>
+                        <p class="card-text">
+                            <div class="row">
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="errors">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 5: Auflistung aller Fehler
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Referenz</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col"><i class="fas fa-info"></i></th>
+                                                <th scope="col"><i class="fas fa-plus"></i></th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                            {% for error in queryset.errors.all %}
+                                            <tr>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ error.url_detail }}">
+                                                        {{ error.reference_number }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="link-dark text-decoration-none" href="{{ error.url_detail }}">
+                                                        {{ error.name }}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" href="{{ error.url_detail }}">
+                                                        <i class="fas fa-info"></i>
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-success" href="{{ error.url_data_add }}">
+                                                        <i class="fas fa-plus"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="process_data">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Tabelle 6: Auflistung der letzen Fehlermeldungen
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Zeitpunkt</th>
+                                                <th scope="col">Referenz</th>
+                                                <th scope="col">Fehler</th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                                {% else %}
+                                {{ form.errors }}
+                                {% endif %}
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{ queryset.maintenances_count }} Wartungen
+                        </h5>
+                        <p class="card-text">
+                            <div class="row">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                <!-- Tabelle -->
+                                <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="maintenances">
+                                    <caption id="{{ model }}-caption" class="">
+                                        Tabelle 7: Auflistung aller Wartungen
+                                    </caption>
+                                    <thead id="{{ model }}-head" class="thead-dark">
+                                        <tr class="" id="{{ model }}-head-row2">
+                                            <th scope="col"></th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Referenz</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Letzte Wartung</th>
+                                            <th scope="col">Nächste Wartung</th>
+                                            <th scope="col"><i class="fas fa-info"></i></th>
+                                            <th scope="col"><i class="fas fa-plus"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Table Body -->
+                                    <tbody id="{{ model }}-body">
+                                        {% for maintenance in queryset.maintenances %}
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <div class="btn {% if maintenance.status == 'alarm' %}btn-danger{% elif maintenance.status == 'warning' %}btn-warning{% elif maintenance.status == 'OK' %}btn-success{% endif %}">
+                                                    &emsp;
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a class="link-dark text-decoration-none" href="{{ maintenance.url_detail }}">
+                                                    {{ maintenance.reference_number }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="link-dark text-decoration-none" href="{{ maintenance.url_detail }}">
+                                                    {{ maintenance.name }}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                {% if maintenance.protocol_last_time %}
+                                                {{ maintenance.protocol_last_time.date|date:"d.m.Y" }} {{ maintenance.protocol_last_time.time }}
+                                                {% else %}
+                                                -
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if maintenance.next_maintenance %}
+                                                {{ maintenance.next_maintenance.date|date:"d.m.Y" }} {{ maintenance.next_maintenance.time }}
+                                                {% else %}
+                                                -
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary" href="{{ maintenance.url_detail }}">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-success" href="{{ maintenance.url_protocol_data_add }}">
+                                                    <i class="fas fa-plus"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <!-- END Table Body -->
+                                    <tfoot>
+                                    </tfoot>
+                                </table>
+                                <!-- END Tabelle -->
+                                {% endif %}
+                            </div>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Dateien</h5>
+                <p class="card-text">
+                    <div class="row">
+                        <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                            <label class="form-label" for="{{ form.picture_id.id_for_label }}">Bild</label> <br>
+                            {% if 'create' in request.resolver_match.url_name %}
+                                {{ form.picture_id }}
+                            {% elif 'update' in request.resolver_match.url_name %}
+                                {{ form.picture_id }}
+                            {% else %}
+                                {% if queryset.picture_id %}
+                                    <a class="btn btn-primary" href="{{ queryset.picture_id.file.url }}" target="_blank" id="picture_url_file">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </a>
+                                    &nbsp;
+                                    <a class="link-dark text-decoration-none" href="{{ queryset.picture_id.url_detail }}" id="picture">
+                                        {{ queryset.picture_id.name }}
+                                    </a>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                            <div>
+                                <label class="form-label" for="{{ form.manuals.id_for_label }}">Handbücher</label> <br>
+                                {% if 'create' in request.resolver_match.url_name %}
+                                    {{ form.manuals }}
+                                {% elif 'update' in request.resolver_match.url_name %}
+                                    {{ form.manuals }}
+                                {% else %}
+                                    {% if queryset.manuals %}
+                                        {% for file in queryset.manuals.all %}
+                                        <div class="mt-3">
+                                            <a class="btn btn-primary" href="{{ file.file.url }}" target="_blank">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a class="link-dark text-decoration-none" href="{{ file.url_detail }}">
+                                                {{ file.name }}
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                            <div>
+                                <label class="form-label" for="{{ form.working_instructions.id_for_label }}">Arbeitsanweisungen</label> <br>
+                                {% if 'create' in request.resolver_match.url_name %}
+                                    {{ form.working_instructions }}
+                                {% elif 'update' in request.resolver_match.url_name %}
+                                    {{ form.working_instructions }}
+                                {% else %}
+                                    {% if queryset.working_instructions %}
+                                        {% for file in queryset.working_instructions.all %}
+                                        <div class="mt-3">
+                                            <a class="btn btn-primary" href="{{ file.file.url }}" target="_blank">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a class="link-dark text-decoration-none" href="{{ file.url_detail }}">
+                                                {{ file.name }}
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                            <div>
+                                <label class="form-label" for="{{ form.documents.id_for_label }}">Dokumente</label> <br>
+                                {% if 'create' in request.resolver_match.url_name %}
+                                    {{ form.documents }}
+                                {% elif 'update' in request.resolver_match.url_name %}
+                                    {{ form.documents }}
+                                {% else %}
+                                    {% if queryset.documents %}
+                                        {% for file in queryset.documents.all %}
+                                        <div class="mt-3">
+                                            <a class="btn btn-primary" href="{{ file.file.url }}" target="_blank" id="documents_{{ file.id }}_url_file">
+                                                <i class="fas fa-file-pdf"></i>
+                                            </a>
+                                            &nbsp;
+                                            <a class="link-dark text-decoration-none" href="{{ file.url_detail }}" id="documents_{{ file.id }}">
+                                                {{ file.name }}
+                                            </a>
+                                        </div>
+                                        {% endfor %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'js/transformTable.js' %}"></script>
+<script src="{% static 'device_updatedetail.js' %}"></script>
+<script>
+    device_updatedetail("{% url 'structuremanagementAPI:device_detail' device=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

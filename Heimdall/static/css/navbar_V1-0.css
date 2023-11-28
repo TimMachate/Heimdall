@@ -1,0 +1,148 @@
+/********************************************************
+*
+Theme Name:     Navigationbar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Navigationbar General
+2. Navigationbar Window max-width: 576px
+3. Navigationbar Window min-width: 576px & max-width: 768px
+4. Navigationbar Window min-width: 768px & max-width: 992px
+5. Navigationbar Window min-width: 992px & max-width: 1200px
+6. Navigationbar Window min-width: 1200px
+*/
+/********************************************************
+* Navigationbar Window General                          *
+********************************************************/
+nav {
+    background-color: rgba(0,0,0,1);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.btn-active {background-color: transparent;}
+
+.toggler-checkbox {display: none;}
+.toggler-btn {display: none; flex-direction: row; flex-wrap: nowrap; justify-content: flex-start; align-items: center;}
+.toggler-btn label {padding: 0.1rem 0.5rem 0.1rem 0.5rem; color: white;}
+.toggler-content {position: relative; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: stretch;}
+
+.toggler-checkbox[type=checkbox]:checked ~ .toggler-content {display: flex;}
+.toggler-checkbox[type=checkbox]:checked ~ .toggler-btn .btn-active {background-color: rgba(0,100,0,1);color:rgba(0,0,0,1);}
+
+.navbar-left {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: stretch;}
+.navbar-middle {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-evenly; align-items: stretch;}
+.navbar-rigth {display: flex; flex-direction: row; flex-wrap: wrap; justify-content: flex-end; align-items: stretch;}
+.navbar-rigth a.navbar-item {display: flex; color:white; text-decoration: none;}
+
+.navbar-item {
+    margin: 0.25rem 0rem 0.25rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+.navbar-item a {
+    padding: 0.1rem 0.5rem 0.1rem 0.5rem; text-decoration: none; background-color: rgba(255,255,255,0.05); color: white;
+}
+
+nav .dropdown-checkbox {display: none;}
+nav .dropdown-btn {padding: 0rem 0.25rem 0rem 0.25rem;display: flex; flex-direction: row; flex-wrap: nowrap; justify-content:space-between; align-items: stretch;}
+nav .dropdown-btn a {padding: 0.1rem 0.5rem 0.1rem 0.5rem; width: 100%; text-decoration: none; background-color: rgba(255,255,255,0.05); color: white;}
+nav .dropdown-btn label {padding: 0.1rem 0.5rem 0.1rem 0.5rem; background-color: rgba(255,255,255,0.05); color: white;}
+nav .dropdown-content {
+    padding: 0.5rem 0rem 0rem 0rem;
+    position: absolute;
+    display: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background-color: rgba(0,0,0,1);
+    z-index: 4;
+}
+
+nav .dropdown-content .dropdown-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+nav .dropdown-content a {padding: 0.1rem 0.5rem 0.1rem 0.5rem; width: 100%; background-color: rgba(255,255,255,0.05); text-decoration: none; color: white;}
+nav .dropdown-checkbox[type=checkbox]:checked ~ .dropdown-content {display: flex;}
+nav .dropdown-checkbox[type=checkbox]:checked ~ .dropdown-btn .btn-active {background-color: rgb(0, 100, 0);color:rgba(0,0,0,1);}
+
+.hover-green:hover {background-color: rgba(0,100,0,1);color:rgba(0,0,0,1);}
+.hover-red:hover {background-color: rgb(200, 0, 0);color:rgba(0,0,0,1);}
+
+/********************************************************
+* Navigationbar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+       
+}
+/********************************************************
+* Navigationbar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+  
+}
+/********************************************************
+* Navigationbar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Navigationbar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Navigationbar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {    
+    .navbar-item {
+        margin: 0.25rem 0rem 0.25rem 0rem;
+    }
+
+    .dropdown-btn {padding: 0rem;}
+    .dropdown-content {
+        padding: 0rem;
+        position: relative;
+        display: none;
+        flex-direction: column;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    .dropdown-content .dropdown-content {
+        display: none;
+    }
+
+    .toggler-btn {display: flex;}
+    .toggler-content {display: none; flex-direction: column; flex-wrap: nowrap; justify-content: stretch; align-items: stretch;}
+
+    .navbar-left {flex-direction: column; flex-wrap: wrap; justify-content: center; align-items: flex-start; width:100%;}
+    .navbar-middle {flex-direction: column; flex-wrap: wrap; justify-content: center; align-items: stretch; width:100%;}
+    .navbar-rigth {flex-direction: column; flex-wrap: wrap; justify-content: center; align-items: stretch; width:100%;}
+}

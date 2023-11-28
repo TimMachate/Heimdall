@@ -1,0 +1,107 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Status
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="Status-Table-1">
+        <col width = "40px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <col width = "200px" />
+        <col width = "150px" />
+        <col width = "45px" />
+        <caption>
+            <div>
+                <span>Status</span>
+                <div>
+                    <div class="icon">
+                        <input class="dropdown-checkbox" type="checkbox" id="settings">
+                        <label for="settings">
+                            <img src="{% static 'icons/settings.png' %}" alt="Icon">
+                        </label>
+                        <div class="dropdown-content">
+                            Test
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th rowspan="2">
+                    Nr
+                </th>
+                <th rowspan="2" colspan="2">
+
+                </th>
+                <th colspan="2">
+                    Letztes Update
+                </th>
+                <th rowspan="2">
+
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="Status-Input-4" onkeyup="tableFilter('Status',1,4)" placeholder="Person" style="width:100%">
+                </th>
+                <th>
+                    Zeit
+                </th>
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <td class="center">
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    <a class="icon" href="{{ obj.get_absolute_url }}">
+                        <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                    </a>
+                </td>
+                <td>
+                    <a class="icon" href="{{ obj.get_update_url }}">
+                        <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                    </a>
+                </td>
+                <th>
+                    Updated
+                </th>
+                <td>
+                    {{ obj.updateUser }}
+                </td>
+                <td class="center">
+                    {{ obj.updateTime|date:'d.m.Y H:i' }}
+                </td>
+                <td></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

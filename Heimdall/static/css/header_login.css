@@ -1,0 +1,455 @@
+/********************************************************
+*
+Theme Name:     Header
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung des Headers
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Header General
+2. Header Window max-width: 576px
+3. Header Window min-width: 576px & max-width: 768px
+4. Header Window min-width: 768px & max-width: 992px
+5. Header Window min-width: 992px & max-width: 1200px
+6. Header Window min-width: 1200px
+*/
+/********************************************************
+* Header Window General                                  *
+********************************************************/
+header {
+    margin: 0;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: black;
+    z-index: 99;
+}
+
+header input[type=checkbox] {
+    display: none;
+}
+
+header label.head-show {
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 0% 0% 100% 100%;
+    color: white;
+    transform: translate(-50%, 0);
+    z-index: 100;   
+}
+
+header label.head-show:hover {
+    background-color: green;
+    color: black;
+}
+
+header label.head-show p {
+    margin: 0;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+    transform: rotate(-90deg);
+    font-size:2rem;
+    font-weight: bolder;
+}
+
+header div.head, nav.dropdown {
+    display:none;
+}
+
+header input[type=checkbox]:checked ~ div.head {
+    display: flex;
+}
+
+header input[type=checkbox]:checked ~ nav {
+    display: block;
+}
+
+header input[type=checkbox]:checked ~ label.head-show p {
+    transform: rotate(90deg);
+}
+
+header div.head {
+    margin: 0;
+    padding: 0;
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header div.head .brand {
+    margin: 0;
+    padding: 0.5rem 1rem 0rem 1rem;
+    color: white;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+header div.head .brand:hover {
+    color: green;
+}
+
+header div.head .brand a:hover {
+    color: green;
+}
+
+header div.head .searchfield {
+    margin: 0.25rem 1rem 0.25rem 1rem;
+    padding:  0;
+    background-color: white;  
+}
+
+header div.head .searchfield form{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content : flex-end;
+    align-items: stretch;
+}
+
+header .searchfield form input {
+    margin: 0;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    border-style: none;
+    width: 100%;
+}
+
+header .searchfield form button {
+    margin: 0;
+    padding: 0rem 1rem 0rem 1rem;
+    border-style: none;
+    background-color: white;
+    font-weight: bolder;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+header .searchfield form button:hover {
+    background-color: green;
+}
+
+/********************************************************
+* Header Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+
+}
+/********************************************************
+* Header Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+
+}
+/********************************************************
+* Header Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Header Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Header Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    header label.head-show {
+        top: 0;
+        left: 90%;
+        transform: translate(-50%, 0);  
+    }
+
+    header .brand {
+        font-size: 1rem;
+    }
+
+    header div.head .searchfield {
+        flex-basis: 100%;  
+    }
+}
+
+/********************************************************
+*
+Theme Name:     Navigationbar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Navigationbar General
+2. Navigationbar Window max-width: 576px
+3. Navigationbar Window min-width: 576px & max-width: 768px
+4. Navigationbar Window min-width: 768px & max-width: 992px
+5. Navigationbar Window min-width: 992px & max-width: 1200px
+6. Navigationbar Window min-width: 1200px
+*/
+/********************************************************
+* Navigationbar Window General                          *
+********************************************************/
+nav {
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0,0,0,1);
+}
+
+nav a {
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    color: white;
+    text-decoration: none;
+}
+
+nav button {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.level1 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+nav .navigation-item {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+nav .navigation-item a {
+    margin: 0.25rem 0rem 0.25rem 1rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    flex-grow: 1;
+    min-width:50%;
+}
+
+nav .navigation-item a:hover {
+    background-color: green;
+    color: black;
+}
+
+nav .navigation-item button {
+    margin: 0.25rem 1rem 0.25rem 0rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    color: white;
+}
+
+nav .level1 a {
+    background-color:rgba(15,15,15,1);
+}
+
+nav .level1 button {
+    background-color:rgba(15,15,15,1);
+}
+
+nav .level2 {
+    background-color:rgba(15,15,15,1)
+}
+
+nav .level2 a {
+    background-color:rgba(25,25,25,1);
+}
+
+nav .level2 button {
+    background-color:rgba(25,25,25,1);
+}
+
+nav .level3 {
+    background-color:rgba(25,25,25,1);
+}
+
+nav .level3 a {
+    margin: 0.25rem 1rem 0.25rem 1rem;
+    background-color:rgba(35,35,35,1);
+}
+
+nav .level3 button {
+    background-color:rgba(35,35,35,1);
+}
+
+.toggler {
+    display: none;
+}
+
+.toggler-content {
+    display:flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+} 
+
+.dropdown {
+    position: relative;
+    display: block;
+}
+
+.dropdown-button {
+    display: block;
+    cursor: pointer;
+}
+
+.dropdown-button:hover , .dropdown-button:focus {
+    background-color: green;
+    color: black;
+}
+
+.dropdown-content{
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0;
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: stretch;
+    top:25px;
+    left:85%;
+    z-index:1;
+}
+
+.show {
+    display: flex;
+}
+
+nav .logout {
+    margin: 0rem;
+    padding: 0rem;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+nav .logout a {
+    margin: 0.25rem 1rem 0.25rem 1rem;
+    padding:0.25rem 1rem 0.25rem 1rem;
+    background-color: rgba(15,15,15,1);
+    color: white;
+    width: 100%;
+}
+
+nav .logout a:hover {
+    background-color: red;
+    color: black;
+}
+
+/********************************************************
+* Navigationbar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+       
+}
+/********************************************************
+* Navigationbar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+  
+}
+/********************************************************
+* Navigationbar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Navigationbar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Navigationbar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .toggler {
+        display: inline-block;
+        margin:0.25rem 1rem 0.25rem 1rem;
+        padding:0.25rem 1rem 0.25rem 1rem;
+        background-color: rgba(15,15,15,1);
+        color: white;
+    }
+    .toggler:hover , .toggler:focus {
+        background-color: green;
+        color: black;
+    }
+
+    .toggler-content {
+        display: none;
+        position: relative;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-grow: 1;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .dropdown-button {
+        display: block;
+        float: right;
+    }
+
+    .dropdown-content{
+        display: none;
+        position: relative;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-basis: 100%;
+        top:0;
+        left: 0;
+        z-index: 1;
+    }
+
+    nav .navigation-item {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    nav .logout {
+        width: 100%;
+    }
+
+    .show {
+        display: flex;
+    }
+}

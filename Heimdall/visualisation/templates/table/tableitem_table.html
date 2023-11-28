@@ -1,0 +1,133 @@
+{% extends "table/tableitem.html" %}
+
+{% block title %}
+    Tab
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/manual.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <div class="table-container">
+        <table id="Tab-Table-1">
+            <col width = "50px" />
+            <col width = "110px" />
+            <col width = "50px" />
+            <col width = "150px" />
+            <col width = "150px" />
+            <col width = "150px" />
+            <col width = "75px" />
+            <col width = "75px" />
+            <col width = "75px" />
+            <col width = "75px" />
+            <thead>
+                <tr>
+                    <th rowspan="2">
+                        Nr
+                    </th>
+                    <th rowspan="2"></th>
+                    <th rowspan="2">
+                        ID
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Tabelle
+                    </th>
+                    <th>
+                        Tab
+                    </th>
+                    <th rowspan="2">
+                        Order
+                    </th>
+                    <th rowspan="2">
+                        Weite
+                    </th>
+                    <th rowspan="2">
+                        H Align
+                    </th>
+                    <th rowspan="2">
+                        V Align
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        <input type="text" id="Tab-Input-4" onkeyup="tableFilter('Tab',1,4)" placeholder="Filter" style="width:100%">
+                    </th>
+                    <th>
+                        <input type="text" id="Tab-Input-5" onkeyup="tableFilter('Tab',1,5)" placeholder="Filter" style="width:100%">
+                    </th>
+                    <th>
+                        <input type="text" id="Tab-Input-6" onkeyup="tableFilter('Tab',1,6)" placeholder="Filter" style="width:100%">
+                    </th>
+                </tr>
+            </thead>
+            <!-- Table Body -->
+            <tbody>
+                {% for obj in queryset %}
+                {% cycle 'row1' 'row2' as rowcolors silent%}
+                {% ifchanged obj.id  %}{% else %}{% cycle rowcolors %}{% endifchanged %}
+                <tr class="{{ rowcolors }}">
+                    <td style="text-align:center">
+                        {{ forloop.counter }}
+                    </td>
+                    <td>
+                        <a class="icon" href="{% url 'Visualisation:tableitem_detail' id=obj.id %}">
+                            <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                        </a>
+                        <a class="icon" href="{% url 'Visualisation:tableitem_update' id=obj.id %}">
+                            <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                        </a>
+                    </td>
+                    <td style="text-align:center">
+                        {{ obj.id }}
+                    </td>
+                    <td>
+                        {% if obj.name %}{{ obj.name }}{% else %}-{% endif %}
+                    </td>
+                    <td>
+                        {% if obj.table.name %}{{ obj.table.name }}{% else %}-{% endif %}
+                    </td>
+                    <td>
+                        {% if obj.table.tab.name %}{{ obj.table.tab.name }}{% else %}-{% endif %}
+                    </td>
+                    <td style="text-align:center">
+                        {% if obj.order %}{{ obj.order }}{% else %}-{% endif %}
+                    </td>
+                    <td style="text-align:center">
+                        {% if obj.col_width %}{{ obj.col_width }}{% else %}-{% endif %}
+                    </td>
+                    <td style="text-align:center">
+                        {% if obj.hAlign %}{{ obj.hAlign }}{% else %}-{% endif %}
+                    </td>
+                    <td style="text-align:center">
+                        {% if obj.vAlign %}{{ obj.vAlign }}{% else %}-{% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <!-- END Table Body -->
+        </table>
+    </div>
+    <!-- END Tabelle -->
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% endblock scripts %}

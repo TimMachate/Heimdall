@@ -1,0 +1,292 @@
+/********************************************************
+*
+Theme Name:     Menubar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Menubar
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Menubar General
+2. Menubar Window max-width: 576px
+3. Menubar Window min-width: 576px & max-width: 768px
+4. Menubar Window min-width: 768px & max-width: 992px
+5. Menubar Window min-width: 992px & max-width: 1200px
+6. Menubar Window min-width: 1200px
+*/
+/********************************************************
+* Menubar Window General                                  *
+********************************************************/
+nav.menubar {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(10,10,10,1);
+}
+
+nav.menubar .menuname {
+    margin: 0rem 1rem 0rem 1rem;
+    padding: 0rem 1rem 0rem 1rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color:white;
+    text-decoration: none;
+}
+
+nav.menubar .menuname:hover ul.dropdown-content {
+    display:block;
+}
+
+nav.menubar .menuname ul.dropdown-content {
+    position:absolute;
+    display:none;
+    margin:0;
+    padding:1rem;
+    list-style: none;
+    overflow-y: auto;
+    min-width: 300px;
+    max-height: 400px;
+    background-color: rgba(20,20,20,1);
+    z-index:4;
+}
+
+nav.menubar .menuname ul.dropdown-content li {
+    font-size: 1rem;
+    padding: 0.25rem;
+}
+
+nav.menubar .menuname ul.dropdown-content li a {
+    font-size: 1rem;
+    font-weight: normal;
+    color:white;
+    text-decoration: none;
+}
+
+nav.menubar .menuname ul.dropdown-content li:hover {
+    background-color: green;
+}
+
+nav.menubar .menuname ul.dropdown-content li:hover a {
+    color: black;
+}
+
+nav.menubar ul.menu {
+    margin: 0.25rem 1rem 0.25rem 1rem;
+    padding: 0rem;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+nav.menubar ul.menu li {
+    margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+    min-width: 50px;
+    overflow: hidden;
+    background-color: rgba(25,25,25,1);
+    cursor: pointer;
+}
+
+nav.menubar ul.menu li.active a {
+    background-color: green;
+}
+
+nav.menubar ul.menu li.active a img {
+    filter: invert(0%);
+}
+
+nav.menubar ul.menu li a {
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-auto-flow: dense;
+    justify-content: space-between;
+    color: white;
+    text-decoration: none;
+}
+
+nav.menubar ul.menu li label {
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-auto-flow: dense;
+    justify-content: space-between;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+nav.menubar ul.menu li.success a:hover{
+    background-color: green;
+    color: black;
+}
+
+nav.menubar ul.menu li.error a:hover{
+    background-color: red;
+    color: black;
+}
+
+nav.menubar ul.menu li.success label:hover{
+    background-color: green;
+    color: black;
+}
+
+nav.menubar ul.menu li.error label:hover{
+    background-color: red;
+    color: black;
+}
+
+nav.menubar ul.menu li a:hover span{
+    display: block;
+}
+
+nav.menubar ul.menu li a:hover img {
+    filter: invert(0%);
+}
+
+nav.menubar ul.menu li label:hover span{
+    display: block;
+}
+
+nav.menubar ul.menu li label:hover img {
+    filter: invert(0%);
+}
+
+nav.menubar ul.menu li img {
+    margin: 0;
+    height: 15px;
+    filter: invert(100%);
+}
+
+nav.menubar ul.menu li span {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    margin: 1.5rem 0.5rem 0rem 0rem;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+    font-size: 1rem;
+    background-color: rgba(150,150,150,1);
+}
+
+nav.menubar ul.menu li .modalbox {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+nav.menubar ul.menu li .modalbox .content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+}
+
+nav.menubar ul.menu li input[type=checkbox]:checked ~ .modalbox {
+    display: block;
+}
+
+nav.menubar ul.menu li .modalbox .content div {
+    margin: 0rem;
+    padding: 20px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav.menubar ul.menu li .modalbox .content div label {
+    background-color: rgba(75,75,75,1);
+    color: black;
+}
+
+nav.menubar ul.menu li .modalbox .content div a {
+    background-color: rgba(75,75,75,1);
+    color: black;
+}
+nav.menubar ul.menu li .modalbox .content div label.hover-success:hover {
+    background-color: green;
+}
+
+nav.menubar ul.menu li .modalbox .content div label.hover-error:hover {
+    background-color: red;
+}
+
+nav.menubar ul.menu li .modalbox .content div a.hover-success:hover {
+    background-color: green;
+}
+
+nav.menubar ul.menu li .modalbox .content div a.hover-error:hover {
+    background-color: red;
+}
+
+/********************************************************
+* Menubar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+
+}
+/********************************************************
+* Menubar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+
+}
+/********************************************************
+* Menubar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Menubar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Menubar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    nav.menubar {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: stretch;
+        align-items: stretch;
+        background-color: rgba(10,10,10,1);
+    }
+
+    nav.menubar ul.menu {
+        margin: 0rem;
+        padding: 0rem;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+}

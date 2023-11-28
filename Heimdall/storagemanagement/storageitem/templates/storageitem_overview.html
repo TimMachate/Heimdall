@@ -1,0 +1,85 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Lagerartikel
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+    {% include "storageitem_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-1 mb-1 ms-1 me-1 pt-1 pe-1 pb-1 ps-1" style="width: 18rem;" id="id_status-{{ obj.id }}">
+            <img src="{{ obj.image_id.url_file }}" class="card-img-top" alt="image of item">
+            <div class="card-body pt-1 pe-1 pb-1 ps-1 bg-white">
+                <div class="input-group mt-1 mb-1">
+                    <a href="" class="form-control btn btn-sm btn-primary align-middle" id="id_name-{{ obj.id }}">-</a>
+                </div>
+                <div class="input-group mt-1 mb-1">
+                    <a href="" class="input-group-text btn btn-danger" id="id_booking_rm-{{ obj.id }}">
+                        <i class="fas fa-minus"></i>
+                    </a>
+                    <a href="" class="form-control text-center btn btn-primary" id="id_stock-{{ obj.id }}">0</a>
+                    <a href="" class="input-group-text btn btn-success" id="id_booking_add-{{ obj.id }}">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                </div>
+                <div class="mt-1 mb-1">
+                    <div class="progress" style="height:1.5rem">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" id="id_progressbar-{{ obj.id }}">
+                        </div>
+                        <div class="progress-value" style="position:absolute;left:45%;font-size:1rem;" id="id_stock_percentage-{{ obj.id }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="input-group mt-1 mb-1">
+                            <a href="" class="input-group-text btn btn-primary" id="id_request-{{ obj.id }}">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a>
+                            <span class="form-control text-center" id="id_request_count-{{ obj.id }}">
+                                0
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mt-1 mb-1">
+                            <a href="" class="input-group-text btn btn-primary" id="id_order-{{ obj.id }}">
+                                <i class="fas fa-shipping-fast"></i>
+                            </a>
+                            <span class="form-control text-center" id="id_order_count-{{ obj.id }}">
+                                0
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'storageitem_overview.js' %}"></script>
+<script>
+    storageitem_overview("{{ api_data_url }}","storageitem");
+</script>
+{% endblock scripts %}

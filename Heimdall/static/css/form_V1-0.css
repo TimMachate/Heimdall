@@ -1,0 +1,191 @@
+/********************************************************
+*
+Theme Name:     Form
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. form General
+2. form Window max-width: 576px
+3. form Window min-width: 576px & max-width: 768px
+4. form Window min-width: 768px & max-width: 992px
+5. form Window min-width: 992px & max-width: 1200px
+6. form Window min-width: 1200px
+*/
+/********************************************************
+* form Window General                          *
+********************************************************/
+section.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+section.form form {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: rgba(50,50,50,1);
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+section.form form div.submit {
+    margin: 0.5rem;
+    padding: 0.5rem 0rem 0.5rem 0rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+section.form form div.submit a {
+    margin: 0rem 0.25rem 0rem 0.25rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    background-color: rgba(25,25,25,1);
+    font-size: 1rem;
+    font-weight: bolder;
+    color: white;
+    text-decoration: none;
+}
+
+section.form form div.submit a:hover {
+    background-color: red;
+    color: black;
+}
+
+section.form form div.submit input {
+    margin: 0rem 0.25rem 0rem 0.25rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    background-color: rgba(25,25,25,1);
+    border: none;
+    font-size: 1rem;
+    font-weight: bolder;
+    color: white;
+    text-decoration: none;
+}
+
+section.form form div.submit input:hover {
+    background-color: green;
+    color: black;
+}
+
+section.form form div.group {
+    margin: 0.5rem 0.5rem 0rem 0.5rem;
+    padding: 0rem 0rem 0.25rem 0rem;
+    background-color: rgba(100,100,100,1);
+    flex-grow: 1;
+}
+
+section.form form div.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+section.form form div.col {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-grow: 1;
+}
+
+section.form form div .title {
+    margin: 0;
+    flex-basis: 100%;
+    flex-grow: 1;
+    font-size: 1.25rem;
+}
+
+section.form form div .item {
+    margin: 0;
+    padding: 0rem 0.25rem 0rem 0.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    flex-grow: 1;
+    min-width: 250px;
+}
+
+section.form form p {
+    margin: 0.5rem 0.5rem 0rem 0.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    background-color: rgba(25,25,25,1);
+    border: none;
+    font-size: 1rem;
+    color: white;
+}
+
+section.form form span {
+    margin: 0rem 0.5rem 0rem 0.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    border: none;
+    font-size: 1rem;
+    color: black;
+}
+
+section.form form input {
+    margin: 0rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    border: none;
+}
+
+section.form form textarea {
+    margin: 0rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    border: none;
+}
+
+section.form form select {
+    margin: 0rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    border: none;
+}
+
+/********************************************************
+* form Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+       
+}
+/********************************************************
+* form Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+  
+}
+/********************************************************
+* form Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* form Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* form Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+
+}

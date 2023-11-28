@@ -1,0 +1,89 @@
+{% extends 'main.html' %}
+{% block title %}
+        {{ company_name }}
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/body.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/section.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/contact.css' %}">
+{% endblock static %}
+{% block style %}{% endblock style %}
+{% block headder %}
+<header class="logout">
+    <div class="brand">
+        <a href="{% url 'main:main_view' %}">{{ company_name }}</a>
+    </div>
+    <div class="headline">
+        <a href="{% url 'main:main_view' %}">Login</a>
+        <a href="{% url 'main:register_view' %}">Registration</a>
+        <a href="{% url 'main:register_view' %}">Unternehmen</a>
+    </div>
+</header>
+{% endblock headder %}
+{% block navigationbar %}
+<nav class="logout">
+    Kontakt
+</nav>
+{% endblock navigationbar %}
+{% block content %}
+<section class="contact">
+    <div class="grid-container">
+        <div class="contact-data col-xl-12 col-lg-8 col-md-24 col-sm-24">
+            <h1>
+                Kontakt
+            </h1>
+            <p>
+                Bei Fragen oder Anfragen stehen wir Ihnen gerne zur Verfügung. Sie erreichen uns über folgende Kontaktdaten oder das nebenstehende Formular.
+            </p>
+            <p class="data">
+                <span>
+                    {% load static %}
+                    <img src="{% static 'icons/Standort.png' %}" alt="Einstellungen" width="20px" height="20px">
+                </span>
+                <span>Musterstraße 100 <br> 00000 Musterstadt </span>
+            </p>
+            <p class="data">
+                <span>
+                    {% load static %}
+                    <img src="{% static 'icons/Telefon.png' %}" alt="Einstellungen" width="20px" height="20px">
+                </span>
+                <span>00000-000000</span>
+            </p>
+            <p class="data">
+                <span>
+                    {% load static %}
+                    <img src="{% static 'icons/Email.png' %}" alt="Einstellungen" width="20px" height="20px">
+                </span>
+                <span>info@musterfirma.com</span>
+            </p>
+        </div>
+        <div class="contact-map col-xl-12 col-lg-16 col-md-24 col-sm-24">
+            {% load static %}
+            <img src="{% static 'icons/Email.png' %}" alt="" style="width:50%;height:auto">
+        </div>
+    </div>
+    <button onclick="Contact()">
+        <span>Kontaktformular &nbsp &nbsp</span><span>&or;</span>
+    </button>
+    <div class="contactformular">
+        <form method="POST">
+            {% csrf_token %}
+            <input class="input" type="text" name="name" maxlength="150" autocapitalize="none" required id="id_name" placeholder="Name">
+            <input class="input" type="email" name="email" maxlength="150" autocapitalize="none" required id="id_email" placeholder="Email Adresse">
+            <textarea  class="input"name="text" autocapitalize="none" required id="id_text" placeholder="Nachricht" cols="10" rows="5"></textarea>
+            <p>Hinweis zur Datenschutzerklärung</p>
+            <div>
+                <input type="checkbox"> <span>Sie erklären sich damit einverstanden, dass Ihre Daten zur Bearbeitung Ihres Anliegens verwendet werden. Informationen und Widerrufshinweise finden Sie in der <a href="#">Datenschutzerklärung</a>.</span>   
+            </div>
+            <input class="submit" type="submit" name="send" value="Senden">
+        </form>
+    </div>
+</section>
+{% endblock content %}

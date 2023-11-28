@@ -1,0 +1,16 @@
+annotated-types==0.5.0
+asgiref==3.7.2
+Django==4.2.2
+django-filter==23.2
+django-qr-code==3.1.1
+django-tinymce==3.6.1
+djangorestframework==3.14.0
+Pillow==9.5.0
+pydantic==2.3.0
+pydantic_core==2.6.3
+pypng==0.20220715.0
+pytz==2023.3
+qrcode==7.4.2
+segno==1.5.2
+sqlparse==0.4.4
+typing_extensions==4.6.3

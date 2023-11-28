@@ -1,0 +1,115 @@
+/********************************************************
+*
+Theme Name:     Settings
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Settings
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Settings General
+2. Settings Window max-width: 576px
+3. Settings Window min-width: 576px & max-width: 768px
+4. Settings Window min-width: 768px & max-width: 992px
+5. Settings Window min-width: 992px & max-width: 1200px
+6. Settings Window min-width: 1200px
+*/
+/********************************************************
+* Settings Window General                                  *
+********************************************************/
+.settings {
+    margin: 0rem;
+    padding: 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings .group{
+    margin: 0rem;
+    padding: 0rem;
+    width:100%;
+}
+
+.settings .group .setting{
+    margin: 1rem;
+    padding: 0.25rem;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.settings .group .setting label{
+    margin: 0rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size: 2rem;
+    color: white;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.settings .group .setting input{
+    margin: 0rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size: 2rem;
+    color: black;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.settings .group .setting select{
+    margin: 0rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    font-size: 2rem;
+    color: black;
+    border-style: none;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.settings .enter{
+    margin: 0rem;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.settings .enter .break {
+    margin: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+}
+
+.settings .enter .break:hover {
+    background-color:red;
+    color:black;
+}
+
+.settings .enter .submit {
+    margin: 1rem;
+    padding: 0.5rem 3rem 0.5rem 3rem;
+    background-color: black;
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    border-style: none;
+    border-radius: 10px;
+}
+
+.settings .enter .submit:hover {
+    background-color: green;
+    color:black;
+}

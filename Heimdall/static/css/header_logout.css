@@ -1,0 +1,115 @@
+/********************************************************
+*
+Theme Name:     Header
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Header Logout
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Header General
+2. Header Window max-width: 576px
+3. Header Window min-width: 576px & max-width: 768px
+4. Header Window min-width: 768px & max-width: 992px
+5. Header Window min-width: 992px & max-width: 1200px
+6. Header Window min-width: 1200px
+*/
+/********************************************************
+* Header Window General                                  *
+********************************************************/
+header {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: black;
+}
+
+header .brand {
+    margin: 0;
+    padding: 0.5rem 1rem 0rem 1rem;
+    color: white;
+    font-size: 2rem;
+    text-decoration: none;
+}
+
+header .brand:hover {
+    color: green;
+}
+
+header .items {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+header .items .item {
+    margin: 0;
+    padding: 0.5rem 1rem 0rem 1rem;
+    color: white;
+    text-decoration: none;
+}
+
+header .items .item:hover {
+    color: green;
+}
+
+/********************************************************
+* Header Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    header .items .item {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Header Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    header .items .item {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Header Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    header .items .item {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Header Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    header .items .item {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Header Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    header .brand {
+        font-size: 1rem;
+    }
+
+    header .items {
+        width: 100%;
+    }
+
+    header .items .item {
+        font-size: 1rem;
+    }
+}

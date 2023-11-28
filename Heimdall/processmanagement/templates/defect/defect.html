@@ -1,0 +1,188 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Defekte
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+<nav class="menubar col-xl-24 col-lg-24 col-md-24 col-sm-24">
+    <ul></ul>
+    <ul class="menu">
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect' %}active{% endif %}">
+            <a href="{% url 'processmanagement:defect' %}">
+                <img src="{% static 'icons/view.png' %}" alt="Icon">
+                <span>Übersicht</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect_list' %}active{% endif %}">
+            <a href="{% url 'processmanagement:defect_list' %}">
+                <img src="{% static 'icons/list.png' %}" alt="Icon">
+                <span>Liste</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect_table' %}active{% endif %}">
+            <a href="{% url 'processmanagement:defect_table' %}">
+                <img src="{% static 'icons/table.png' %}" alt="Icon">
+                <span>Tabelle</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'defect_detail' or request.resolver_match.url_name == 'defect_update' or request.resolver_match.url_name == 'defect_delete' %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect_detail' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'processmanagement:defect_detail' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'processmanagement:defect_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                <span>Details</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect_update' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'processmanagement:defect_update' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'processmanagement:defect_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                <span>Bearbeiten</span>
+            </a>
+        </li>
+        {% endif %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'defect_create' %}active{% endif %}">
+            <a href="{% url 'processmanagement:defect_create' %}">
+                <img src="{% static 'icons/add.png' %}" alt="Icon">
+                <span>Hinzufügen</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'defect_detail' or request.resolver_match.url_name == 'defect_update' or request.resolver_match.url_name == 'defect_delete' %}
+        <li class="menuitem defect">
+            <label for="delete">
+                <img src="{% static 'icons/delete.png' %}" alt="Icon">
+                <span>Löschen</span>
+            </label>
+            <input type="checkbox" id="delete" name="delete" hidden>
+            <div class="modalbox">
+                <div class="content">
+                    Soll dieses Objekt wirklich gelöscht werden?
+                    <div>
+                        <label class="hover-defect" for="delete">
+                        Abbrechen
+                        </label>
+                        {% if queryset.id %}
+                        <a class="hover-success" href="{% url 'processmanagement:defect_delete' id=queryset.id %}">
+                            Bestätigen
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="Error-Table-1">
+        <col width = "200px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <col width = "50px" />
+        <caption>
+            <div>
+                <span>Defekte</span>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th>
+                    Fehlermeldung
+                </th>
+                <th colspan="30">
+                    Anzahl
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="Error-Input-1" onkeyup="tableFilter('Error',1,1)" placeholder="Filter" style="width:100%">
+                </th>
+                {% for obj in queryset|slice:":1" %}
+                    {% for key, value in obj.countMonth.items %}
+                    <th rowspan="2">
+                        {{ key|date:'d.m.' }}
+                    </th>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <th>
+                    Defekt
+                </th>
+                <td>
+                    {{ obj.name }}
+                </td>
+                {% for key, value in obj.countMonth.items %}
+                    <th>
+                        {{ key }}
+                    </th>
+                    <td class="center">
+                        {{ value }}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

@@ -1,0 +1,101 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class ="pt-1 pe-1 pb-1 ps-1">
+    <div class ="input-group w-100">
+        {% if perms.relationshipmanagement %}
+        <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:company_overview' %}">
+            Beziehungsmanagement
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start">
+            Beziehungsmanagement
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-relationshipmanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Structure Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-relationshipmanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.relationshipmanagement %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.relationshipmanagement.view_company %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:company_overview' %}">Unternehmen</a>
+                {% elif perms.relationshipmanagement.list_company %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:company_list' %}">Unternehmen</a>
+                {% elif perms.relationshipmanagement.table_company %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:company_table' %}">Unternehmen</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Unternehmen</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-relationshipmanagement-company">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Level 2 Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-relationshipmanagement-company">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:customer_overview' %}">Kunden</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:supplier_overview' %}">Lieferanten</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:general_overview' %}">Sonstige</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+            </div>
+            <!-- END Level 2 Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+        {% if perms.relationshipmanagement.view_person or perms.relationshipmanagement.list_person or perms.relationshipmanagement.table_person %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.relationshipmanagement.view_person %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:person_overview' %}">Personen</a>
+                {% elif perms.relationshipmanagement.list_person %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:person_list' %}">Personen</a>
+                {% elif perms.relationshipmanagement.table_person %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:person_table' %}">Personen</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Personen</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+        {% if perms.relationshipmanagement.view_ware or perms.relationshipmanagement.list_ware or perms.relationshipmanagement.table_ware %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.relationshipmanagement.view_ware %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:ware_overview' %}">Waren</a>
+                {% elif perms.relationshipmanagement.list_ware %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:ware_list' %}">Waren</a>
+                {% elif perms.relationshipmanagement.table_ware %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'relationshipmanagement:ware_table' %}">Waren</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Waren</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->

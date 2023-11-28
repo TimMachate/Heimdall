@@ -1,0 +1,72 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Kontakt
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+    {% include "storagemanagement_companycontact_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-3 mb-3 ms-1 me-1" style="width: 18rem;">
+            <div class="card-body">
+                <div class="input-group mt-1 mb-1">
+                    <a href="" class="form-control btn btn-primary align-middle" id="id_companycontact-{{ obj.id }}">
+                        -
+                    </a>
+                </div>
+                <div class="input-group mt-1 mb-1">
+                    <a href="" class="form-control btn btn-sm btn-primary" id="id_company-{{ obj.id }}">
+                        -
+                    </a>
+                </div>
+                {% for phone in obj.telephones %}
+                <div class="input-group mt-1 mb-1">
+                    <div class="input-group-text">
+                        <i class="fas fa-phone" id="id_telephone_type-{{ obj.id }}-{{ phone.id }}"></i>
+                    </div>
+                    <span class="form-control">
+                        <small id="id_telephone-{{ obj.id }}-{{ phone.id }}">-</small>
+                    </span>
+                </div>
+                {% endfor %}
+                {% for email in obj.emails %}
+                <div class="input-group mt-1 mb-1">
+                    <div class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <span class="form-control">
+                        <small id="id_email-{{ obj.id }}-{{ email.id }}">-</small>
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'storagemanagement_companycontact_overview.js' %}"></script>
+<script>
+    companycontact_overview("{{ api_data_url }}","companycontact");
+</script>
+{% endblock scripts %}

@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Visualisierung
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around;align-items:stretch;width:100%;">
+    <h1>Beziehungs-Management</h1>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

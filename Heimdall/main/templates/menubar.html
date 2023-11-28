@@ -1,0 +1,27 @@
+{% load static %}
+<nav class="menubar">
+    <ul>
+        {% if menubar.left %}
+        {% for key,value in menubar.left.items %}
+        <li class="icon {% if key in request.resolver_match.url_name %}success{% endif %} success-hover">
+            <a href="{% if value.permission %}{{ value.url }}{% else %}#{% endif %}">
+                <img class="ss" src="{% static value.icon %}" alt="{{ value.alt }}">
+            </a>
+            <label>{{ value.alt }}</label>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+    <ul>
+        {% if menubar.right %}
+        {% for key,value in menubar.right.items %}
+        <li class="icon success-hover">
+            <a href="{{ value.url }}">
+                <img class="ss" src="{% static value.icon %}" alt="{{ value.alt }}">
+            </a>
+            <label>{{ value.alt }}</label>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,266 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Documentation Management Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class ="pt-1 pe-1 pb-1 ps-1">
+    <div class ="input-group w-100">
+        {% if perms.documentationmanagement.view_file %}
+        <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:file_overview' %}">
+            Dokumentations-Management
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start">
+            Dokumentations-Management
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-documentationmanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Documentation Management Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-documentationmanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.documentationmanagement.view_file or perms.documentationmanagement.list_file or perms.documentationmanagement.table_file %}
+        <!-- Documentation Management Level 2 Files Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_file %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:file_overview' %}">Dateien</a>
+                {% elif perms.documentationmanagement.list_file %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:file_list' %}">Dateien</a>
+                {% elif perms.documentationmanagement.table_file %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:file_table' %}">Dateien</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Dateien</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Files Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_direction or perms.documentationmanagement.list_direction or perms.documentationmanagement.table_direction %}
+        <!-- Documentation Management Level 2 Direction Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_direction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:direction_overview' %}">Betriebsanweisung</a>
+                {% elif perms.documentationmanagement.list_direction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:direction_list' %}">Betriebsanweisung</a>
+                {% elif perms.documentationmanagement.table_direction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:direction_table' %}">Betriebsanweisung</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Betriebsanweisung</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Direction Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_document or perms.documentationmanagement.list_document or perms.documentationmanagement.table_document %}
+        <!-- Documentation Management Level 2 Document Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_document %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:document_overview' %}">Dokumente</a>
+                {% elif perms.documentationmanagement.list_document %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:document_list' %}">Dokumente</a>
+                {% elif perms.documentationmanagement.table_document %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:document_table' %}">Dokumente</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Dokumente</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Document Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_formular or perms.documentationmanagement.list_formular or perms.documentationmanagement.table_formular %}
+        <!-- Documentation Management Level 2 Formular Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_formular %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:formular_overview' %}">Formulare</a>
+                {% elif perms.documentationmanagement.list_formular %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:formular_list' %}">Formulare</a>
+                {% elif perms.documentationmanagement.table_formular %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:formular_table' %}">Formulare</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Formulare</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Formular Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_general or perms.documentationmanagement.list_general or perms.documentationmanagement.table_general %}
+        <!-- Documentation Management Level 2 General Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_general %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:general_overview' %}">Sonstige</a>
+                {% elif perms.documentationmanagement.list_general %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:general_list' %}">Sonstige</a>
+                {% elif perms.documentationmanagement.table_general %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:general_table' %}">Sonstige</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Sonstige</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 General Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_manual or perms.documentationmanagement.list_manual or perms.documentationmanagement.table_manual %}
+        <!-- Documentation Management Level 2 Manual Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_manual %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:manual_overview' %}">Handbücher</a>
+                {% elif perms.documentationmanagement.list_manual %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:manual_list' %}">Handbücher</a>
+                {% elif perms.documentationmanagement.table_manual %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:manual_table' %}">Handbücher</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Handbücher</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Manual Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_picture or perms.documentationmanagement.list_picture or perms.documentationmanagement.table_picture %}
+        <!-- Documentation Management Level 2 Picture Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_picture %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:picture_overview' %}">Bilder</a>
+                {% elif perms.documentationmanagement.list_picture %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:picture_list' %}">Bilder</a>
+                {% elif perms.documentationmanagement.table_picture %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:picture_table' %}">Bilder</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Bilder</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Picture Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_processinstruction or perms.documentationmanagement.list_processinstruction or perms.documentationmanagement.table_processinstruction %}
+        <!-- Documentation Management Level 2 Process Instruction Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_processinstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:processinstruction_overview' %}">Verfahrensanweisung</a>
+                {% elif perms.documentationmanagement.list_processinstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:processinstruction_list' %}">Verfahrensanweisung</a>
+                {% elif perms.documentationmanagement.table_processinstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:processinstruction_table' %}">Verfahrensanweisung</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Verfahrensanweisung</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Process Instruction Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_protocol or perms.documentationmanagement.list_protocol or perms.documentationmanagement.table_protocol %}
+        <!-- Documentation Management Level 2 Protocol Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_protocol %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:protocol_overview' %}">Protokolle</a>
+                {% elif perms.documentationmanagement.list_protocol %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:protocol_list' %}">Protokolle</a>
+                {% elif perms.documentationmanagement.table_protocol %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:protocol_table' %}">Protokolle</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Protokolle</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-documentationmanagement-protocol">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Documentation Management Level 2 Protocol Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-documentationmanagement-protocol">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                <!-- Documentation Management Level 2 Protocol Level 3 Protocol Data Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:protocoldata_overview' %}">Daten</a>
+                </div>
+                <!-- END Documentation Management Level 2 Protocol Level 3 Protocol Data Navbar Item -->
+                <!-- Documentation Management Level 2 Protocol Level 3 Variable Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:variable_overview' %}">Variablen</a>
+                </div>
+                <!-- END Documentation Management Level 2 Protocol Level 3 Variable Navbar Item -->
+            </div>
+            <!-- END Documentation Management Level 2 Protocol Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Documentation Management Level 2 Protocol Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_safetydatasheet or perms.documentationmanagement.list_safetydatasheet or perms.documentationmanagement.table_safetydatasheet %}
+        <!-- Documentation Management Level 2 Safety Data Sheet Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_safetydatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:safetydatasheet_overview' %}">Sicherheitsdatenblätter</a>
+                {% elif perms.documentationmanagement.list_safetydatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:safetydatasheet_list' %}">Sicherheitsdatenblätter</a>
+                {% elif perms.documentationmanagement.table_safetydatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:safetydatasheet_table' %}">Sicherheitsdatenblätter</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Sicherheitsdatenblätter</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Safety Data Sheet Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_technicaldatasheet or perms.documentationmanagement.list_technicaldatasheet or perms.documentationmanagement.table_technicaldatasheet %}
+        <!-- Documentation Management Level 2 Technical Data Sheet Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_technicaldatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:technicaldatasheet_overview' %}">Technische Datenblätter</a>
+                {% elif perms.documentationmanagement.list_technicaldatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:technicaldatasheet_list' %}">Technische Datenblätter</a>
+                {% elif perms.documentationmanagement.table_technicaldatasheet %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:technicaldatasheet_table' %}">Technische Datenblätter</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Technische Datenblätter</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Technical Data Sheet Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_workingdescription or perms.documentationmanagement.list_workingdescription or perms.documentationmanagement.table_workingdescription %}
+        <!-- Documentation Management Level 2 Working Description Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_workingdescription %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workingdescription_overview' %}">Arbeitsplatzbeschreibung</a>
+                {% elif perms.documentationmanagement.list_workingdescription %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workingdescription_list' %}">Arbeitsplatzbeschreibung</a>
+                {% elif perms.documentationmanagement.table_workingdescription %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workingdescription_table' %}">Arbeitsplatzbeschreibung</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Arbeitsplatzbeschreibung</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Working Description Navbar Item -->
+        {% endif %}
+        {% if perms.documentationmanagement.view_workinginstruction or perms.documentationmanagement.list_workinginstruction or perms.documentationmanagement.table_workinginstruction %}
+        <!-- Documentation Management Level 2 Working Instruction Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.documentationmanagement.view_workinginstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workinginstruction_overview' %}">Arbeitsanweisung</a>
+                {% elif perms.documentationmanagement.list_workinginstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workinginstruction_list' %}">Arbeitsanweisung</a>
+                {% elif perms.documentationmanagement.table_workinginstruction %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'documentationmanagement:workinginstruction_table' %}">Arbeitsanweisung</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Arbeitsanweisung</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Documentation Management Level 2 Working Instruction Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Documentation Management Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Documentation Management Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->

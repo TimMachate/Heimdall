@@ -1,0 +1,55 @@
+<nav>
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-toggler">
+    <label class="navbar-toggler hover-green-red" for="navbar-toggler">&#8801</label>
+    <div class="dropdown-content navbar-items">
+        {% for l1 in navbar.items|dictsort:"order" %}
+        <style>
+        input.l1-{{ l1.name }}[type=checkbox]:checked ~ .l1-{{ l1.name }} {display:flex;}
+        input.l1-{{ l1.name }}[type=checkbox]:checked ~ div label.l1-{{ l1.name }} {background-color:green;color:black;}
+        input.l1-{{ l1.name }}[type=checkbox]:checked ~ div label.l1-{{ l1.name }}:hover {background-color: red;}
+        </style>
+        <input class="dropdown-checkbox l1-{{ l1.name }}" type="checkbox" id="navbar-link-{{ l1.name }}">
+        <div class ="navbar-item">
+            <a class="navbar-btn navbar-link hover-green" href="{% url l1.url %}">
+                {{ l1.name }}
+            </a>
+            {% if l1.items %}
+            <label class="navbar-btn hover-green-red l1-{{ l1.name }}" for="navbar-link-{{ l1.name }}">&#9654;</label>
+            {% else %}
+            {% endif %}
+        </div>
+        {% if l1.items %}
+        <div class="dropdown-content navbar-item-content l1-{{ l1.name }}">
+            <a class="navbar-link headline" href="{% url l1.url %}">
+                {{ l1.name }}
+            </a>
+            {% for l2 in l1.items|dictsort:"order" %}
+            <style>
+            input.l2-{{ l2.name }}[type=checkbox]:checked ~ .l2-{{ l2.name }} {display:flex;}
+            input.l2-{{ l2.name }}[type=checkbox]:checked ~ label.l2-{{ l2.name }} {background-color:green;color:black;}
+            input.l2-{{ l2.name }}[type=checkbox]:checked ~ label.l2-{{ l2.name }}:hover {background-color: red;}
+            </style>
+            <div class ="navbar-item">
+                <input class="dropdown-checkbox l2-{{ l2.name }}" type="checkbox" id="dropdown-link-{{ l2.name }}">
+                <a class="navbar-btn navbar-link hover-green" href="{% url l2.url %}">
+                    {{ l2.name }}
+                </a>
+                {% if l2.items %}
+                <label class="navbar-btn hover-green-red l2-{{ l2.name }}" for="dropdown-link-{{ l2.name }}">&#9654;</label>
+                <div class="dropdown-content l2-navbar-item-content l2-{{ l2.name }}">
+                    {% for l3 in l2.items|dictsort:"order" %}
+                    <a class="navbar-link hover-green" href="{% url l3.url %}">{{ l3.name }}</a>
+                    {% endfor %}
+                </div>
+                {% else %}{% endif %}
+            </div>
+            
+            {% endfor %}   
+        </div>
+        {% else %} {% endif %}
+        {% endfor %}       
+    </div>
+    <div class="navbar-icons">
+        <a class="navbar-btn navbar-link hover-red" href="{% url 'main:logout_view' %}">{{ user.username }}</a>
+    </div> 
+</nav>

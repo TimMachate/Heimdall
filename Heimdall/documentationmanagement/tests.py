@@ -1,0 +1,1 @@
+from documentationmanagement.file.tests import *

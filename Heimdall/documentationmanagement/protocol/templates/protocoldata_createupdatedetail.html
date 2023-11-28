@@ -1,0 +1,298 @@
+{% extends "protocol/templates/protocoldata_overview.html" %}
+
+{% block title %}
+    Protokolle
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+    <!-- Protocol -->
+    <div class="container mt-3">
+        <div class="card h-100">
+            <div class="card-body">
+
+                <!-- Card Title -->
+                <div class="card-title row justify-content-between align-items-start mt-3">
+
+                    <!-- Qrcode -->
+                    {% if 'create' in request.resolver_match.url_name %}
+                    {% else %}
+                    <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_file" target="_blank">
+                        {% load qr_code %}
+                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_qrcode size='m' image_format='png' %}" alt="Link to File">
+                    </a>
+                    {% endif %}
+                    <!-- END Qrcode -->
+                    
+                    <!-- Protocol General Data -->
+                    <div class="col">
+                        <div class="row justify-content-between align-items-start">
+
+                            <!-- Title -->
+                            <h1 class="col" id="reference_number">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                <span>Aktenzeichen</span>
+                                {% else %}
+                                <span id="id_reference_number"></span>
+                                {% endif %}
+                            </h1>
+                            <!-- END Title -->
+
+                            <!-- Protocol -->
+                            <div class="row">
+                                <div class="col-lg-8 col-md-12 col-sm-12 mt-3">
+                                    <div class="input-group">
+                                        {% if 'create' in request.resolver_match.url_name %}
+                                            {% if protocol %}
+                                                <span class="form-control">
+                                                    {{ protocol.name }}
+                                                </span>
+                                                {{ form.protocol_id.as_hidden }}
+                                                <a class="input-group-text btn btn-primary" href="{{ protocol.url_detail }}">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+                                            {% else %}
+                                                {{ form.protocol_id }}
+                                            {% endif %}
+                                        {% else %}
+                                        <input type="text" class="form-control" value="" id="id_protocol_id" disabled>
+                                        {{ form.protocol_id.as_hidden }}
+                                        <a class="input-group-text btn btn-primary" id="id_protocol_id_url_detail"><i class="fas fa-info"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% if protocol %}
+                                <div class="col-lg-4 col-md-12 col-sm-12 mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Version</span>
+                                        <input class="form-control" value="" id="id_version" disabled>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- END Protocol -->
+
+                            <!-- Create and Update from the Protocol Data -->
+                            {% if 'create' in request.resolver_match.url_name %}
+                            {% else %}
+                            <div class="row">
+
+                                <!-- Create Protocol Data -->
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                    <h5>
+                                        <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="create">Erstellt</label>
+                                    </h5>
+                                    <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                    <div class="dropdown-content">
+                                        <div class="input-group mt-3">
+                                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                            <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Create Protocol Data -->
+
+                                <!-- Update Protocol Data -->
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                    <h5>
+                                        <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="update">Letztes Update</label> 
+                                    </h5>
+                                    <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                    <div class="dropdown-content">
+                                        <div class="input-group mt-3">
+                                            <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                            <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                        </div>
+                                        <div class="input-group mt-3">
+                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                            <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Update Protocol Data -->
+
+                            </div>
+                            {% endif %}
+                            <!-- END Create and Update from the Protocol Data -->
+
+                        </div>
+                    </div>
+                    <!-- END Protocol General Data -->
+
+                </div>
+                <!-- END Card Title -->
+
+                <!-- Card Text -->
+                <p class="card-text">
+                    <!-- Protocol Specific Data -->
+                    {% if protocol.protocol %}
+
+                    <!-- Protocol Topic -->
+                    <div>
+                        <h3>
+                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="topic">Thema</label>
+                        </h3>
+                        <input type="checkbox" class="dropdown-checkbox" id="topic" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                        <div class="dropdown-content" id="id_topic">
+                        </div>
+                    </div>
+                    <!-- END Protocol Topic -->
+
+                    <!-- Protocol Procdure -->
+                    <div>
+                        <h3>
+                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="procedure">Durchführung</label>
+                        </h3>
+                        <input type="checkbox" class="dropdown-checkbox" id="procedure" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                        <div class="dropdown-content" id="id_procedure">
+                        </div>
+                    </div>
+                    <!-- END Protocol Procdure -->
+
+                    {% else %}
+
+                    <!-- File -->
+                    {% if 'detail' in request.resolver_match.url_name %}
+                    {% else %}
+                        {{ form.file }}
+                    {% endif %}
+                    <!-- END File -->
+                        
+                    {% endif %}
+                    <!-- END Protocol Specific Data -->        
+                </p>
+                <!-- END Card Text -->
+
+            </div>
+        </div>
+    </div>
+    <!-- END Protocol -->
+
+    <!-- Protocol Steps -->
+    {% if protocol.steps %}    
+    <div class="mt-3">
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for step in protocol.steps %}
+                    <div class="carousel-item {% if forloop.counter == 1 %}active{% endif %}">
+                        <div class="container">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title input-group">
+                                        <span class="input-group-text" id="id_order-{{ step.id }}">
+                                        </span>
+                                        <label class="form-control btn btn-secondary text-start" for="text-{{ step.id }}" id="id_name-{{ step.id }}">
+                                        </label>
+                                    </h5>
+                                    <p class="card-text mx-auto">
+                                        <div>
+                                            <input class="dropdown-checkbox" type="checkbox" id="text-{{ step.id }}" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                            <div class="dropdown-content mt-3" id="id_text-{{ step.id }}">
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-between align-items-center mt-3">
+                                            {% for variable in step.variables.all %}
+                                                <div class="col-xxl-6 col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12 mt-3" style="max-width: 300px;">
+                                                    {% if variable.input_type == 'BO' %}
+                                                        <label class="" for="id_value-{{ step.id }}-{{ variable.id }}" id="id_name-{{ step.id }}-{{ variable.id }}">
+
+                                                        </label>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" name="checkbox-{{ step.id }}-{{ variable.id }}" id="id_value-{{ step.id }}-{{ variable.id }}">
+                                                            <label class="form-check-label" for="id_value-{{ step.id }}-{{ variable.id }}" id="id_symbol-{{ step.id }}-{{ variable.id }}"></label>
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="" id="id_name-{{ step.id }}-{{ variable.id }}">
+                                                        </div>
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="text-nowrap text-end" id="id_symbol-{{ step.id }}-{{ variable.id }}">
+                                                            </div>
+                                                            <div class="text-nowrap">
+                                                                =
+                                                            </div>
+                                                            <div class="bg-light">
+                                                                {% if variable.input_type == 'TE' %}
+                                                                <input class="form-control" type="text" name="text-{{ step.id }}-{{ variable.id }}" value="" id="id_value-{{ step.id }}-{{ variable.id }}">
+                                                                {% elif variable.input_type == 'NU' %}
+                                                                <input class="form-control" type="number" name="number-{{ step.id }}-{{ variable.id }}" value="" id="id_value-{{ step.id }}-{{ variable.id }}">
+                                                                {% endif %}
+                                                            </div>
+                                                            <div class="text-nowrap" id="id_unit-{{ step.id }}-{{ variable.id }}">
+                                                            </div>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>    
+                                            {% endfor %}
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev text-dark" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    {% endif %}
+    <!-- END Protocol Steps -->
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if queryset %}
+<script src="{% static 'protocoldata_updatedetail.js' %}"></script>
+<script>
+    protocoldata_updatedetail("{% url 'documentationmanagementAPI:protocoldata_detail' protocoldata=queryset.slug %}")
+</script>
+{% elif protocol %}
+<script src="{% static 'protocol_updatedetail.js' %}"></script>
+<script>
+    protocol_updatedetail("{% url 'documentationmanagementAPI:protocol_detail' protocol=protocol.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

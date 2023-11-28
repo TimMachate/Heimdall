@@ -1,0 +1,85 @@
+/********************************************************
+*
+Theme Name:     Grid
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Erstellung eines Rasters zur Darstellung einzelner html Inhalte
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Grid General
+2. Grid Window max-width: 576px
+3. Grid Window min-width: 576px & max-width: 768px
+4. Grid Window min-width: 768px & max-width: 992px
+5. Grid Window min-width: 992px & max-width: 1200px
+6. Grid Window min-width: 1200px
+*/
+/********************************************************
+* Grid Window General                                   *
+********************************************************/
+.item-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.item {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    align-items: stretch;
+    min-width: 250px;
+}
+
+.item .head {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    text-align: center;
+    background-color: rgba(0,0,0,1);
+    color: rgba(255,255,255,1);
+}
+
+.item .body {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    text-align: center;
+    background-color: rgba(255,255,255,1);
+}
+
+/********************************************************
+* Grid Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+}
+/********************************************************
+* Grid Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+}
+/********************************************************
+* Grid Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+}
+/********************************************************
+* Grid Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+}
+/********************************************************
+* Grid Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+}

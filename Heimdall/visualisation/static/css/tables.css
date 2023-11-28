@@ -1,0 +1,66 @@
+/********************************************************
+*
+Theme Name:     Items
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Erstellung eines Rasters zur Darstellung einzelner html Inhalte
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Items General
+2. Items Window max-width: 576px
+3. Items Window min-width: 576px & max-width: 768px
+4. Items Window min-width: 768px & max-width: 992px
+5. Items Window min-width: 992px & max-width: 1200px
+6. Items Window min-width: 1200px
+*/
+/********************************************************
+* Items Window General                                  *
+********************************************************/
+
+table {
+    margin:1rem 1rem 1rem 1rem;
+    padding:0rem;
+    color: white;
+    border-collapse: collapse;
+}
+
+caption {
+    margin:0;
+    padding:0.25rem 0.25rem 0.25rem 0.25rem;
+    background-color: black;
+    text-align: left;
+    font-size: 1.25rem;
+}
+
+caption div {
+    display:flex;
+    justify-content:space-between;
+}
+
+thead {
+    margin:0;
+    padding:0;
+    background-color: black;
+    border:1px solid black;
+}
+
+th {
+    padding:0.1rem;
+    border:1px solid black;
+    border-collapse: collapse;
+    font-size: 1rem;
+    font-weight: bolder;
+}
+
+td {
+    padding:0.25rem;
+    border:1px solid black;
+    border-collapse: collapse;
+}

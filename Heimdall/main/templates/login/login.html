@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Title of the Site -->
+    <title>
+        {% block title %}
+            {{ company_name }}
+        {% endblock title %}
+    </title>
+    <!-- Links -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    {% block static %}
+    {% endblock static %}
+
+    <!-- Styles -->
+    {% block style %}
+    {% endblock %}
+    {% block head %}
+    {{ form.media }}
+    {% endblock head %}
+</head>
+{% load static %}
+<body>
+    <!-- Header -->
+    <!-- END Header -->
+
+    <!-- Navigationbar -->
+    <!-- END Navigationbar -->
+
+    <!-- Menubar -->
+    <!-- END Menubar -->
+
+    <div class="main-container">
+        <!-- Content -->
+        {% block content %}
+        <section>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <div class="submit">
+                    <input type="submit" name="login" value="Login">
+                </div>
+            </form>
+            <div class="items">
+                <a class="item" href="{% url 'main:logout_view' %}">Registrieren</a>
+                <a class="item" href="{% url 'main:logout_view' %}">Passwort vergessen?</a>
+            </div>
+        </section>
+        {% endblock %}
+        <!-- END Content -->
+        
+        <!-- Sidebar Rigth -->
+        {% block aside %}
+        {% endblock aside %}
+        <!-- End Sidebar Rigth -->
+    </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="messages">
+    {% for message in messages %}
+        <!-- Modal Boxes -->
+        <div class="{{message.tags}}">
+            <p>{{message}}</p>
+            <span class="close" onclick="this.parentElement.style.display='none';">&times;</span>
+        </div>
+        <!-- END Modal Boxes -->
+    {% endfor %}
+    </div>
+    {% endif %}
+    <!-- END Messages -->
+    
+    {% block footer %}
+    <footer>
+        <div>
+            <div>
+                <div>
+    
+                </div>
+                <div>
+    
+                </div>
+                <div>
+    
+                </div>
+            </div>
+            <div>
+                &copy; 2021 MaTi | Design By Tim Machate
+            </div>
+        </div>
+    </footer>
+    {% endblock footer %}
+    <!-- Script -->
+    {% block scripts %}
+    {% endblock scripts %}
+    <!-- END Script -->
+</body>
+</html>

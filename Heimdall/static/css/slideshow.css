@@ -1,0 +1,180 @@
+/********************************************************
+*
+Theme Name:     Slideshow
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Slideshow
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Slideshow General
+2. Slideshow Window max-width: 576px
+3. Slideshow Window min-width: 576px & max-width: 768px
+4. Slideshow Window min-width: 768px & max-width: 992px
+5. Slideshow Window min-width: 992px & max-width: 1200px
+6. Slideshow Window min-width: 1200px
+*/
+/********************************************************
+* Slideshow Window General                          *
+********************************************************/
+
+/* Slideshow container */
+.slideshow-container {
+    position: relative;
+    margin: auto auto 10vw auto;
+    min-width: 82vw;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: fixed;
+    top: 50vh;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* Position the "prev button" to the left */
+.prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+  
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+  
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 2vw;
+    padding: 1vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: green;
+}
+  
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+  
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+form .filename {
+    text-align: center;
+    font-size: 3vw;
+}
+
+form .file-upload {
+    margin: 10vw 1vw;
+    padding: 0;
+}
+
+/********************************************************
+* Slideshow Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    .slideshow-container {
+        min-width: 82vw;
+    }
+
+    form .filename {
+        font-size: 3vw;
+    }
+}
+/********************************************************
+* Slideshow Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    .slideshow-container {
+        min-width: 86vw;
+    }
+
+    form .filename {
+        font-size: 4vw;
+    }
+}
+/********************************************************
+* Slideshow Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    .slideshow-container {
+        min-width: 90vw;
+    }
+
+    form .filename {
+        font-size: 5vw;
+    }
+}
+/********************************************************
+* Slideshow Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    .slideshow-container {
+        min-width: 6vw;
+    }
+
+    form .filename {
+        font-size: 5.5vw;
+    }
+
+}
+/********************************************************
+* Slideshow Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .slideshow-container {
+        min-width: 98vw;
+    }
+
+    form .filename {
+        font-size: 7vw;
+    }
+
+}

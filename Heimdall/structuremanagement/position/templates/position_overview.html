@@ -1,0 +1,106 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Arbeitsplatz Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "position/templates/position_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 class="card-title">
+                        <a class="btn btn-primary btn-lg w-100" href="" id="id_url_detail-{{ obj.id }}">
+                            <span id="id_name-{{ obj.id }}">&nbsp;</span> &nbsp;&nbsp;
+                            <span id="id_reference_number-{{ obj.id }}">&nbsp;</span>
+                        </a>
+                    </h1>
+                    <p class="card-text">
+                        <div class="mb-3">
+                            <h5>
+                                <label class="btn btn-secondary btn-lg dropdown-btn w-100 text-start" for="dropdown-responsible-{{ obj.id }}">Leiter</label>
+                            </h5>
+                            <div>
+                                <div class="mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span class="form-control" id="id_responsible_employee_id-{{ obj.id }}">&nbsp;</span>
+                                    </div>
+                                </div>
+                                <input class="dropdown-checkbox" type="checkbox" id="dropdown-responsible-{{ obj.id }}">
+                                <div class="dropdown-content">
+                                    <div class="mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            <span class="form-control" id="id_responsible_email-{{ obj.id }}">&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            <span class="form-control" id="id_responsible_telephone-{{ obj.id }}">&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h5>
+                                <label class="btn btn-secondary btn-lg dropdown-btn w-100 text-start" for="dropdown-substitute-{{ obj.id }}">Stellvertreter</label>
+                            </h5>
+                            <div>
+                                <div class="mt-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span class="form-control" id="id_substitute_employee_id-{{ obj.id }}">&nbsp;</span>
+                                    </div>
+                                </div>
+                                <input class="dropdown-checkbox" type="checkbox" id="dropdown-substitute-{{ obj.id }}">
+                                <div class="dropdown-content">
+                                    <div class="mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            <span class="form-control" id="id_substitute_email-{{ obj.id }}">&nbsp;</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="input-group">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            <span class="form-control" id="id_substitute_telephone-{{ obj.id }}">&nbsp;</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                    <img id="id_picture_id-{{ obj.id }}" class="card-img-bottom" src="" alt="Image from Position.">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'position_overview.js' %}"></script>
+<script>
+    position_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Title of the Site -->
+    <title>
+        NavbarTest
+    </title>
+    <!-- Links -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'navbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'slideshow.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'table.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'card.css' %}">
+    <!-- Styles -->
+    <style type="text/css">
+    </style>
+</head>
+<body style="background: rgba(25,25,25,1);">
+    <!-- Headder -->
+    <header>
+        <!-- Brand -->
+        <a href="{% url 'CompanyStructure:main' %}">
+            {{ company_name }}
+        </a>
+        <!-- END Brand -->
+        <!-- Toggler -->
+        <button class="toggler" onclick="Toggler()">
+          &#8801
+        </button>
+        <!-- END Toggle -->
+        <!-- SearchField -->
+        <form class="searchfield" method="post">
+            {% csrf_token %}
+            <div class="input">{{ form }}</div>
+            <input class="button" type="submit" value="&#9654">
+        </form>
+        <!-- END SearchField -->
+    </header>
+    <!-- END Headder -->
+    <!-- NavigationBar -->
+    <nav class="navigationbar">
+        <!-- NavigationItems -->
+        {% for department in navbar %}
+        {% if department.DeSeSoNa == True %}
+        {% if department.DeSe.count != 0 %}
+        <div class="item-{{ forloop.counter }}-0-0">
+            <div class="navigationbar-item">
+                <a class="link" href="{% url 'CompanyStructure:department' department %}">
+                    {{ department }}
+                </a>
+                <button class="button" onclick="dropdown({{forloop.counter}},0,0)">
+                    &#709
+                </button>
+            </div>
+        </div>
+        <div class="dropdown dropdown-{{ forloop.counter }}-0-0" style="grid-area: auto;">
+            {% for section in department.DeSe.all %}
+            <div class="dropdown-item">
+                <a class="link" href="{% url 'CompanyStructure:section' department section %}">
+                    {{ section }}
+                </a>
+                <button class="button" onclick="dropdown(1,{{forloop.counter}},0)">
+                    &#709
+                </button>
+            </div>
+            {% endfor %}
+        </div> 
+        {% else %}
+        <div class="item-{{ forloop.counter }}-0-0">
+            <div class="navigationbar-item" style="grid-template-columns:auto;">
+                <a class="link" href="{% url 'CompanyStructure:department' department %}">
+                    {{ department }}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- END NavigationItems -->
+    </nav>
+    <!-- END NavigationBar -->
+    {% block content %}
+
+    <div class="grid-container col-24">
+        {% for i,j in card_content.items %}
+        {% if i.DeSeSoSi == True %}
+        <div class="col-xl-{{ j.xl }} col-lg-{{ j.lg }} col-md-{{ j.md }} col-sm-{{ j.sm }} card">
+            <div class="head">
+                <a href="{% url 'CompanyStructure:department' i %}" style="color:white">{{ i }}</a>
+            </div>
+            <div class="body">
+                <a href="{% url 'CompanyStructure:department' i %}" style="vertical-align:middle"><img src="media/{{ j.image }}" alt="{{ j.image }}" style="width: 100%; height: auto;"></a>
+            </div>
+            <div class="body">
+                {% if j.person_responsible is None %}
+                <div style="color:rgba(25,25,25,1);height: auto;"> 0 </div><br>
+                {% else %}
+                <div class="grid-container">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left;">
+                        Name:
+                    </div>
+                    <div class="col-xl-16 col-lg-16 col-md-16 col-sm-16" style="text-align: left;">
+                        {{ j.person_responsible }}
+                    </div>
+                </div> <br>
+                {% endif %}
+                {% if j.telephone_number is None %}
+                <div style="color:rgba(25,25,25,1)"> 0 </div><br>
+                {% else %}
+                <div class="grid-container">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left;">
+                        Tel.:
+                    </div>
+                    <div class="col-xl-16 col-lg-16 col-md-16 col-sm-16" style="text-align: left;">
+                        {{ j.telephone_number }}
+                    </div>
+                </div> <br>
+                {% endif %}
+                {% if j.email is None %}
+                <div style="color:rgba(25,25,25,1)"> 0 </div><br>
+                {% else %}
+                <div class="grid-container">
+                    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8" style="text-align: left;">
+                        E-Mail:
+                    </div>
+                    <div class="col-xl-16 col-lg-16 col-md-16 col-sm-16" style="text-align: left;">
+                        {{ j.email }}
+                    </div>
+                </div> <br>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    {% endblock %}
+
+    <!-- Script -->
+    <script src="{% static 'navbar.js' %}"></script>
+    <!--<script src="{% static 'slideshow.js' %}"></script>-->
+    <script src="{% static 'table.js' %}"></script>
+    <!--<script src="{% static 'time-counter.js' %}"></script>-->
+
+    <!-- END Script -->
+</body>
+</html>

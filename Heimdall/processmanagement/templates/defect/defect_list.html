@@ -1,0 +1,62 @@
+{% extends "defect/defect.html" %}
+
+{% block title %}
+    Defekt Liste
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/manual.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section class="manual">
+    <input class="search" type="text" id="filter" onkeyup="filter()" placeholder="Suche">
+    {% for obj in queryset %}
+        {% ifchanged obj.name.0  %}
+        {% if forloop.counter != 1 %}
+    </div>
+        {% endif %}
+        <a class="list-item">{{ obj.name.0 }}</a>
+    <div class="list">
+        <a class="list-item" href="{% url 'processmanagement:defect_detail' id=obj.id %}">{{ obj }}</a>
+        {% else %}
+        <a class="list-item" href="{% url 'processmanagement:defect_detail' id=obj.id %}">{{ obj }}</a>
+        {% endifchanged %}
+    {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script>
+    function filter() {
+      // Declare variables
+      var input, filter, c, i, txtValue;
+      input = document.getElementById('filter');
+      filter = input.value.toUpperCase();
+      c = document.getElementsByClassName('list-item');
+      console.log(c);
+      // Loop through all list items, and hide those who don't match the search query
+      for (i = 0; i < c.length; i++) {
+      //  a = li[i].getElementsByTagName("a")[0];
+        txtValue = c[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          c[i].style.display = "";
+        } else {
+          c[i].style.display = "none";
+        }
+      }
+    }
+</script>
+{% endblock scripts %}

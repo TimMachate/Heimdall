@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Fehler Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "error/templates/errordata_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'errordata_overview.js' %}"></script>
+<script>
+    errordata_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

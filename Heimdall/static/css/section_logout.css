@@ -1,0 +1,184 @@
+/********************************************************
+*
+Theme Name:     Section
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Section
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Section General
+2. Section Window max-width: 576px
+3. Section Window min-width: 576px & max-width: 768px
+4. Section Window min-width: 768px & max-width: 992px
+5. Section Window min-width: 992px & max-width: 1200px
+6. Section Window min-width: 1200px
+*/
+/********************************************************
+* Section Window General                                  *
+********************************************************/
+section {
+    margin: 1rem;
+    padding: 2rem 3rem 2rem 3rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    min-width: 500px;
+    min-height: 200px;
+}
+
+section form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+section form div {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: stretch;
+    width: 100%;
+}
+
+section form div input {
+    margin: 1rem 1rem 0.25rem 1rem;
+    flex-basis: 100%;
+    flex-grow: 1;
+    border-style: none;
+}
+
+section form div span {
+    margin: 0rem 2rem 0.25rem 2rem;
+    padding: 0;
+    color: white;
+}
+
+section form div.submit {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+section form div.submit .cancel {
+    margin: 1rem 1rem 0.25rem 1rem;
+    padding: 0;
+    background-color: rgba(50,50,50,1);
+    color: black;
+    font-size: 2rem;
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+}
+
+section form div.submit .cancel:hover {
+    background-color: red;
+    color: black;
+}
+
+section form div.submit input {
+    background-color: rgba(50,50,50,1);
+}
+
+section form div.submit input:hover {
+    background-color: green;
+    color:black;
+}
+
+section .items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+section .items .item {
+    margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+    background-color: black;
+    flex-basis: 100%;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+section .items .item:hover {
+    background-color: green;
+    color: black;
+}
+
+/********************************************************
+* Section Window min-width: 1200px                      *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    section form div input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    section form div input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    section form div input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    section form div input {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Section Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) , (max-height: 400px) {
+    section {
+        margin: auto;
+        padding: 0rem;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(0, 0);
+        min-width: 0px;
+        min-height: 0px;
+    }
+
+    section form div input {
+        font-size: 1rem;
+    }
+
+    section .items {
+        flex-wrap: wrap;
+    }
+}

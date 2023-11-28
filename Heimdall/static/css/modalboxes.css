@@ -1,0 +1,174 @@
+/********************************************************
+*
+Theme Name:     Modal Boxes
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Erstellung der Darstellung der Modal Boxes
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Modal Boxes General
+2. Modal Boxes Window max-width: 576px
+3. Modal Boxes Window min-width: 576px & max-width: 768px
+4. Modal Boxes Window min-width: 768px & max-width: 992px
+5. Modal Boxes Window min-width: 992px & max-width: 1200px
+6. Modal Boxes Window min-width: 1200px
+*/
+/********************************************************
+* Modal Boxes Window General                            *
+********************************************************/
+
+.modalbox-middle {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.modalbox-middle .content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    border: 1px solid #888;
+    width: 300px;
+    text-align: center;
+}
+
+.modalbox-middle .content div {
+    margin: 0rem;
+    padding: 20px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modalbox-middle .content div label {
+    background-color: rgba(75,75,75,1);
+    color: black;
+}
+
+.modalbox-middle .content div a {
+    background-color: rgba(75,75,75,1);
+    color: black;
+}
+.modalbox-middle .content div label.hover-success:hover {
+    background-color: green;
+}
+
+.modalbox-middle .content div label.hover-error:hover {
+    background-color: red;
+}
+
+.modalbox-middle .content div a.hover-success:hover {
+    background-color: green;
+}
+
+.modalbox-middle .content div a.hover-error:hover {
+    background-color: red;
+}
+
+.messages {
+    position:absolute;
+    bottom:1vh;
+    display:flex;
+    flex-direction: column;
+    width:98%;
+}
+
+.messages div {
+    display: grid;
+    grid-template-columns: auto auto;
+    border-radius: 1rem;
+}
+
+.messages .success {
+    background-color: rgba(0,255,0,0.9);
+}
+
+.messages .info {
+    background-color: rgba(0,0,255,0.9);
+}
+
+.messages .warning {
+    background-color: rgba(255,255,0,0.9);    
+}
+
+.messages .error {
+    background-color: rgba(255,0,0,0.9);
+}
+
+.messages div span {
+    margin: 0.25rem;
+    align-self: center;
+    justify-self: right;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+.messages div p {
+    margin: 0.25rem;
+    align-self: center;
+    justify-self: left;
+    font-size: 2rem;
+}
+
+/********************************************************
+* Grid Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    .messages div {
+        margin: 0.25rem 3rem 0.25rem 3rem;
+        padding: 0rem 2rem 0rem 2rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    .messages div {
+        margin: 0.25rem 3rem 0.25rem 3rem;
+        padding: 0rem 2rem 0rem 2rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    .messages div {
+        margin: 0.25rem 2rem 0.25rem 2rem;
+        padding: 0rem 1rem 0rem 1rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    .messages div {
+        margin: 0.25rem 2rem 0.25rem 2rem;
+        padding: 0rem 0.5rem 0rem 0.5rem;
+    }
+}
+/********************************************************
+* Grid Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .messages div {
+        margin: 0.25rem 1rem 0.25rem 1rem;
+        padding: 0rem 0.25rem 0rem 0.25rem;
+    }
+}

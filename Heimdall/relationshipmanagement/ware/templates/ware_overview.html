@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Ware
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+    {% include "ware_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-1 mb-1 ms-1 me-1" style="width: 18rem;">
+            <img src="{{ obj.image_id.url_file }}" class="card-img-top" alt="image of ware">
+            <div class="card-body">
+            <h5 class="card-title ">
+                <div class="input-group mt-1 mb-1">
+                    <a href="{{ obj.url_detail }}" class="form-control btn btn-sm btn-primary align-middle">
+                        {{ obj.name }}
+                    </a>
+                    <span class="input-group-text">
+                        0
+                    </span>
+                    <a href="{{ obj.url_request_add }}" class="input-group-text btn btn-success">
+                        <i class="fas fa-cart-plus"></i>
+                    </a>
+                </div>
+            </h5>
+            <div class="input-group">
+                <a href="{{ obj.company_id.url_detail }}" class="form-control btn btn-sm btn-primary align-middle">
+                    {{ obj.company_id.name }}
+                </a>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

@@ -1,0 +1,145 @@
+/********************************************************
+*
+Theme Name:     Form
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. form General
+2. form Window max-width: 576px
+3. form Window min-width: 576px & max-width: 768px
+4. form Window min-width: 768px & max-width: 992px
+5. form Window min-width: 992px & max-width: 1200px
+6. form Window min-width: 1200px
+*/
+/********************************************************
+* form Window General                          *
+********************************************************/
+section.form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    max-width: 800px;
+}
+
+section.form form {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+section.form form .form-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+    border-spacing: 10px;
+    background-color: rgba(10, 10, 10, 1);
+    color: white;
+}
+
+section.form form .form-container h1 {
+    margin: 1rem 0rem 0rem 0rem;
+    padding: 0.25rem;
+}
+
+section.form form .form-container p {
+    margin: 0;
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+section.form form .form-container p label {
+    padding: 0.25rem 0.25rem 0.5rem 0.25rem;
+    font-size: 0.75rem;
+}
+
+section.form form .form-container p input, textarea, select {
+    margin: 0;
+    padding: 0.25rem 0.25rem 0.25rem 0.25rem;
+    font-size: 1.5rem;
+}
+
+section.form form input.btn-submit {
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    align-self: flex-end;
+}
+/********************************************************
+* form Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+       
+}
+/********************************************************
+* form Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+  
+}
+/********************************************************
+* form Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* form Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* form Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    section.form form .form-container {
+        margin: 0;
+        padding: 0.25rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    section.form form .form-container p {
+        margin: 0;
+        padding: 0.25rem 0rem 0.5rem 0rem;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+        background-color: rgba(10, 10, 10, 1);
+        color: white;
+    }
+
+    section.form form .form-container p label {
+        align-self: stretch;
+        font-size: 0.5rem;
+    }
+
+    section.form form .form-container p input, textarea, select {
+        font-size: 1rem;
+    }
+}

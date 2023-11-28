@@ -1,0 +1,67 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class ="pt-1 pe-1 pb-1 ps-1">
+    <div class ="input-group w-100">
+        {% if perms.productmanagement %}
+        <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:orderprocess_overview' %}">
+            Produktmanagement
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start">
+            Produktmanagement
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-productmanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Structure Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-productmanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.productmanagement %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.productmanagement.view_orderprocess %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:orderprocess_overview' %}">Bestellvorgang</a>
+                {% elif perms.productmanagement.list_orderprocess %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:orderprocess_list' %}">Bestellvorgang</a>
+                {% elif perms.productmanagement.table_orderprocess %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:orderprocess_table' %}">Bestellvorgang</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Bestellvorgang</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-productmanagement-orderprocess">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Level 2 Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-productmanagement-orderprocess">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:request_overview' %}">Anfragen</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:offer_overview' %}">Angebote</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'productmanagement:order_overview' %}">Bestellungen</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+            </div>
+            <!-- END Level 2 Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->

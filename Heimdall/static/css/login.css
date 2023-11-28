@@ -1,0 +1,251 @@
+/********************************************************
+*
+Theme Name:     Login
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Login Form
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Login General
+2. Login Window max-width: 576px
+3. Login Window min-width: 576px & max-width: 768px
+4. Login Window min-width: 768px & max-width: 992px
+5. Login Window min-width: 992px & max-width: 1200px
+6. Login Window min-width: 1200px
+*/
+/********************************************************
+* Login Window General                                  *
+********************************************************/
+body {
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url(/static/icons/settings.png);
+    background-repeat: no-repeat;
+    background-size: 100vh;
+    background-position: top;
+    height: 100%;
+}
+
+body header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+body header a {
+    float: right;
+    padding: 2rem 1rem 0.5rem 1rem;
+    color: white;
+    font-size: 1rem;
+    text-decoration: None;
+}
+
+.companyname{
+    margin: 3rem 1rem 0.5rem 1rem;
+    font-size: 3rem;
+    color: white;
+    font-weight: bolder;
+    text-align: center;
+}
+
+form {
+    width: 40%;
+	height: 60%;
+	
+	position: absolute;
+	top:0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+  	
+    display: flex;
+    flex-direction: column;
+
+	margin: auto;
+}
+
+form div {
+    display: grid;
+    margin: 1rem;
+    padding: 0.5rem;
+}
+
+form div .Input {
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    font-size: 2rem;
+    border-radius: 1rem;
+}
+
+.Error {
+    font-size: 1rem;
+    color: red;
+}
+
+.Help {
+    padding: 0.5rem 1rem 0.25rem 1rem;
+    font-size: 1rem;
+    color: white;
+}
+
+form div .Submit {
+    margin: 0rem 6rem 0rem 6rem ;
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    font-size: 2rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    background-color: green;  
+}
+
+form div a {
+    font-size: 2rem;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    justify-self: center;
+}
+
+form div span ul {
+    margin: 0;
+    padding: 0;
+}
+
+form div .Button {
+    margin: 0rem 1rem 0rem 1rem ;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    border-radius: 2rem;
+    cursor: pointer;
+    background-color: green;
+    border: None;
+    color: black;  
+}
+
+/********************************************************
+* Grid Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    form {
+        width: 35%;
+    }
+    
+    
+    form div .Input {
+        font-size: 2rem;
+    }
+    
+    form div .Submit {
+        font-size: 2rem; 
+    }
+    
+    form div a {
+        font-size: 2rem;
+    }
+
+    form div .Button {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    form {
+        width: 55%;
+    }
+    
+    form div .Input {
+        font-size: 2rem;
+    }
+    
+    form div .Submit {
+        font-size: 2rem; 
+    }
+    
+    form div a {
+        font-size: 1.5rem;
+    }
+
+    form div .Button {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    form {
+        width: 75%;
+    }
+    
+    form div .Input {
+        font-size: 2rem;
+    }
+    
+    form div .Submit {
+        font-size: 2rem; 
+    }
+    
+    form div a {
+        font-size: 1.5rem;
+    }
+
+    form div .Button {
+        font-size: 2rem;
+    }
+}
+/********************************************************
+* Grid Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    form {
+        width: 90%;
+    }
+    
+    form div .Input {
+        font-size: 2rem;
+    }
+    
+    form div .Submit {
+        font-size: 2rem; 
+    }
+    
+    form div a {
+        font-size: 1.5rem;
+    }
+
+    form div .Button {
+        font-size: 1.5rem;
+    }
+}
+/********************************************************
+* Grid Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    form {
+        width: 100%;
+    }
+    
+    form div .Input {
+        font-size: 1.5rem;
+    }
+    
+    form div .Submit {
+        font-size: 1.5rem; 
+    }
+    
+    form div a {
+        font-size: 1.5rem;
+    }
+
+    form div .Button {
+        font-size: 1.5rem;
+    }
+}

@@ -1,0 +1,93 @@
+/********************************************************
+*
+Theme Name:     Menubar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Menubar
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Menubar General
+2. Menubar Window max-width: 576px
+3. Menubar Window min-width: 576px & max-width: 768px
+4. Menubar Window min-width: 768px & max-width: 992px
+5. Menubar Window min-width: 992px & max-width: 1200px
+6. Menubar Window min-width: 1200px
+*/
+/********************************************************
+* Menubar Window General                                *
+********************************************************/
+nav.menubar {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(100,100,100,1);
+}
+
+nav.menubar ul {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1vw;
+}
+
+nav.menubar ul li {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+/********************************************************
+* Menubar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    nav.menubar ul li {
+        margin: 0 0.5vw;
+    }
+}
+/********************************************************
+* Menubar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    nav.menubar ul li {
+        margin: 0 0.75vw;
+    }
+}
+/********************************************************
+* Menubar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    nav.menubar ul li {
+        margin: 0 1vw;
+    }
+}
+/********************************************************
+* Menubar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    nav.menubar ul li {
+        margin: 0 1.25vw;
+    }
+}
+/********************************************************
+* Menubar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    nav.menubar ul li {
+        margin: 0 1.5vw;
+    }
+}

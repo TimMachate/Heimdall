@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+{% block title %}
+        {{ company_name }}
+{% endblock title %}
+
+{% block static %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+    {% if user.is_authenticated %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/body_login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header_login.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/section_login.css' %}">
+    {% else %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/body_logout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header_logout.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/section_logout.css' %}">
+    {% endif %}
+{% endblock static %}
+{% block style %}{% endblock style %}
+
+{% block content %}
+<section>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <div class="col-xl-24 col-lg-24 col-md-24 col-sm-24">
+            {{ form.non_field_errors }}
+        </div>
+        <div class="col-xl-24 col-lg-24 col-md-24 col-sm-24">
+            <span class="Error">{{ form.username.errors }}</span>
+            <input class="Input" type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username" placeholder="Benutzername">
+            <span class="Help">Pflichtfeld. Maximal 150 Zeichen. Buchstaben, Zahlen und @/./+/-/_ erlaubt.</span>
+        </div>
+        <div class="col-xl-24 col-lg-24 col-md-24 col-sm-24">
+            <span class="Error">{{ form.password1.errors }}</span>
+            <input class="Input" type="password" name="password1" autocomplete="new-password" required id="id_password1" placeholder="Passwort">
+            <span class="Help">
+                <ul>
+                    <li>Darf keine Ähnlichkeit mit dem Benutzernamen aufweisen.</li>
+                    <li>Mindestens 8 Zeichen.</li>
+                    <li>Keine allgemein üblichen Passwörter verwenden.</li>
+                    <li>Nicht nur Zahlen verwenden.</li>
+                </ul>
+            </span>
+        </div>
+        <div class="col-xl-24 col-lg-24 col-md-24 col-sm-24">
+            <span class="Error">{{ form.password2.errors }}</span>
+            <input class="Input" type="password" name="password2" autocomplete="new-password" required id="id_password2" placeholder="Passwort verifizieren">
+            <span class="Help">Zur Verifikation Passwort erneut eingeben.</span>
+        </div>
+        <div class="submit">
+            <a class="cancel" href="{% url 'main:main_view' %}">Zurück</a>
+            <input type="submit" name="register" value="Registrieren">
+        </div>
+    </form>
+</section>
+{% endblock content %}

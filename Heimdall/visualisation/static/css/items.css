@@ -1,0 +1,98 @@
+/********************************************************
+*
+Theme Name:     Items
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Erstellung eines Rasters zur Darstellung einzelner html Inhalte
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Items General
+2. Items Window max-width: 576px
+3. Items Window min-width: 576px & max-width: 768px
+4. Items Window min-width: 768px & max-width: 992px
+5. Items Window min-width: 992px & max-width: 1200px
+6. Items Window min-width: 1200px
+*/
+/********************************************************
+* Items Window General                                  *
+********************************************************/
+.group {
+    margin: 0;
+    padding: 1rem;
+}
+
+.group-head {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.group-head span {
+    margin: 0.5rem 0.25rem 0.25rem 0.25rem;
+}
+
+.icon {
+    margin: 0.25rem 0.25rem 0.25rem 0.25rem;
+    padding: 2px;
+    width:17px;
+    height:17px;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.icon:hover {
+    background-color: white;
+}
+
+.group-body {
+    margin: 0;
+    padding: 0.25rem;
+}
+
+.group-body.border {
+    border: 2px solid black;
+}
+
+.item {
+    margin: 0;
+    padding: 0.25rem;
+}
+
+.item-head {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    background-color: black;
+    color: white;
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+.item-head span {
+    margin: 0.5rem 0.25rem 0.25rem 0.25rem;
+}
+
+.item-body {
+    margin: 0;
+    padding: 0.25rem;
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    text-align: center;
+}

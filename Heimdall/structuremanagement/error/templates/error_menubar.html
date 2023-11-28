@@ -1,0 +1,81 @@
+{% load static %}
+<nav class="navbar navbar-expand-sm bg-dark">
+    <div class="container-fluid">
+        <ul class="nav me-auto mb-0">
+            {% if perms.structuremanagement.view_error %}
+            <!-- Overview -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_overview' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_overview' %}">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </li>
+            <!-- END Overview -->
+            {% endif %}
+            {% if perms.structuremanagement.list_error %}
+            <!-- List -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_list' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_list' %}">
+                    <i class="fas fa-list"></i>
+                </a>
+            </li>
+            <!-- END List -->
+            {% endif %}
+            {% if perms.structuremanagement.table_error %}
+            <!-- Table -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_table' %}">
+                    <i class="fas fa-table"></i>
+                </a>
+            </li>
+            <!-- END Table -->
+            {% endif %}
+            {% if perms.structuremanagement.add_error %}
+            <!-- Create -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_create' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_create' %}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </li>
+            <!-- END Create -->
+            {% endif %}
+            {% if 'error_delete' in request.resolver_match.url_name or 'error_detail' in request.resolver_match.url_name or 'error_update' in request.resolver_match.url_name and perms.structuremanagement.detail_error %}
+            <!-- Detail -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_detail' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_detail' error=queryset.slug %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </li>
+            <!-- END Detail -->
+            {% endif %}
+            {% if 'error_delete' in request.resolver_match.url_name or 'error_detail' in request.resolver_match.url_name or 'error_update' in request.resolver_match.url_name and perms.structuremanagement.change_error %}
+            <!-- Update -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_update' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_update' error=queryset.slug %}">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </li>
+            <!-- END Update -->
+            {% endif %}
+            {% if 'error_delete' in request.resolver_match.url_name or 'error_detail' in request.resolver_match.url_name or 'error_update' in request.resolver_match.url_name and perms.structuremanagement.delete_error %}
+            <!-- Delete -->
+            <li class="nav-item">
+                <a class="btn {% if 'error_delete' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'structuremanagement:error_delete' error=queryset.slug %}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+            <!-- END Delete -->
+            {% endif %}
+        </ul>
+        <ul class="nav ms-auto mb-0">
+            {% if perms.structuremanagement.view_errordata %}
+            <!-- Data -->
+            <li class="nav-item">
+                <a class="btn {% if 'errordata_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% if request.resolver_match.kwargs.error %}{% url 'structuremanagement:error_errordata_table' error=queryset.slug %}{% else %}{% url 'structuremanagement:errordata_table' %}{% endif %}">
+                    <i class="fas fa-database"></i>
+                </a>
+            </li>
+            <!-- ENDE Data -->
+            {% endif %}
+        </ul>
+    </div>
+</nav>

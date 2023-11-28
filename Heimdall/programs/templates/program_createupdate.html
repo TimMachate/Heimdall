@@ -1,0 +1,36 @@
+{% extends "program.html" %}
+
+{% block title %}
+    Programm Erstellen/Updaten
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/form_V3-0.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section class="form">
+    <form class="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-container">
+            <h1>Programm</h1>
+            {{ form.as_p }}
+        </div>
+        <input class="btn-submit" type="submit" name="add_value" value="Bestätigen">
+    </form>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% endblock scripts %}

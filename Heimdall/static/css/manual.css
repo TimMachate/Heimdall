@@ -1,0 +1,384 @@
+/********************************************************
+*
+Theme Name:     Body
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung des Manual
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Manual General
+2. Manual Window max-width: 576px
+3. Manual Window min-width: 576px & max-width: 768px
+4. Manual Window min-width: 768px & max-width: 992px
+5. Manual Window min-width: 992px & max-width: 1200px
+6. Manual Window min-width: 1200px
+*/
+/********************************************************
+* Manual Window General                                  *
+********************************************************/
+section.manual {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: stretch;
+    background-color: rgba(50,50,50,1);
+    width: 100%;
+}
+
+/********************************************************
+List
+********************************************************/
+.search {
+    margin-bottom: 0.5rem;
+    border: none;
+    border-radius: 0;
+    min-width: 200px;
+    max-width: 300px;
+    font-size: 1.5rem;
+}
+
+.list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.list .list-item {
+    margin: 0.5rem;
+    min-width: 200px;
+    color: black;
+    text-decoration: none;
+}
+
+.list .list-item:hover {
+    text-decoration: underline;
+}
+/*******************************************************/
+.btn {
+    background-color: rgba(10,10,10,1);
+    color: white;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: green;
+    color: black;
+}
+
+.collapse-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.collapse-content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.collapse-content .link {
+    margin: 0;
+    padding: 0.25rem 1rem 0.25rem 1rem;
+    color: black;
+    text-decoration: none;
+    min-width: 200px;
+}
+
+.collapse-content .link:hover {
+    text-decoration: underline;
+}
+/********************************************************
+Collapse
+********************************************************/
+input.collapse-checkbox[type='checkbox'] {
+    display: none;
+}
+
+.collapse-content {
+    display: none;
+}
+
+input#persons[type='checkbox']:checked ~ .collapse-container .persons {
+    display: flex;
+}
+
+input#persons[type='checkbox']:checked ~ .navbar .navbar-items .persons {
+    background-color: green;
+    color: black;
+}
+
+input#files[type='checkbox']:checked ~ .collapse-container .files {
+    display: flex;
+}
+
+input#files[type='checkbox']:checked ~ .navbar .navbar-items .files {
+    background-color: green;
+    color: black;
+}
+
+input#label[type='checkbox']:checked ~ .collapse-container .label {
+    display: flex;
+}
+
+input#label[type='checkbox']:checked ~ .navbar .navbar-items .label {
+    background-color: green;
+    color: black;
+}
+
+input#aim[type='checkbox']:checked ~ .collapse-container .aim {
+    display: flex;
+}
+
+input#aim[type='checkbox']:checked ~ .navbar .navbar-items .aim {
+    background-color: green;
+    color: black;
+}
+
+input#introduction[type='checkbox']:checked ~ .collapse-container .introduction {
+    display: flex;
+}
+
+input#introduction[type='checkbox']:checked ~ .navbar .navbar-items .introduction {
+    background-color: green;
+    color: black;
+}
+
+input#execution[type='checkbox']:checked ~ .collapse-container .execution {
+    display: flex;
+}
+
+input#execution[type='checkbox']:checked ~ .navbar .navbar-items .execution {
+    background-color: green;
+    color: black;
+}
+
+input#result[type='checkbox']:checked ~ .collapse-container .result {
+    display: flex;
+}
+
+input#result[type='checkbox']:checked ~ .navbar .navbar-items .result {
+    background-color: green;
+    color: black;
+}
+
+.manual-step {
+    margin: 0.25rem 0rem 0.25rem 0rem;
+    padding: 0;
+    border:solid 1px;
+    width:100%;
+}
+
+.manual-step-content {
+    display: none;
+}
+
+.manual-step label {
+    margin: 0.2rem 0rem 0.25rem 0rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+input.collapse-checkbox[type='checkbox']:checked ~ .manual-step-content {
+    display: flex;
+}
+
+/*******************************************************/
+
+/********************************************************
+A4 Text
+********************************************************/
+.text {
+    background-color:white;
+    max-width: 21cm;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column;
+    align-self: center;
+    font-family: Arial;
+    font-size: 0.95rem;
+}
+
+.text .text-content {
+    padding: 0cm 1cm 0cm 1cm;
+    max-width: 19cm;
+}
+
+.text .text-head {
+    margin-top: 0.5cm;
+    display:flex;
+    flex-direction:row;
+    flex-wrap: nowrap;
+    justify-content:space-between;
+    align-items:stretch;
+    width:100%;
+    border:solid 1px;
+}
+
+.text .text-head .left {
+    width:100px;
+    text-align: left;
+    border:solid 1px;
+}
+
+.text .text-head .middle {
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.text .text-head .right {
+    width:100px;
+    text-align:right;
+    border:solid 1px;
+}
+
+.text .text-foot {
+    padding-bottom: 0.5cm;
+}
+
+.text h1 {
+    margin: 0.5rem 0rem 0.25rem 0rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.text h2 {
+    margin: 0.5rem 0rem 0.25rem 0rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.text h3 {
+    margin: 0.5rem 0rem 0.25rem 0rem;
+    font-size: 1.25rem;
+    text-decoration: underline;
+}
+
+.text p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.95rem;
+}
+
+.item-container {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.item-container .item {
+    margin:0.25rem;
+    min-width: 200px;
+}
+
+.item-container .item th {
+    text-align:left
+}
+
+.item-container .item td {
+    border-bottom: solid 1px;
+}
+
+.item-container .item td input {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.item-container .item td .unit {
+    margin: 0;
+    padding: 0;
+    border: none;
+    float: right;
+}
+/*******************************************************/
+
+/********************************************************
+* Manual Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+
+}
+/********************************************************
+* Manual Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+
+}
+/********************************************************
+* Manual Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Manual Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Manual Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+
+    .navbar .navbar-items {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .text .text-content {
+        padding: 0cm 0.25cm 0cm 0.25cm;
+    }
+
+    .text .text-head {
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .text .text-head .left {
+        border: none;
+    }
+
+    .text .text-head .middle {
+        width:100%;
+        border:solid 1px;
+    }
+    .text .text-head .right {
+        width:100%;
+        text-align:left;
+        border: none;
+    }
+}

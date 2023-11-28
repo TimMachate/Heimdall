@@ -1,0 +1,87 @@
+/********************************************************
+*
+Theme Name:     Icons
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Icons
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Icons General
+2. Icons Window max-width: 576px
+3. Icons Window min-width: 576px & max-width: 768px
+4. Icons Window min-width: 768px & max-width: 992px
+5. Icons Window min-width: 992px & max-width: 1200px
+6. Icons Window min-width: 1200px
+*/
+/********************************************************
+* Icons Window General                                  *
+********************************************************/
+.alarm {
+    background-color: rgba(150,0,0,1);
+}
+
+.alarm-hover:hover {
+    background-color: rgba(150,0,0,1);
+}
+
+.info {
+    background-color: rgba(0,0,150,1);
+}
+
+.info-hover:hover {
+    background-color: rgba(0,0,150,1);
+}
+
+.success {
+    background-color: rgba(0,150,0,1);
+}
+
+.success-hover:hover {
+    background-color: rgba(0,150,0,1);
+}
+
+.warning {
+    background-color: rgba(150,150,0,1);
+}
+
+.warning-hover:hover {
+    background-color: rgba(150,150,0,1);
+}
+
+/********************************************************
+* Icons Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+
+}
+/********************************************************
+* Icons Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+
+}
+/********************************************************
+* Icons Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Icons Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Icons Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+
+}

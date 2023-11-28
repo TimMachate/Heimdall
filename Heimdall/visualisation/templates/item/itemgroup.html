@@ -1,0 +1,119 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Visualisierung
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/tables.css' %}">
+{% endblock static %}
+
+{% block navbar %}
+    {% include "headline_V1-0.html" %}
+    {% include "navbar_V2-0.html" %}
+{% endblock navbar %}
+
+{% block menubar %}
+<nav class="menubar col-xl-24 col-lg-24 col-md-24 col-sm-24">
+    <ul class="menu">
+        {% for tab in tabs %}
+        {% if tab.name == queryset.name %}
+        <li class="menuitem success active">
+            <a href="{% url 'Visualisation:visualisation_detail' slug=tab.slug %}">
+                {{ tab.name }}
+            </a>
+        </li>
+        {% else %}
+        <li class="menuitem success">
+            <a href="{% url 'Visualisation:visualisation_detail' slug=tab.slug %}">
+                {{ tab.name }}
+            </a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <ul class="menu">
+        <li class="menuitem success {% if request.resolver_match.url_name == 'itemgroup_list' %}active{% endif %}">
+            <a href="{% url 'Visualisation:itemgroup_list' %}">
+                <img src="{% static 'icons/list.png' %}" alt="Icon">
+                <span>Liste</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'itemgroup_table' %}active{% endif %}">
+            <a href="{% url 'Visualisation:itemgroup_table' %}">
+                <img src="{% static 'icons/table.png' %}" alt="Icon">
+                <span>Tabelle</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'itemgroup_detail' or request.resolver_match.url_name == 'itemgroup_update' %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'itemgroup_detail' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'Visualisation:itemgroup_detail' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'Visualisation:itemgroup_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                <span>Details</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'itemgroup_update' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'Visualisation:itemgroup_update' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'Visualisation:itemgroup_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                <span>Bearbeiten</span>
+            </a>
+        </li>
+        {% endif %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'itemgroup_create' %}active{% endif %}">
+            <a href="{% url 'Visualisation:itemgroup_create' %}">
+                <img src="{% static 'icons/add.png' %}" alt="Icon">
+                <span>Hinzufügen</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'itemgroup_detail' or request.resolver_match.url_name == 'itemgroup_update' %}
+        <li class="menuitem error">
+            <label for="delete">
+                <img src="{% static 'icons/delete.png' %}" alt="Icon">
+                <span>Löschen</span>
+            </label>
+            <input type="checkbox" id="delete" name="delete" hidden>
+            <div class="modalbox">
+                <div class="content">
+                    Soll dieses Objekt wirklich gelöscht werden?
+                    <div>
+                        <label class="hover-error" for="delete">
+                        Abbrechen
+                        </label>
+                        {% if queryset.id %}
+                        <a class="hover-success" href="{% url 'Visualisation:itemgroup_delete' id=queryset.id %}">
+                            Bestätigen
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<h1 style="font-size:5rem;color: white;">Item-Gruppe</h1>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

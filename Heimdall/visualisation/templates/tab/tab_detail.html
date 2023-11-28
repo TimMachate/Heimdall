@@ -1,0 +1,50 @@
+{% extends "visualisation.html" %}
+
+{% block title %}
+    Tab
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/manual.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+{% block content %}
+<div>
+    {{ queryset.id }}
+    {{ queryset.name }}
+    {{ queryset.order }}
+    {{ queryset.slug }}
+</div>
+
+<div>
+    {{ queryset.user }}
+    {{ queryset.create_user }}
+    {{ queryset.create_time }}
+    {{ queryset.update_user }}
+    {{ queryset.update_time }}
+</div>
+
+<div>
+    {% for itemgroup in queryset.itemgroup %}
+    {{ itemgroup.name }}
+    {% endfor %}
+</div>
+
+<div>
+    {% for table in queryset.table %}
+    {{ table.name }}
+    {% endfor %}
+</div>
+
+<div>
+    {% for diagram in queryset.diagram %}
+    {{ diagram.name }}
+    {% endfor %}
+</div>
+
+{% endblock content %}

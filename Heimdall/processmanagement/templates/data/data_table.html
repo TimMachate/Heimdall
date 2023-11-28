@@ -1,0 +1,128 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Daten
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+<nav class="menubar col-xl-24 col-lg-24 col-md-24 col-sm-24">
+    <ul></ul>
+    <ul class="menu">
+        <li class="menuitem success {% if request.resolver_match.url_name == 'data_table' %}active{% endif %}">
+            <a href="{% url 'processmanagement:data_table' %}">
+                <img src="{% static 'icons/table.png' %}" alt="Icon">
+                <span>Tabelle</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'data_create' %}active{% endif %}">
+            <a href="{% url 'processmanagement:data_create' %}">
+                <img src="{% static 'icons/add.png' %}" alt="Icon">
+                <span>Hinzufügen</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="Daten-Table-1">
+        <col width = "150px" />
+        <col width = "200px" />
+        <col width = "200px" />
+        <col width = "200px" />
+        <col width = "200px" />
+        <caption>
+            <div>
+                <span>Daten</span>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Ersteller
+                </th>
+                <th>
+                    Auftrag
+                </th>
+                <th>
+                    Meldung
+                </th>
+                <th>
+                    Defekt
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Zeit
+                </th>
+                <th>
+                    Person
+                </th>
+                <th>
+                    <input type="text" id="Daten-Input-3" onkeyup="tableFilter('Daten',1,3)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    <input type="text" id="Daten-Input-4" onkeyup="tableFilter('Daten',1,4)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    <input type="text" id="Daten-Input-5" onkeyup="tableFilter('Daten',1,5)" placeholder="Filter" style="width:100%">
+                </th>
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <th>
+                    Ersteller
+                </th>
+                <td class="center">
+                    {{ obj.createTime|date:'d.m.Y H:i' }}
+                </td>
+                <td>
+                    {{ obj.createUser }}
+                </td>
+                <th>
+                    Auftrag
+                </th>
+                <td>
+                    {{ obj.commission }}
+                </td>
+                <th>
+                    Meldung
+                </th>
+                <td>
+                    {{ obj.statusreport }}
+                </td>
+                <th>
+                    Defekt
+                </th>
+                <td>
+                    {% if obj.defect %}{{ obj.defect }}{% else %}{% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

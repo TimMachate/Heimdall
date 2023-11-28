@@ -1,0 +1,339 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Prozess Daten Detail
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "process/templates/processdata_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+    <div class="container mt-3">
+
+        <div class="card">
+            <div class="card-body">
+                <!-- Error Values -->
+                <div class="row justify-content-between align-items-start">
+                    <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_detail" target="_blank">
+                        {% load qr_code %}
+                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_detail size='m' image_format='png' %}" alt="Link to File" id="id_image_file_url">
+                    </a>
+                    <div class="col">
+                        <div class="row justify-content-between align-items-start">
+
+                            <h1 class="col card-title mt-3" id="reference_number">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                <span>Aktenzeichen</span>
+                                {% else %}
+                                <span id="id_reference_number"></span>
+                                {% endif %}
+                            </h1>                            
+                            <div class="col text-end">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Process -->
+                            <div class="mt-3">
+                                <div>
+                                    <label class="form-label" for="{{ form.process_id.id_for_label }}">Prozess</label>
+                                </div>
+                                <div class="btn-group w-100">
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_process">
+                                    {% else %}
+                                        {{ form.process_id }}
+                                    {% endif %}
+                                    {% if 'create' in request.resolver_match.url_name %}
+                                    {% else %}
+                                        <a class="btn btn-primary" href="" id="id_process_url_detail">
+                                            <i class="fas fa-info"></i>        
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- END Process -->
+
+                            <!-- Device -->
+                            <div class="mt-3">
+                                <div>
+                                    <label class="form-label" for="{{ form.device_id.id_for_label }}">Gerät</label>
+                                </div>
+                                <div class="btn-group w-100">
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_device">
+                                    {% else %}
+                                        {{ form.device_id }}
+                                    {% endif %}
+                                    {% if 'create' in request.resolver_match.url_name %}
+                                    {% else %}
+                                        <a class="btn btn-primary" href="" id="id_device_url_detail">
+                                            <i class="fas fa-info"></i>        
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- END Device -->
+
+                            <!-- Create and Update -->
+                            <div class="mt-3">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                <div class="row">
+
+                                    <!-- Create -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="create">Erstellt</label>
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                            </div>
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Create -->
+
+                                    <!-- Update -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="update">Letztes Update</label> 
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                            </div>
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Update -->
+
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- END Create and Update -->
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Values -->
+
+                <p class="card-text">
+
+                    <!-- Process Parameter -->
+                    <div class="mt-3">
+                        <label class="btn btn-secondary btn-lg dropdown-btn text-start w-100" for="processparameter">Prozessparameter</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="processparameter" checked>
+                        <div class="dropdown-content">
+                            <div class="row mt-3">
+                                <div class="col input-group">
+                                    <label class="input-group-text"><i class="fas fa-clock"></i></label>
+                                    <input class="form-control" type="text" value="-" id="id_duration" disabled>
+                                </div>
+                                <div class="col input-group">
+                                    <label class="input-group-text">
+                                        Stückzahl
+                                    </label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control text-end" type="text" value="" id="id_count" disabled>
+                                    {% else %}
+                                    {{ form.count }}
+                                    {% endif %}
+                                    <label class="input-group-text">
+                                        Stk.
+                                    </label>
+                                </div>
+                                <div class="col input-group">
+                                    <label class="input-group-text">
+                                        Auslastung
+                                    </label>
+                                    <input class="form-control text-end" type="text" value="" id="id_utilization" disabled>
+                                    <label class="input-group-text">
+                                        %
+                                    </label>
+                                </div>
+                            </div>
+                            <h5 class="mt-3">
+                                Beginn
+                                {% if 'update' in request.resolver_match.url_name %}
+                                    <a class="btn btn-primary" href="{% url 'structuremanagement:processdata_update_begintime' queryset.slug %}">Jetzt</a>
+                                {% else %}
+                                
+                                {% endif %}
+                            </h5>
+                            <div class="row">
+                                <div class="col input-group">
+                                    <label class="input-group-text"><i class="fas fa-clock"></i></label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value="" id="id_begin_datetime" disabled>
+                                    {% else %}
+                                    {{ form.begin_datetime }}
+                                    {% endif %}
+                                </div>
+                                <div class="col input-group">
+                                    <label class="input-group-text"><i class="fas fa-user"></i></label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value="" id="id_begin_username" disabled>
+                                    {% else %}
+                                    {{ form.begin_user_id }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h5 class="mt-3">
+                                Ende
+                                {% if 'update' in request.resolver_match.url_name %}
+                                    <a class="btn btn-primary" href="{% url 'structuremanagement:processdata_update_endtime' queryset.slug %}">Jetzt</a>
+                                {% else %}
+                                
+                                {% endif %}
+                            </h5>
+                            <div class="row">
+                                <div class="col input-group">
+                                    <label class="input-group-text"><i class="fas fa-clock"></i></label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value="" id="id_end_datetime" disabled>
+                                    {% else %}
+                                    {{ form.end_datetime }}
+                                    {% endif %}
+                                </div>
+                                <div class="col input-group">
+                                    <label class="input-group-text"><i class="fas fa-user"></i></label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value=""  id="id_end_username" disabled>
+                                    {% else %}
+                                    {{ form.end_user_id }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Process Parameter -->
+
+                    <!-- Notice -->
+                    <div class="mt-3">
+                        <label class="btn btn-secondary btn-lg dropdown-btn text-start w-100" for="notice">Bemerkungen</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="notice" checked>
+                        <div class="dropdown-content">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                <div id="id_notice"></div>
+                            {% else %}
+                                {{ form.notice }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Notice -->
+
+                </p>
+            </div>
+        </div>
+
+        <!-- Files -->
+        <div class="card mt-3">
+            <div class="card-body">
+                <div class="input-group">
+                    <label class="btn btn-secondary btn-lg dropdown-btn form-control text-start" for="files">Dateien</label>
+                </div>                
+                <input type="checkbox" class="dropdown-checkbox" id="files" checked>
+                <div class="dropdown-content">
+                    <div>
+                        <label class="form-label" for="{{ form.protocol_id.id_for_label }}">Protokoll</label> <br>
+                        {% if 'detail' in request.resolver_match.url_name %}
+                            {% if queryset.protocol_id %}
+                                <a class="btn btn-primary" href="{{ queryset.protocol_id.url_file }}" target="_blank">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                                <a class="link-dark text-decoration-none" href="{{ queryset.protocol_id.url_detail }}" target="_blank">
+                                    {{ queryset.protocol_id.technical_data_sheet_id.name }}
+                                </a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% else %}
+                            {{ form.protocol_id }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        {% if 'create' in request.resolver_match.url_name %}
+                        {% else %}
+                            <label class="form-label" for="technical_data_sheet_id">Technisches Datenblatt</label><br>
+                            {% if queryset.process_id.technical_data_sheet_id %}
+                                <a class="btn btn-primary" href="{{ queryset.process_id.technical_data_sheet_id.url_file }}" target="_blank">
+                                    <i class="fas fa-file-pdf"></i>
+                                </a>
+                                <a class="link-dark text-decoration-none" href="{{ queryset.process_id.technical_data_sheet_id.url_detail }}" target="_blank">
+                                    {{ queryset.process_id.technical_data_sheet_id.name }}
+                                </a>
+                            {% else %}
+                                -
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Files -->
+
+    </div>
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'js/transformTable.js' %}"></script>
+<script src="{% static 'processdata_updatedetail.js' %}"></script>
+<script>
+    processdata_updatedetail("{% url 'structuremanagementAPI:processdata_detail' processdata=queryset.slug %}")
+</script>
+{% endblock scripts %}

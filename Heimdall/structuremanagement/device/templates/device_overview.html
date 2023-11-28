@@ -1,0 +1,105 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Geräte Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "device/templates/device_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around" id="content">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 id="card-title-{{ obj.id }}" class="card-title"></h1>
+                    <p class="card-text">
+                        <div class="mb-3">
+                            <h5>
+                                <a class="btn btn-primary btn-lg w-100" href="" id="id_url_detail_{{ obj.id }}">
+                                    <span id="id_name_{{ obj.id }}">&nbsp;</span> &nbsp;&nbsp;
+                                    <span id="id_reference_number_{{ obj.id }}">&nbsp;</span>
+                                </a>
+                            </h5>
+                            <div class="mt-2">
+                                <div class="input-group">
+                                    <a class="input-group-text link-dark text-decoration-none w-25" href="{{ obj.url_processdata_overview }}" id="id_processdata_status_{{ obj.id }}">
+                                        Prozess
+                                    </a>
+                                    <a class="form-control link-dark text-decoration-none text-center" href="" id="id_processdata_last_{{ obj.id }}">
+                                        <span id="id_processdata_last_datetime_{{ obj.id }}">&nbsp;</span><br>
+                                        <span id="id_processdata_last_reference_number_{{ obj.id }}">&nbsp;</span>
+                                    </a>
+                                    <a class="input-group-text link-dark text-decoration-none" href="" id="id_processdata_add_{{ obj.id }}">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="input-group">
+                                    <a class="input-group-text link-dark text-decoration-none w-25" href="{{ obj.url_statusdata_table }}" id="id_statusdata_status_{{ obj.id }}">
+                                        Status
+                                    </a>
+                                    <a class="form-control link-dark text-decoration-none text-center" href="" id="id_statusdata_last_{{ obj.id }}">
+                                        <span id="id_statusdata_last_datetime_{{ obj.id }}">&nbsp;</span><br>
+                                        <span id="id_statusdata_last_name_{{ obj.id }}">&nbsp;</span>
+                                    </a>
+                                    <a class="input-group-text link-dark text-decoration-none" href="" id="id_statusdata_add_{{ obj.id }}">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="input-group">
+                                    <a class="input-group-text link-dark text-decoration-none w-25" href="{{ obj.url_errordata_table }}" id="id_errordata_status_{{ obj.id }}">
+                                        Fehler
+                                    </a>
+                                    <a class="form-control link-dark text-decoration-none text-center" href="" id="id_errordata_last_{{ obj.id }}">
+                                        <span id="id_errordata_last_datetime_{{ obj.id }}">&nbsp;</span><br>
+                                        <span id="id_errordata_last_name_{{ obj.id }}">&nbsp;</span>
+                                    </a>
+                                    <a class="input-group-text link-dark text-decoration-none" href="" id="id_errordata_add_{{ obj.id }}">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <div class="input-group">
+                                    <a class="form-control link-dark text-decoration-none text-center" href="{% url 'structuremanagement:maintenance_table' %}" id="id_maintenance_status_{{ obj.id }}">
+                                        Offene Wartungen
+                                    </a>
+                                    <span class="input-group-text link-dark text-decoration-none w-25" id="id_maintenance_open_{{ obj.id }}">&nbsp;</span>
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+                <a href="" id="id_picture_url_detail_{{ obj.id }}">
+                    <img class="card-img-bottom" src="" alt="Gerät" id="id_image_{{ obj.id }}">
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'device_overview.js' %}"></script>
+<script>
+    device_overview("{{ api_data_url }}","{{ model }}")
+</script>
+{% endblock scripts %}

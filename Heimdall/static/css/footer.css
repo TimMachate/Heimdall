@@ -1,0 +1,74 @@
+/********************************************************
+*
+Theme Name:     Footer
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung des Footers
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Footer General
+2. Footer Window max-width: 576px
+3. Footer Window min-width: 576px & max-width: 768px
+4. Footer Window min-width: 768px & max-width: 992px
+5. Footer Window min-width: 992px & max-width: 1200px
+6. Footer Window min-width: 1200px
+*/
+/********************************************************
+* Footer Window General                                  *
+********************************************************/
+footer {
+    padding:0.5rem;
+    position:fixed;
+    bottom:0;
+    left: 0;
+    right: 0;
+    margin:0 auto;
+    overflow: hidden;
+}
+
+footer div {
+    display: grid;
+    grid-template-columns: auto auto ;
+    grid-auto-flow: dense;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/********************************************************
+* Footer Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+
+}
+/********************************************************
+* Footer Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+
+}
+/********************************************************
+* Footer Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+
+}
+/********************************************************
+* Footer Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+
+}
+/********************************************************
+* Footer Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+
+}

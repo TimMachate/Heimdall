@@ -1,0 +1,246 @@
+/********************************************************
+*
+Theme Name:     Buttons
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Buttons
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Buttons General
+2. Buttons Window max-width: 576px
+3. Buttons Window min-width: 576px & max-width: 768px
+4. Buttons Window min-width: 768px & max-width: 992px
+5. Buttons Window min-width: 992px & max-width: 1200px
+6. Buttons Window min-width: 1200px
+*/
+/********************************************************
+* Buttons Window General                                *
+********************************************************/
+.container-btn {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4vw 4vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.container-btn.bottom {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+}
+
+.container-btn .btn {
+    margin: 0 1vw;
+    padding: 0 1vw;
+    border: none;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    cursor: pointer;
+}
+
+/********************************************************
+* Buttons Window min-width: 1200px                      *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    .container-btn .btn.ss {
+        font-size: 0.75vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 1vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 1.5vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 2vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 2.5vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 3.5vw;
+    }
+}
+/********************************************************
+* Buttons Window min-width: 992px & max-width: 1200px   *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    .container-btn .btn.ss {
+        font-size: 1vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 1.5vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 2vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 2.5vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 3.5vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 4vw;
+    }
+}
+/********************************************************
+* Buttons Window min-width: 768px & max-width: 992px    *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    .container-btn .btn.ss {
+        font-size: 1.5vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 2vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 2.5vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 3.5vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 4vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 4.5vw;
+    }
+}
+/********************************************************
+* Buttons Window min-width: 576px & max-width: 768px    *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    .container-btn .btn.ss {
+        font-size: 2vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 2.5vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 3.5vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 4vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 4.5vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 5vw;
+    }
+}
+/********************************************************
+* Buttons Window max-width: 576px                       *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .container-btn .btn.ss {
+        font-size: 2.5vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 3.5vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 4vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 4.5vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 5vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 5.5vw;
+    }
+}
+
+/********************************************************
+* Buttons Window max-width: 320px                       *
+********************************************************/
+@media only screen and (max-width: 320px) {
+    .container-btn .btn.ss {
+        font-size: 3vw;
+    }
+
+    .container-btn .btn.xs {
+        font-size: 3.5vw;
+    }
+
+    .container-btn .btn.sm {
+        font-size: 4vw;
+    }
+
+    .container-btn .btn.md {
+        font-size: 4.5vw;
+    }
+
+    .container-btn .btn.lg {
+        font-size: 5vw;
+    }
+
+    .container-btn .btn.xl {
+        font-size: 5.5vw;
+    }
+
+    .container-btn .btn.xx {
+        font-size: 6vw;
+    }
+}

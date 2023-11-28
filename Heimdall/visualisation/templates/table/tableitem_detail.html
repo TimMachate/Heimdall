@@ -1,0 +1,184 @@
+{% extends "table/tableitem.html" %}
+
+{% block title %}
+    Tab
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/modalboxes.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+{% endblock static %}
+
+{% block content %}
+<section class="grid-container" style="width:100%;">
+    <div class="group grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+        <div class="group-head col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            Allgemein
+        </div>
+        <div class="group-body grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    ID
+                </div>
+                <div class="item-body">
+                    {{ queryset.id }}
+                </div>
+            </div>
+            <div class="item col-xl-12 col-lg-12 col-md-24 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    Name
+                </div>
+                <div class="item-body">
+                    {{ queryset.name }}
+                </div>
+            </div>
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    Reihenfolge
+                </div>
+                <div class="item-body">
+                    {% if queryset.order %}{{ queryset.order }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-12 col-lg-12 col-md-12 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    Gruppe
+                </div>
+                <div class="item-body">
+                    {% if queryset.itemGroup.name %}{{ queryset.itemGroup.name }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-12 col-lg-12 col-md-12 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    Tab
+                </div>
+                <div class="item-body">
+                    {% if queryset.itemGroup.tab.name %}{{ queryset.itemGroup.tab.name }}{% else %}-{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+        <div class="group-head col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            Layout
+        </div>
+        <div class="group-body grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            <div class="item col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    URL
+                </div>
+                <div class="item-body">
+                    {{ queryset.dataURL }}
+                </div>
+            </div>
+            <div class="item col-xl-12 col-lg-12 col-md-12 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    Data
+                </div>
+                <div class="item-body">
+                    {{ queryset.itemData }}
+                </div>
+            </div>
+            <div class="item col-xl-12 col-lg-12 col-md-12 col-sm-24 col-xs-24">
+                <div class="item-head">
+                    Reload
+                </div>
+                <div class="item-body">
+                    {% if queryset.time %}{{ queryset.time }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    Min Warning
+                </div>
+                <div class="item-body">
+                    {% if queryset.minValueWarning %}{{ queryset.minValueWarning }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    Max Warning
+                </div>
+                <div class="item-body">
+                    {% if queryset.maxValueWarning %}{{ queryset.maxValueWarning }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    Min
+                </div>
+                <div class="item-body">
+                    {% if queryset.minValue %}{{ queryset.minValue }}{% else %}-{% endif %}
+                </div>
+            </div>
+            <div class="item col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                <div class="item-head">
+                    Max
+                </div>
+                <div class="item-body">
+                    {% if queryset.maxValue %}{{ queryset.maxValue }}{% else %}-{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+        <div class="group-head col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            Layout
+        </div>
+        <div class="group-body grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    XS
+                </div>
+                <div class="item-body">
+                    {{ queryset.col_xs }}
+                </div>
+            </div>
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    SM
+                </div>
+                <div class="item-body">
+                    {{ queryset.col_sm }}
+                </div>
+            </div>
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    MD
+                </div>
+                <div class="item-body">
+                    {{ queryset.col_md }}
+                </div>
+            </div>
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    LG
+                </div>
+                <div class="item-body">
+                    {{ queryset.col_lg }}
+                </div>
+            </div>
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    XL
+                </div>
+                <div class="item-body">
+                    {{ queryset.col_xl }}
+                </div>
+            </div>
+            <div class="item col-xl-4 col-lg-4 col-md-8 col-sm-8 col-xs-12">
+                <div class="item-head">
+                    Rows
+                </div>
+                <div class="item-body">
+                    {{ queryset.rowspan }}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

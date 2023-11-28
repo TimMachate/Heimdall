@@ -1,0 +1,199 @@
+/********************************************************
+*
+Theme Name:     Navigationbar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Navigationbar General
+2. Navigationbar Window max-width: 576px
+3. Navigationbar Window min-width: 576px & max-width: 768px
+4. Navigationbar Window min-width: 768px & max-width: 992px
+5. Navigationbar Window min-width: 992px & max-width: 1200px
+6. Navigationbar Window min-width: 1200px
+*/
+/********************************************************
+* Navigationbar Window General                          *
+********************************************************/
+input.header-toggler-cb[type=checkbox] , header , nav.menubar {
+    display: none;
+}
+
+input.header-toggler-cb[type=checkbox]:checked ~ header {
+    display: flex;
+}
+
+input.header-toggler-cb[type=checkbox]:checked ~ nav.menubar {
+    display: flex;
+}
+
+input.header-toggler-cb[type=checkbox]:checked ~ .header-toggler-btn:hover {
+    opacity: 1;
+    background-color: red;
+}
+
+input.header-toggler-cb[type=checkbox]:checked ~ .header-toggler-btn p {
+    transform: rotate(90deg);
+}
+
+.header-toggler-btn {
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    height: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-end;
+    opacity: 0;
+    background-color: rgba(255,255,255,0.2);
+    left: 50%;
+    top: -25px;
+    z-index: 100;
+    border-radius: 0 0 100% 100%;
+    text-align: center;
+    color: black;
+    transform: translateX(-50%);
+}
+
+.header-toggler-btn:hover {
+    opacity: 1;
+    background-color: green;
+}
+
+.header-toggler-btn p {
+    margin: 0;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+    transform: rotate(-90deg);
+}
+
+header {
+    margin: 0;
+    padding: 0 0 0 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header form {
+    margin: 0;
+    padding: 1vw 2vw;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header form input[type="text"]{
+    border: none;
+}
+
+header form button {
+    margin: 0 0 0 1vw;
+    padding: 0 2vw 0 2vw;
+    border: none;
+    cursor: pointer;
+}
+
+header a {
+    margin: 0.5vw 1vw;
+    padding: 0.25vw 1vw;
+    color: black;
+    text-decoration: none;
+}
+
+header label {
+    margin: 0.5vw 1vw;
+    padding: 0.25vw 1vw;
+    cursor: pointer;
+}
+
+input[type="checkbox"].toggler {
+    display: none;
+}
+
+input[type="checkbox"].toggler:checked ~ nav.navbar {
+    display: flex;
+}
+
+/********************************************************
+* Navigationbar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    header {
+        font-size: 1vw;
+    }
+}
+/********************************************************
+* Navigationbar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    header {
+        font-size: 1.5vw;
+    }
+}
+/********************************************************
+* Navigationbar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    header {
+        font-size: 2.5vw;
+    }
+}
+/********************************************************
+* Navigationbar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    header {
+        font-size: 3.5vw;
+    }
+}
+/********************************************************
+* Navigationbar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    header {
+        font-size: 4.5vw;
+    }
+
+    header {
+        margin: 0;
+        padding: 1vw 0 0 0;
+        display: none;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    header form input{
+        width: 70vw;
+    }
+
+    header form button {
+        width: 15vw;
+    }
+}

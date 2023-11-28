@@ -1,0 +1,93 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Artikel Angebote
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+    {% include "storagemanagement_offerdata_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row">
+        <div class="col mt-3 mb-3 ms-3 me-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <div class="fluid-container">
+                            <div class="row mt-3 mb-3">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <a class="link-dark text-decoration-none" href="{% url 'storagemanagement:offerdata_overview' %}" >
+                                        <h3>Artikel von offenen Angeboten</h3>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </h5>
+                    <p class="card-text">
+                        <!-- Tabelle -->
+                        <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="id_offerdata">
+                            <caption id="{{ model }}-caption" class="">
+                                Liste 1: Auflistung aller Artikel von offenen Angeboten
+                            </caption>
+                            <thead id="{{ model }}-head" class="thead-dark">
+                                <tr class="" id="{{ model }}-head-row2">
+                                      <th scope="col"></th>
+                                      <th scope="col">Erstellt</th>
+                                      <th scope="col">Lagerartikel</th>
+                                      <th scope="col">Artikel</th>
+                                      <th scope="col">Firma</th>
+                                      <th scope="col">Menge</th>
+                                      <th scope="col">Preis</th>
+                                      <th scope="col">Wert</th>
+                                      <th scope="col"></th>
+                                      <th scope="col"></th>
+                                      <th scope="col">
+                                          <a class="btn btn-success" href="{% url 'storagemanagement:offerdata_authorize_all_true' %}">
+                                              <i class="fas fa-check"></i>
+                                          </a>
+                                      </th>
+                                      <th scope="col">
+                                          <a class="btn btn-danger" href="{% url 'storagemanagement:offerdata_authorize_all_false' %}">
+                                              <i class="fas fa-times"></i>
+                                          </a>
+                                      </th>
+                                </tr>
+                            </thead>
+                            <!-- Table Body -->
+                            <tbody id="{{ model }}-body">
+                            </tbody>
+                            <!-- END Table Body -->
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                        <!-- END Tabelle -->
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> 
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'js/createList.js' %}"></script>
+<script src="{% static 'storagemanagement_offerdata_overview.js' %}"></script>
+<script>
+    offerdata_overview("{{ api_data_url }}","offerdata");
+</script>
+{% endblock scripts %}

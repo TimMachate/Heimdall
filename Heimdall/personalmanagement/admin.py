@@ -1,0 +1,4 @@
+from personalmanagement.departmentsettings.admin import DepartmentSettingsAdmin
+from personalmanagement.employee.admin import EmployeeAdmin
+from personalmanagement.positionsettings.admin import PositionSettingsAdmin
+from personalmanagement.sectionsettings.admin import SectionSettingsAdmin

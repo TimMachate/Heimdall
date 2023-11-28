@@ -1,0 +1,10 @@
+<div class="headline">
+    <a class="brand navbar-link" href="{% url 'main:main_view' %}">{{ company_name }}</a>
+    <!-- SearchField -->
+    <form class="searchfield" method="POST" action="{% url 'main:search' %}">
+        {% csrf_token %}
+        <input type="text" name="searchfield" id="id_searchfield" value="" placeholder="Eingabe/Suche" autofocus>
+        <button class="hover-green" type="submit">&crarr;</button>
+    </form>
+    <!-- END SearchField -->
+</div>

@@ -1,0 +1,131 @@
+{% extends "commission/commission.html" %}
+
+{% block title %}
+    Aufträge
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="Commission-Table-1">
+        <col width = "200px" />
+        <col width = "100px" />
+        <col width = "75px" />
+        <col width = "100px" />
+        <col width = "200px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <caption>
+            <div>
+                <span>{{ queryset.count }} Aufträge</span>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th>
+                    Auftrag
+                </th>
+                <th rowspan="2">
+                    Eingang
+                </th>
+                <th rowspan="2">
+                    Alter
+                </th>
+                <th colspan="2">
+                    Letzte Meldung
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/sos.png' %}" alt="Icon">
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/ticket.png' %}" alt="Icon">
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/delivery.png' %}" alt="Icon">
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="Commission-Input-1" onkeyup="tableFilter('Commission',1,1)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    Zeitpunkt
+                </th>
+                <th>
+                    <input type="text" id="Commission-Input-5" onkeyup="tableFilter('Commission',1,5)" placeholder="Filter" style="width:100%">
+                </th>
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <th>
+                    Auftrag
+                </th>
+                <td>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>
+                </td>
+                <th>
+                    Eingang
+                </th>
+                <td class="center">
+                    {{ obj.getFirstStatusReport.createTime|date:"d.m.Y" }}
+                </td>
+                <th>
+                    Alter
+                </th>
+                <td class="center">
+                    {{ obj.getAge }}
+                </td>
+                <th>
+                    Letzte Meldung
+                </th>
+                <td class="center">
+                    {{ obj.getLastStatusReport.createTime|date:"d.m.Y H:i" }}
+                </td>
+                <td>
+                    {{ obj.getLastStatusReport.statusreport }}
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/sos.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_sos_change' id=obj.id %}">{% if obj.sos %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/ticket.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_ticket_change' id=obj.id %}">{% if obj.ticket %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/delivery.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_delivery_change' id=obj.id %}">{% if obj.done %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

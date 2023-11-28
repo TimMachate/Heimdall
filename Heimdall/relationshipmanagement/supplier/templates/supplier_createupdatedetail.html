@@ -1,0 +1,452 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Lieferanten
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "supplier_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+    <div class="container">
+
+        <div class="card mt-3">
+            <div class="card-body">
+
+                <!-- Values -->
+                <div class="row justify-content-between align-items-start">
+                    <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_detail" target="_blank">
+                        {% load qr_code %}
+                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_detail size='m' image_format='png' %}" alt="Link to File" id="id_image_file_url">
+                    </a>
+                    <div class="col">
+                        <div class="row justify-content-between align-items-start">
+
+                            <h1 class="col card-title mt-3" id="reference_number">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                <span>Aktenzeichen</span>
+                                {% else %}
+                                <span id="id_reference_number"></span>
+                                {% endif %}
+                            </h1>
+                            <div class="col text-end">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Name -->
+                            <div class="mt-3">
+                                <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <input class="form-control" type="text" value="" disabled id="id_name">
+                                {% else %}
+                                {{ form.name }}
+                                {% endif %}
+                            </div>
+                            <!-- END Name -->
+
+                            <!-- Create and Update -->
+                            <div class="mt-3">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                <div class="row">
+
+                                    <!-- Create -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="create">Erstellt</label>
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                            </div>
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Create -->
+
+                                    <!-- Update -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-3">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="update">Letztes Update</label> 
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                            </div>
+                                            <div class="input-group mt-3">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Update -->
+
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- END Create and Update -->
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Values -->
+
+                <p class="card-text">
+
+                    <!-- Address -->
+                    <div class="mt-3">
+                        <label class="btn btn-secondary btn-lg dropdown-btn text-start w-100" for="address">Adresse</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="address" checked>
+                        <div class="dropdown-content">
+                            <div class="row">
+                                <div class="col mt-3">
+                                    <label class="form-label">
+                                        Straße
+                                    </label>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-road"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_street" disabled>
+                                        {% else %}
+                                        {{ form.street }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col mt-3">
+                                    <label class="form-label">
+                                        Hausnummer
+                                    </label>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_house_number" disabled>
+                                        {% else %}
+                                        {{ form.house_number }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mt-3">
+                                    <label class="form-label">
+                                        Postleitzahl
+                                    </label>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-code"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_post_code" disabled>
+                                        {% else %}
+                                        {{ form.post_code }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col mt-3">
+                                    <label class="form-label">
+                                        Stadt
+                                    </label>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-city"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_city" disabled>
+                                        {% else %}
+                                        {{ form.city }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mt-3">
+                                    <label class="form-label">
+                                        Land
+                                    </label>
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_country" disabled>
+                                        {% else %}
+                                        {{ form.country }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Address -->
+
+                    <!-- Telephone -->
+                    <div class="mt-3">
+                        <div class="input-group  w-100">
+                            <span class="input-group-text" id="id_telephone_count">0</span>
+                            <label class="btn btn-secondary btn-lg dropdown-btn form-control text-start" for="telephone">Telefonnummern</label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="telephone" checked>
+                        <div class="dropdown-content">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                {% for obj in queryset.telephones %}
+                                    <div class="row mt-3">
+                                        <div class="col input-group">
+                                            <span class="input-group-text" id="id_telephone_type-{{ obj.id }}"></span>
+                                            <input class="form-control" value="" id="id_telephone_number-{{ obj.id }}" disabled>
+                                        </div>
+                                        <div class ="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                            <input class="form-control" value="" id="id_telephone_target-{{ obj.id }}" disabled>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {{ formset_telephone.management_form }}
+                                {{ formset_telephone.non_form_errors }}
+                                {% for telephone in formset_telephone.forms %}
+                                    {% for hidden_field in telephone.hidden_fields %}
+                                        {{ hidden_field }}
+                                    {% endfor %}
+                                    <div class="row mt-3">
+                                        <div class="col input-group">
+                                            {{ telephone.type }}
+                                            {{ telephone.number }}
+                                        </div>
+                                        <div class="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                            {{ telephone.target }}
+                                        </div>
+                                    </div>
+                                    {% for hidden_field in telephone.hidden_fields %}
+                                        {{ hidden_field.errors }}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Telephone -->
+
+                    <!-- Email -->
+                    <div class="mt-3">
+                        <div class="input-group w-100">
+                            <span class="input-group-text" id="id_email_count">0</span>
+                            <label class="btn btn-secondary btn-lg dropdown-btn form-control text-start" for="email">Emails</label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="email" checked>
+                        <div class="dropdown-content">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                {% for obj in queryset.emails %}
+                                    <div class="row mt-3">
+                                        <div class="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            <input class="form-control" value="" id="id_email_email-{{ obj.id }}" disabled>
+                                        </div>
+                                        <div class="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                            <input class="form-control" value="" id="id_email_target-{{ obj.id }}" disabled>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                {{ formset_email.management_form }}
+                                {{ formset_email.non_form_errors }}
+                                {% for email in formset_email.forms %}
+                                    {% for hidden_field in email.hidden_fields %}
+                                        {{ hidden_field }}
+                                    {% endfor %}
+                                    <div class="row mt-3">
+                                        <div class="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            {{ email.email }}
+                                        </div>
+                                        <div class="col input-group">
+                                            <span class="input-group-text"><i class="fas fa-bullseye"></i></span>
+                                            {{ email.target }}
+                                        </div>
+                                    </div>
+                                    {% for hidden_field in email.hidden_fields %}
+                                        {{ hidden_field.errors }}
+                                    {% endfor %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Email -->
+
+                    <!-- Persons -->
+                    <div class="mt-3">
+                        <div class="input-group w-100">
+                            <span class="input-group-text" id="id_persons_count">0</span>
+                            <label class="btn btn-secondary btn-lg dropdown-btn form-control text-start" for="persons">Personen</label>
+                            <a class="btn btn-primary btn-lg input-group-text" href="{% url 'relationshipmanagement:person_list' %}"><i class="fas fa-list"></i></a>
+                            <a class="btn btn-primary btn-lg input-group-text" href="{% url 'relationshipmanagement:person_table' %}"><i class="fas fa-table"></i></a>
+                            <a class="btn btn-success btn-lg input-group-text" href="{% url 'relationshipmanagement:person_create' %}"><i class="fas fa-plus"></i></a>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="persons" checked>
+                        <div class="dropdown-content">
+                            <!-- Tabelle -->
+                            <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="id_persons">
+                                <caption id="{{ model }}-caption" class="">
+                                    Liste 1: Auflistung aller Personen
+                                </caption>
+                                <thead id="{{ model }}-head" class="thead-dark">
+                                    <tr class="" id="{{ model }}-head-row2">
+                                        <th scope="col"></th>
+                                        <th scope="col">Nachname</th>
+                                        <th scope="col">Vorname</th>
+                                        <th scope="col">Telefonnummern</th>
+                                        <th scope="col">Emails</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <!-- Table Body -->
+                                <tbody id="{{ model }}-body">
+                                </tbody>
+                                <!-- END Table Body -->
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                            <!-- END Tabelle -->
+                        </div>
+                    </div>
+                    <!-- END Persons -->
+
+                    <!-- Supplier -->
+                    <div class="mt-3">
+                        <div class="input-group w-100">
+                            <label class="btn btn-secondary btn-lg dropdown-btn form-control text-start" for="supplier">Lieferanteninformationen</label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="supplier" checked>
+                        <div class="dropdown-content">
+                            {% if 'create' in request.resolver_match.url_name %}
+                            {% else %}
+                            <div class="mt-3">
+                                <div class="input-group">
+                                    <span class="input-group-text" id="id_wares_count">0</span>
+                                    <label class="btn btn-secondary dropdown-btn form-control text-start" for="wares">
+                                        Waren
+                                    </label>
+                                    <a class="btn btn-primary input-group-text" href="{% url 'relationshipmanagement:ware_list' %}"><i class="fas fa-list"></i></a>
+                                    <a class="btn btn-primary input-group-text" href="{% url 'relationshipmanagement:ware_table' %}"><i class="fas fa-table"></i></a>
+                                    <a class="btn btn-success input-group-text" href="{% url 'relationshipmanagement:ware_create' %}"><i class="fas fa-plus"></i></a>
+                                </div>
+                                <input class="dropdown-checkbox" type="checkbox" id="wares" checked>
+                                <div class="dropdown-content">
+                                    <!-- Tabelle -->
+                                    <table class="table table-striped table-hover dt-responsive display align-middle nowrap" id="id_wares">
+                                        <caption id="{{ model }}-caption" class="">
+                                            Liste 1: Auflistung aller Waren
+                                        </caption>
+                                        <thead id="{{ model }}-head" class="thead-dark">
+                                            <tr class="" id="{{ model }}-head-row2">
+                                                <th scope="col"></th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Warennummer</th>
+                                                <th scope="col">Verpackungs-<br>Einheit</th>
+                                                <th scope="col">Einheit</th>
+                                                <th scope="col">Preis</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <!-- Table Body -->
+                                        <tbody id="{{ model }}-body">
+                                        </tbody>
+                                        <!-- END Table Body -->
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                    <!-- END Tabelle -->
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Supplier -->
+
+                    <!-- Notice -->
+                    <div class="mt-3">
+                        <label class="btn btn-secondary btn-lg dropdown-btn text-start w-100" for="notice">Bemerkung</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="notice" checked>
+                        <div class="dropdown-content">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                <div id="id_notice"></div>
+                            {% else %}
+                                {{ form.notice }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Notice -->
+
+                </p>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'js/transformTable.js' %}"></script>
+<script src="{% static 'supplier_updatedetail.js' %}"></script>
+<script>
+    supplier_updatedetail("{% url 'relationshipmanagementAPI:supplier_detail' supplier=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

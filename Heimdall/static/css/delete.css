@@ -1,0 +1,130 @@
+/********************************************************
+*
+Theme Name:     Delete
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung einer Delete-Seite
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Delete General
+2. Delete Window max-width: 576px
+3. Delete Window min-width: 576px & max-width: 768px
+4. Delete Window min-width: 768px & max-width: 992px
+5. Delete Window min-width: 992px & max-width: 1200px
+6. Delete Window min-width: 1200px
+*/
+/********************************************************
+* Delete Window General                                  *
+********************************************************/
+.container {
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0rem;
+    display: block;
+    text-align: center;
+}
+
+.container h1 {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    color: white;
+}
+
+.container div {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0rem;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-content: center;
+}
+
+.container div a, input {
+    margin: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.25rem 2rem 0.25rem 2rem;
+    background-color: rgba(10,10,10,1);
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    border-style: none;
+}
+
+.container div .break:hover {
+    background-color: red;
+    color: black;
+}
+
+/********************************************************
+* Offer Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    .container h1 {
+        font-size:4rem;
+        width: 50%;
+    }
+    
+    .container div {
+        width: 50%;
+    }
+}
+/********************************************************
+* Offer Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    .container h1 {
+        font-size:3rem;
+        width: 75%;
+    }
+    
+    .container div {
+        width: 75%;
+    }
+}
+/********************************************************
+* Offer Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    .container h1 {
+        font-size:2rem;
+        width: 75%;
+    }
+    
+    .container div {
+        width: 75%;
+    }
+}
+/********************************************************
+* Offer Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    .container h1 {
+        font-size:2rem;
+        width: 100%;
+    }
+    
+    .container div {
+        width: 100%;
+    }
+}
+/********************************************************
+* Offer Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    .container h1 {
+        font-size:2rem;
+        width: 100%;
+    }
+    
+    .container div {
+        width: 100%;
+    }
+}

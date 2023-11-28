@@ -1,0 +1,238 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Aufträge
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+<nav class="menubar col-xl-24 col-lg-24 col-md-24 col-sm-24">
+    <ul></ul>
+    <ul class="menu">
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission' %}active{% endif %}">
+            <a href="{% url 'commission:commission' %}">
+                <img src="{% static 'icons/view.png' %}" alt="Icon">
+                <span>Übersicht</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_sos' %}active{% endif %}">
+            <a href="{% url 'commission:commission_sos' %}">
+                <img src="{% static 'icons/sos.png' %}" alt="Icon">
+                <span>SOS</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_ticket' %}active{% endif %}">
+            <a href="{% url 'commission:commission_ticket' %}">
+                <img src="{% static 'icons/ticket.png' %}" alt="Icon">
+                <span>Ticket</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_table' %}active{% endif %}">
+            <a href="{% url 'commission:commission_table' %}">
+                <img src="{% static 'icons/table.png' %}" alt="Icon">
+                <span>Tabelle</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'commission_detail' or request.resolver_match.url_name == 'commission_update' or request.resolver_match.url_name == 'commission_delete' %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_detail' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'commission:commission_detail' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'commission:commission_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                <span>Details</span>
+            </a>
+        </li>
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_update' %}active{% endif %}">
+            {% if queryset.id %}
+            <a href="{% url 'commission:commission_update' id=queryset.id %}">
+            {% else %}
+            <a href="{% url 'commission:commission_list' %}">
+            {% endif %}
+                <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                <span>Bearbeiten</span>
+            </a>
+        </li>
+        {% endif %}
+        <li class="menuitem success {% if request.resolver_match.url_name == 'commission_create' %}active{% endif %}">
+            <a href="{% url 'commission:commission_create' %}">
+                <img src="{% static 'icons/add.png' %}" alt="Icon">
+                <span>Hinzufügen</span>
+            </a>
+        </li>
+        {% if request.resolver_match.url_name == 'commission_detail' or request.resolver_match.url_name == 'commission_update' or request.resolver_match.url_name == 'commission_delete' %}
+        <li class="menuitem commission">
+            <label for="delete">
+                <img src="{% static 'icons/delete.png' %}" alt="Icon">
+                <span>Löschen</span>
+            </label>
+            <input type="checkbox" id="delete" name="delete" hidden>
+            <div class="modalbox">
+                <div class="content">
+                    Soll dieses Objekt wirklich gelöscht werden?
+                    <div>
+                        <label class="hover-commission" for="delete">
+                        Abbrechen
+                        </label>
+                        {% if queryset.id %}
+                        <a class="hover-success" href="{% url 'commission:commission_delete' id=queryset.id %}">
+                            Bestätigen
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="Commission-Table-1">
+        <col width = "200px" />
+        <col width = "100px" />
+        <col width = "75px" />
+        <col width = "75px" />
+        <col width = "100px" />
+        <col width = "200px" />
+        <col width = "75px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <caption>
+            <div>
+                <span>{{ queryset.count }} Aufträge</span>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th>
+                    Auftrag
+                </th>
+                <th rowspan="2">
+                    Eingang
+                </th>
+                <th rowspan="2">
+                    Alter
+                </th>
+                <th>
+                    Neu
+                </th>
+                <th colspan="2">
+                    Letzte Meldung
+                </th>
+                <th rowspan="2">
+                    Fortschritt
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/sos.png' %}" alt="Icon">
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/ticket.png' %}" alt="Icon">
+                </th>
+                <th rowspan="2" class="icon">
+                    <img src="{% static 'icons/delivery.png' %}" alt="Icon">
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="Commission-Input-1" onkeyup="tableFilter('Commission',1,1)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    <input type="text" id="Commission-Input-4" onkeyup="tableFilter('Commission',1,4)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    Zeitpunkt
+                </th>
+                <th>
+                    <input type="text" id="Commission-Input-6" onkeyup="tableFilter('Commission',1,6)" placeholder="Filter" style="width:100%">
+                </th>
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <th>
+                    Auftrag
+                </th>
+                <td>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.name }}</a>
+                </td>
+                <th>
+                    Eingang
+                </th>
+                <td class="center">
+                    {{ obj.getFirstStatusReport.createTime|date:"d.m.Y" }}
+                </td>
+                <th>
+                    Alter
+                </th>
+                <td class="center">
+                    {{ obj.getAge }}
+                </td>
+                <th>
+                    Neuauflagen
+                </th>
+                <td class="center">
+                    {% if obj.getRemake %}{{ obj.getRemake }}{% else %} - {% endif %}
+                </td>
+                <th>
+                    Letzte Meldung
+                </th>
+                <td class="center">
+                    {{ obj.getLastStatusReport.createTime|date:"d.m.Y H:i" }}
+                </td>
+                <td>
+                    {{ obj.getLastStatusReport.statusreport }}
+                </td>
+                <th>
+                    Fortschritt
+                </th>
+                <td class="center">
+                    {{ obj.getProcress }}%
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/sos.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_sos_change' id=obj.id %}">{% if obj.sos %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/ticket.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_ticket_change' id=obj.id %}">{% if obj.ticket %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+                <th class="icon">
+                    <img src="{% static 'icons/delivery.png' %}" alt="Icon">
+                </th>
+                <td class="center">
+                    <a class="icon" href="{% url 'commission:commission_delivery_change' id=obj.id %}">{% if obj.done %}&#10004;{% else %}&#10006;{% endif %}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

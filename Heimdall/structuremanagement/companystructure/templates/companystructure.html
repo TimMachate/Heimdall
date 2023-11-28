@@ -1,0 +1,131 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Bereich Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="card h-100">
+        <div class="card-body">
+            <h3 id="card-title-{{ obj.id }}">
+                Geschäftsführung
+            </h3>
+            <p class="card-text">
+                <div class="row me-1">
+                    <div class="col-xxl-2 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <a class="link-dark text-decoration-none" href="{% url 'structuremanagement:department_overview' %}">
+                            Bereiche: {{ department_count }}
+                        </a><br>
+                        <a class="link-dark text-decoration-none" href="{% url 'structuremanagement:section_overview' %}">
+                            Abteilungen: {{ section_count }}
+                        </a><br>
+                        <a class="link-dark text-decoration-none" href="{% url 'structuremanagement:position_overview' %}">
+                            Arbeitsplätze: {{ position_count }}
+                        </a><br>
+                        <a class="link-dark text-decoration-none" href="#">
+                            Mitarbeiter: {{ employee_count }}
+                        </a><br>
+                    </div>
+                    <div class="col-xxl-10 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="row">
+                            {% for department in queryset %}
+                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1 ms-1 me-1">
+                                <div class="card h-100" {{ department.rgba_style }}>
+                                    <div class="card-body">
+                                        <h3 id="card-title-{{ obj.id }}" class="">
+                                            <a class="link-dark text-decoration-none" href="{{ department.url_detail }}">
+                                                {{ department.name }}
+                                            </a>
+                                        </h3>
+                                        <p class="card-text">
+                                            <div class="row me-1">
+                                                <div class="col-xxl-4 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    Referenznummer:
+                                                    <a class="link-dark text-decoration-none" href="{{ department.url_detail }}">
+                                                        {{ department.reference_number }}
+                                                    </a><br>
+                                                    Abteilungen: {{ department.section_count }} <br>
+                                                    Arbeitsplätze: {{ department.position_count }} <br>
+                                                    Mitarbeiter: {{ department.employee_count }} <br>
+                                                </div>
+                                                <div class="col-xxl-8 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    {% for section in department.sections %}
+                                                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1 ms-1 me-1">
+                                                        <div class="card h-100" {{ section.rgba_style }}>
+                                                            <div class="card-body">
+                                                                <h3 id="card-title-{{ obj.id }}" class="">
+                                                                    <a class="link-dark text-decoration-none" href="{{ section.url_detail }}">
+                                                                        {{ section.name }}
+                                                                    </a>
+                                                                </h3>
+                                                                <p class="card-text">
+                                                                    <div class="row me-1">
+                                                                        <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                                            Referenznummer:
+                                                                            <a class="link-dark text-decoration-none" href="{{ section.url_detail }}">
+                                                                                {{ section.reference_number }}
+                                                                            </a><br>
+                                                                            Arbeitsplätze: {{ section.position_count }}<br>
+                                                                            Mitarbeiter: {{ section.employee_count }} <br>
+                                                                        </div>
+                                                                        <div class="col-xxl-6 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                                            {% for position in section.positions %}
+                                                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-1 mb-1 ms-1 me-1">
+                                                                                <div class="card h-100">
+                                                                                    <div class="card-body">
+                                                                                        <h3 id="card-title-{{ obj.id }}" class="">
+                                                                                            <a class="link-dark text-decoration-none" href="{{ position.url_detail }}">
+                                                                                                {{ position.name }}
+                                                                                            </a>
+                                                                                        </h3>
+                                                                                        <p class="card-text">
+                                                                                            Referenznummer:
+                                                                                            <a class="link-dark text-decoration-none" href="{{ position.url_detail }}">
+                                                                                                {{ position.reference_number }}
+                                                                                            </a> <br>
+                                                                                            Mitarbeiter: {{ position.employees.count }}<br>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            {% endfor %}
+                                                                        </div>
+                                                                    </div>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'companystructure.js' %}"></script>
+<script>
+    companystructure("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

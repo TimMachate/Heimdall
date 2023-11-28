@@ -1,0 +1,133 @@
+{% extends "visualisation.html" %}
+
+{% block content %}
+{% load static %}
+{% load class_name %}
+<div class="grid-container" style="width:100%">
+    {% for query in queryset.get_all %}
+        {% if query|classname == 'ItemGroup' %}
+        <div class="col-xl-{{ query.col_xl }} col-lg-{{ query.col_lg }} col-md-{{ query.col_md }} col-sm-{{ query.col_sm }} col-xs-{{ query.col_xs }}"  style="grid-row: span {{ query.rowspan }}">
+            <div class="group grid-container">
+                {% if query.name %}
+                <div class="group-head col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+                    <span>{{ query.name }}</span>
+                    <a href="{% url 'Visualisation:itemgroup_update' id=query.id %}">
+                        <img class="icon" src="{% static 'icons/settings.png' %}" alt="Icon">
+                    </a>
+                </div>
+                <div class="group-body border grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+                    {% for i in query.data %}
+                    <div class="col-xl-{{ i.col_xl }} col-lg-{{ i.col_lg }} col-md-{{ i.col_md }} col-sm-{{ i.col_sm }} col-xs-{{ i.col_xs }}" style="grid-row: span {{ i.rowspan }}">
+                        <div class="item">
+                            <div class="item-head">
+                                <span>{{ i.name }}</span>
+                                <a href="{% url 'Visualisation:item_update' id=i.id %}">
+                                    <img class="icon" src="{% static 'icons/settings.png' %}" alt="Icon">
+                                </a>
+                            </div>
+                            <div id="item-{{ i.id }}" class="item-body">
+                                loading
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="group-body grid-container col-xl-24 col-lg-24 col-md-24 col-sm-24 col-xs-24">
+                    {% for i in query.data %}
+                    <div class="item col-xl-{{ i.col_xl }} col-lg-{{ i.col_lg }} col-md-{{ i.col_md }} col-sm-{{ i.col_sm }} col-xs-{{ i.col_xs }}">
+                        <div class="item-head">
+                            <span>{{ i.name }}</span>
+                            <a href="{% url 'Visualisation:item_update' id=i.id %}">
+                                <img class="icon" src="{% static 'icons/settings.png' %}" alt="Icon">
+                            </a>
+                        </div>
+                        <div id="item-{{ i.id }}" class="item-body">
+                            loading
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% elif query|classname == 'Table' %}
+        <table class="col-xl-{{ query.col_xl }} col-lg-{{ query.col_lg }} col-md-{{ query.col_md }} col-sm-{{ query.col_sm }} col-xs-{{ query.col_xs }}">
+            <caption>
+                <div>
+                    <span>{{ query.name }}</span>
+                    <a href="{% url 'Visualisation:table_update' id=query.id %}">
+                        <img class="icon" src="{% static 'icons/settings.png' %}" alt="Icon">
+                    </a>
+                </div>
+            </caption>
+            {% for i in query.tableItem %}
+            <col width = "{{ i.col_width }}px" />
+            {% endfor %}
+            <thead>
+                <tr>
+                    {% for th in query.tableItem %}
+                        <th>
+                            {{ th.name }}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody id="Table-{{ query.id }}">             
+            </tbody>
+        </table>
+        {% for i in query.data %}
+        {{ i }}
+        {% endfor %}
+        {% elif query|classname == 'Diagram' %}
+        <div class="group col-xl-12 col-lg-12 col-md-24 col-sm-24 col-xs-24">
+            <canvas class="" id="chart-{{ query.id }}" aria-label="Diagramm {{ query.id }}" role="img">
+                <p>Diagram</p>
+            </canvas>
+        </div>        
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}
+
+{% block scripts %}
+    {% load static %}
+    <script src="{% static 'js/item.js' %}"></script>
+    <script src="{% static 'js/tab.js' %}"></script>
+    <script src="{% static 'js/chart.js' %}"></script>
+    <script src="{% static 'js/v_chart.js' %}"></script>
+    {% for query in queryset.get_all %}
+        {% if query|classname == 'ItemGroup' %}
+            {% for i in query.data %}
+                <script>
+                    runItemUpdate(
+                        id='{{ i.id }}',
+                        url='{{ i.dataURL }}',
+                        value='{{ i.itemData }}',
+                        time='{{ i.time }}',
+                        minW='{{ i.minValueWarning }}',
+                        maxW='{{ i.maxValueWarning }}',
+                        minV='{{ i.minValue }}',
+                        maxV='{{ i.maxValue }}',
+                        )
+                </script>
+            {% endfor %}
+        {% elif query|classname == 'Table' %}
+            <script>
+                runTableUpdate(
+                    id = '{{ query.id }}',
+                    url = '{{ query.dataURL }}',
+                    values = '{% for i in query.tableItem %}{{ i.itemData }};{{ i.hAlign }};{{ i.vAlign }},{% endfor %}',
+                    time = '{{ query.time }}',
+                )
+            </script>
+        {% elif query|classname == 'Diagram' %}
+            <script>
+                drawDiagram(
+                    'http://127.0.0.1:8000/api/visualisation/diagram/detail/1/',
+                    30
+                )
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endblock scripts %}

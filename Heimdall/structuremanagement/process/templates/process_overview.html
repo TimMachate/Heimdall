@@ -1,0 +1,79 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Prozess Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "process/templates/process_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around" id="content">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 id="card-title-{{ obj.id }}" class="card-title"></h1>
+                    <p class="card-text">
+                        <div class="mb-3">
+                            <h5>
+                                <a class="link-dark text-decoration-none" href="" id="id_name_{{ obj.id }}">
+                                </a>
+                                <span id="id_reference_number_{{ obj.id }}">
+                                </span>
+                            </h5>
+                            <div>
+                                <label>
+                                    Nächster Prozess
+                                </label>
+                                <div class="input-group w-100 mt-2">
+                                    <a class="input-group-text form-control btn btn-secondary" href="" id="id_processes_next_{{ obj.id }}">
+                                        &nbsp;
+                                    </a>
+                                </div>
+                            </div>
+                            <div>
+                                <label>
+                                    Letzter Prozess
+                                </label>
+                                <div class="input-group w-100 mt-2">
+                                    <a class="btn btn-success" href="" id="id_url_processes_create_{{ obj.id }}">
+                                        <i class="fas fa-plus"></i>
+                                    </a>
+                                    <a class="input-group-text form-control btn btn-secondary" href="" id="id_processes_last_{{ obj.id }}">
+                                        &nbsp;
+                                    </a>
+                                    <button class="btn btn-danger" disabled id="id_processes_last_status_{{ obj.id }}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+                {% if obj.picture_id %}
+                <img class="card-img-bottom" src="" alt="Prozess Foto" id="id_image_{{ obj.id }}">
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'process_overview.js' %}"></script>
+<script>
+    process_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

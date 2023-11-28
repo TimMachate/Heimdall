@@ -1,0 +1,71 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Wartung Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "maintenance/templates/maintenance_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around" id="content">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 id="card-title-{{ obj.id }}" class="card-title d-grid">
+                        <a class="link-dark text-decoration-none btn btn-lg btn-primary" href="" id="id_url_detail-{{ obj.id }}">
+                            <span id="id_name-{{ obj.id }}">&nbsp;</span> &nbsp;&nbsp;
+                            <span id="id_reference_number-{{ obj.id }}">&nbsp;</span>
+                        </a>
+                    </h1>
+                    <p class="card-text">
+                        <div class="input-group">
+                            <button type="button" class="btn btn-secondary form-control text-start" id="id_device-{{ obj.id }}" disabled></button>
+                            <a class="btn btn-primary input-group-text" href="" id="id_device_url_detail-{{ obj.id }}"><i class="fas fa-info"></i></a>
+                        </div>
+                        <div class="mt-3">
+                            <label for="next_maintenance-dropdown">
+                                Nächste Wartung
+                            </label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary form-control" id="id_maintenance_next-{{ obj.id }}" disabled></button>
+                                <a class="btn btn-success input-group-text" href="" id="id_maintenance_next_data_create-{{ obj.id }}"><i class="fas fa-plus"></i></a>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <label for="last_maintenance-dropdown">
+                                Letzte Wartung
+                            </label>
+                            <div class="input-group">
+                                <button type="button" class="btn btn-secondary form-control" id="id_maintenance_last-{{ obj.id }}" disabled></button>
+                                <a class="btn btn-primary input-group-text" href="" id="id_maintenance_last_data_create-{{ obj.id }}"><i class="fas fa-info"></i></a>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'maintenance_overview.js' %}"></script>
+<script>
+    maintenance_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

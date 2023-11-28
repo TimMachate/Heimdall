@@ -1,0 +1,137 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class ="pt-1 pe-1 pb-1 ps-1">
+    <div class ="input-group w-100">
+        {% if perms.storagemanagement %}
+        <a class="btn btn-secondary form-control text-start {% if 'storagemanagement' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storagemanagement' %}">
+            Lagermanagement
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start {% if 'storagemanagement' in request.resolver_match.url_name %}bg-success{% endif %}">
+            Lagermanagement
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-storagemanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Structure Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-storagemanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.storagemanagement %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.storagemanagement.orderprocess %}
+                <a class="btn btn-secondary form-control text-start {% if 'orderprocess' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:orderprocess' %}">Bestellvorgänge</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start {% if 'orderprocess' in request.resolver_match.url_name %}bg-success{% endif %}">Bestellvorgänge</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-storagemanagement-orderprocess">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Level 2 Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-storagemanagement-orderprocess">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'request' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:requestdata_overview' %}">Anfragen</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'offer' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:offer_overview' %}">Angebote</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'order_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:order_overview' %}">Bestellungen</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+            </div>
+            <!-- END Level 2 Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_overview' %}">Lager</a>
+                {% elif perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_list' %}">Lager</a>
+                {% elif perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_table' %}">Lager</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Lager</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-storagemanagement-storage">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Level 2 Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-storagemanagement-storage">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                {% if perms.storagemanagement.view_booking %}
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'booking' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:booking_overview' %}">Buchungen</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                {% endif %}
+                {% if perms.storagemanagement.view_item %}
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'storageitem' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storageitem_overview' %}">Lagerartikel</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                {% endif %}
+            </div>
+            <!-- END Level 2 Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_overview' %}">Firmen</a>
+                {% elif perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_list' %}">Firmen</a>
+                {% elif perms.storagemanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_table' %}">Firmen</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Firmen</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-storagemanagement-company">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Level 2 Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-storagemanagement-company">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                {% if perms.storagemanagement.view_contact %}
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'companycontact' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:companycontact_overview' %}">Kontakte</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                {% endif %}
+                {% if perms.storagemanagement.view_ware %}
+                <!-- Level 2 Level 3 Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start {% if 'companyitem' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:companyitem_overview' %}">Artikel</a>
+                </div>
+                <!-- END Level 2 Level 3 Navbar Item -->
+                {% endif %}
+            </div>
+            <!-- END Level 2 Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->

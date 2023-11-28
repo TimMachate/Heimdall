@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Datei Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "protocol/templates/variable_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around">
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'file_overview.js' %}"></script>
+<script>
+    file_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

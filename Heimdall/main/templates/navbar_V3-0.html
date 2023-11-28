@@ -1,0 +1,57 @@
+<nav class="">
+    <input class="toggler-checkbox" type="checkbox" id="navbar-toggler">
+    <div class="toggler-btn">
+        <a></a>
+        <label class="hover-green btn-active" for="navbar-toggler">&#8801</label>
+    </div>
+    <div class="toggler-content">
+        <div class="navbar-left">
+        </div>
+        <div class="navbar-middle">
+            <!-- Add apps to navbar -->
+            <!-- Storage -->
+            {% for k,v in navbar.items %}
+                {% for level1key,level1value in v.items %}
+                    {% if level1key in installed_apps %}
+                    <div class ="navbar-item">
+                        <input class="dropdown-checkbox" type="checkbox" id="navbar-link-{{ level1key }}">
+                        <div class ="dropdown-btn">
+                            <a class="hover-green" href="{% url level1value.url %}">{{ level1value.name }}</a>
+                            <label class="hover-green btn-active" for="navbar-link-{{ level1key }}" {% if not level1value.level2 %}style="display:none"{% endif %}>+</label>
+                        </div>
+                        {% if level1value.level2 %}
+                        <div class="dropdown-content">
+                            {% for level2key,level2value in level1value.level2.items %}
+                            <div class="navbar-item">
+                                <input class="dropdown-checkbox l2-consumables" type="checkbox" id="dropdown-link-{{ level2key }}">
+                                <div class="dropdown-btn">
+                                    <a class="hover-green" href="{% url level2value.url %}">{{ level2value.name }}</a>
+                                    <label class="hover-green btn-active" for="dropdown-link-{{ level2key }}">+</label>
+                                </div>
+                                <div class="dropdown-content">
+                                    {% for level3key,level3value in level2value.level3.items %}
+                                    <div class="navbar-item">
+                                        {% if level3value.kwargs %}
+                                        <a class="hover-green" href="{% url level3value.url level3value.kwargs %}">{{ level3value.name }}</a>
+                                        {% else %}
+                                        <a class="hover-green" href="{% url level3value.url %}">{{ level3value.name }}</a>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="navbar-rigth">
+            <div class="navbar-item">
+                <a class="hover-red" href="{% url 'main:logout_view' %}">{{ user.username }}</a>
+            </div>
+        </div>
+    </div>
+</nav>

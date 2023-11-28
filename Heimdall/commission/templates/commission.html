@@ -1,0 +1,37 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Prozess Management
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
+{% endblock static %}
+
+{% block menubar %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+<div class="item-container">
+    {% for key,value in data.items %}
+    <div class="item">
+        <div class="head">{{ key }}</div>
+        <div class="body">{{ value|length }}</div>
+    </div>
+    {% endfor %}
+</div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

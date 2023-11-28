@@ -1,0 +1,247 @@
+{
+    "navbar":{
+        "level1":{
+            "documentationmanagement":{
+                "name":"Dokumentations-Management",
+                "url":"documentationmanagement:file_overview",
+                "level2": {
+                    "file":{
+                        "name":"Dateien",
+                        "url":"documentationmanagement:file_list",
+                        "level3": {}
+                    },
+                    "direction":{
+                        "name":"Betriebsanweisungen",
+                        "url":"documentationmanagement:direction_list",
+                        "level3": {}
+                    },
+                    "document":{
+                        "name":"Dokumente",
+                        "url":"documentationmanagement:document_list",
+                        "level3": {}
+                    },
+                    "formular":{
+                        "name":"Formulare",
+                        "url":"documentationmanagement:formular_list",
+                        "level3": {}
+                    },
+                    "general":{
+                        "name":"Sonstiges",
+                        "url":"documentationmanagement:general_list",
+                        "level3": {}
+                    },
+                    "manual":{
+                        "name":"Handbücher",
+                        "url":"documentationmanagement:manual_list",
+                        "level3": {}
+                    },
+                    "picture":{
+                        "name":"Bilder",
+                        "url":"documentationmanagement:picture_list",
+                        "level3": {}
+                    },
+                    "processinstruction":{
+                        "name":"Verfahrensanweisungen",
+                        "url":"documentationmanagement:processinstruction_list",
+                        "level3": {}
+                    },
+                    "protocol":{
+                        "name":"Protokoll",
+                        "url":"documentationmanagement:protocol_list",
+                        "level3": {
+                            "variable":{
+                                "name":"Variablen",
+                                "url":"documentationmanagement:file_list"
+                            }
+                        }
+                    },
+                    "saftydatasheet":{
+                        "name":"Sicherheitsdatenblätter",
+                        "url":"documentationmanagement:safetydatasheet_list",
+                        "level3": {}
+                    },
+                    "technicaldatasheet":{
+                        "name":"Technischedatenblätter",
+                        "url":"documentationmanagement:technicaldatasheet_list",
+                        "level3": {}
+                    },
+                    "workingdescription":{
+                        "name":"Arbeitsplatzbeschreibung",
+                        "url":"documentationmanagement:workingdescription_list",
+                        "level3": {}
+                    },
+                    "workinginstruction":{
+                        "name":"Arbeitsanweisungen",
+                        "url":"documentationmanagement:workinginstruction_list",
+                        "level3": {}
+                    }
+                }
+            },
+            "processmanagement":{
+                "name":"Prozess Management",
+                "url":"processmanagement:processmanagement",
+                "level2": {
+                    "statusreport":{
+                        "name":"Statusmeldungen",
+                        "url":"processmanagement:statusreport",
+                        "level3": null
+                    },
+                    "defect":{
+                        "name":"Defekte",
+                        "url":"processmanagement:defect",
+                        "level3": null
+                    },
+                    "data":{
+                        "name":"Daten",
+                        "url":"processmanagement:data_table",
+                        "level3": null
+                    }
+                }
+            },
+            "productmanagement":{
+                "name":"Produkt Management",
+                "url":"productmanagement:productmanagement",
+                "level2": {
+                    "product":{
+                        "name":"Produkte",
+                        "url":"productmanagement:product_overview",
+                        "level3": {
+                            "article":{
+                                "name":"Artikel",
+                                "url":"productmanagement:article_overview"
+                            },
+                            "articleparameter":{
+                                "name":"Artikelparameter",
+                                "url":"productmanagement:articleparameter_overview"
+                            },
+                            "tool":{
+                                "name":"Hilfsmittel",
+                                "url":"productmanagement:tool_overview"
+                            }
+                        }
+                    },
+                    "storage":{
+                        "name":"Lager",
+                        "url":"productmanagement:storage_overview",
+                        "level3": {
+                            "stock":{
+                                "name":"Bestand",
+                                "url":"productmanagement:stock_overview"
+                            },
+                            "demand":{
+                                "name":"Anforderungen",
+                                "url":"productmanagement:demand_table"
+                            },
+                            "booking":{
+                                "name":"Buchungen",
+                                "url":"productmanagement:booking_table"
+                            }
+                        }
+                    }
+                }
+            },
+            "programs":{
+                "name":"Programme",
+                "url":"programs:program",
+                "level2": null
+            },
+            "relationshipmanagement":{
+                "name":"Beziehungs-Management",
+                "url":"relationshipmanagement:relationshipmanagement",
+                "level2": {
+                    "statusreport":{
+                        "name":"Firmen",
+                        "url":"relationshipmanagement:company_overview",
+                        "level3": {
+                            "Allgemein":{
+                                "name":"Allgemein",
+                                "url":"relationshipmanagement:general_overview"
+                            },
+                            "supplier":{
+                                "name":"Lieferanten",
+                                "url":"relationshipmanagement:supplier_overview"
+                            },
+                            "customer":{
+                                "name":"Kunden",
+                                "url":"relationshipmanagement:customer_overview"
+                            }
+                        }
+                    },
+                    "defect":{
+                        "name":"Kontaktpersonen",
+                        "url":"relationshipmanagement:person_overview",
+                        "level3": null
+                    }
+                }
+            },
+            "structuremanagement":{
+                "name":"Struktur-Management",
+                "url":"structuremanagement:companystructure",
+                "level2": {
+                    "structure":{
+                        "name":"Unternehmensstruktur",
+                        "url":"structuremanagement:companystructure",
+                        "level3": {
+                            "department":{
+                                "name":"Bereich",
+                                "url":"structuremanagement:department_overview"
+                            },
+                            "section":{
+                                "name":"Abteilung",
+                                "url":"structuremanagement:section_overview"
+                            },
+                            "position":{
+                                "name":"Arbeitsplatz",
+                                "url":"structuremanagement:position_overview"
+                            }
+                        }
+                    },
+                    "device":{
+                        "name":"Geräte",
+                        "url":"structuremanagement:device_overview",
+                        "level3": {
+                            "error":{
+                                "name":"Fehler",
+                                "url":"structuremanagement:error_overview"
+                            },
+                            "group":{
+                                "name":"Gerätegruppen",
+                                "url":"structuremanagement:group_overview"
+                            },
+                            "process":{
+                                "name":"Prozess",
+                                "url":"structuremanagement:process_overview"
+                            },
+                            "status":{
+                                "name":"Status",
+                                "url":"structuremanagement:status_overview"
+                            },
+                            "maintenance":{
+                                "name":"Wartung",
+                                "url":"structuremanagement:maintenance_overview"
+                            }
+                        }
+                    },
+                    "daten":{
+                        "name":"Daten",
+                        "url":"structuremanagement:errordata_table",
+                        "level3": {
+                            "errordata":{
+                                "name":"Fehlerdaten",
+                                "url":"structuremanagement:errordata_table"
+                            },
+                            "processdata":{
+                                "name":"Prozessdaten",
+                                "url":"structuremanagement:processdata_overview"
+                            },
+                            "statusdata":{
+                                "name":"Statusdaten",
+                                "url":"structuremanagement:statusdata_table"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

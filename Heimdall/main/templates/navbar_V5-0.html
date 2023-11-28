@@ -1,0 +1,15 @@
+<input class="dropdown-checkbox" type="checkbox" id="navbar">
+<nav class="col-xxl-2 col-xl-3 col-lg-4 col-md-12 col-sm-12 col-12 dropdown-content bg-dark text-white overflow-auto vh-100">
+    {% if perms.documentationmanagement and documentationmanagement %}
+    {% include "documentationmanagement_navbar.html" %}
+    {% endif %}
+    {% if perms.relationshipmanagement and relationshipmanagement %}
+    {% include "relationshipmanagement_navbar.html" %}
+    {% endif %}
+    {% if perms.storagemanagement %}
+    {% include "storagemanagement_navbar.html" %}
+    {% endif %}
+    {% if perms.structuremanagement and structuremanagement %}
+    {% include "structuremanagement_navbar.html" %}
+    {% endif %}
+</nav>

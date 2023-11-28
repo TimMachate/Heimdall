@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Fehler Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "group/templates/group_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="row justify-content-around" id="content">
+        {% for obj in queryset %}
+        <div class="col-xxl-3 col-xl-4 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h1 id="card-title-{{ obj.id }}" class="card-title"></h1>
+                    <p class="card-text">
+                        <div class="mb-3">
+                            <h5>
+                                <a class="link-dark text-decoration-none" href="{{ obj.url_detail }}">
+                                    {{ obj.name }}
+                                </a>
+                            </h5>
+                            <div>
+                                <span id="responsible-{{ obj.id }}">
+                                    {{ obj.reference_number }}
+                                </span><br>
+                            </div>
+                        </div>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'group_overview.js' %}"></script>
+<script>
+    group_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

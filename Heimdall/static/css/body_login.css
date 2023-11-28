@@ -1,0 +1,44 @@
+/********************************************************
+*
+Theme Name:     Body
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Kontaktseite
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Body General
+2. Body Window max-width: 576px
+3. Body Window min-width: 576px & max-width: 768px
+4. Body Window min-width: 768px & max-width: 992px
+5. Body Window min-width: 992px & max-width: 1200px
+6. Body Window min-width: 1200px
+*/
+/********************************************************
+* Body Window General                                  *
+********************************************************/
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 98vh;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: rgba(0,0,0,0.90);
+}
+
+div.main-container {
+    margin: 0 auto 0 auto;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+}

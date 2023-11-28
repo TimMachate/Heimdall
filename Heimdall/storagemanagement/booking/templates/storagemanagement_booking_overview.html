@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Buchungen
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+    {% include "storagemanagement_booking_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <h1>
+        Buchungen {{ request.get_full_path }}
+    </h1>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

@@ -1,0 +1,45 @@
+<nav>
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-toggler">
+    <label class="navbar-toggler hover-green-red" for="navbar-toggler">&#8801</label>
+    <div class="dropdown-content navbar-items">
+        {% for navitem in navbar %}
+        <input class="dropdown-checkbox l1-{{ navitem.name }}" type="checkbox" id="navbar-link-{{ navitem.name }}">
+        <div class ="navbar-item">
+            <a class="navbar-btn navbar-link hover-green" href="{% url navitem.link %}">
+                {{ navitem.name }}
+            </a>
+            {% if navitem.get_menuItems %}
+            <label class="navbar-btn hover-green-red l1-{{ navitem.name }}" for="navbar-link-{{ navitem.name }}">&#9654;</label>
+            {% else %}
+            {% endif %}
+        </div>
+        {% if navitem.get_menuItems %}
+        <div class="dropdown-content navbar-item-content l1-{{ l1.name }}">
+            <a class="navbar-link headline" href="{% url l1.url %}">
+                {{ l1.name }}
+            </a>
+            {% for l2 in l1.items|dictsort:"order" %}
+            <div class ="navbar-item">
+                <input class="dropdown-checkbox l2-{{ l2.name }}" type="checkbox" id="dropdown-link-{{ l2.name }}">
+                <a class="navbar-btn navbar-link hover-green" href="{% url l2.url %}">
+                    {{ l2.name }}
+                </a>
+                {% if l2.items %}
+                <label class="navbar-btn hover-green-red l2-{{ l2.name }}" for="dropdown-link-{{ l2.name }}">&#9654;</label>
+                <div class="dropdown-content l2-navbar-item-content l2-{{ l2.name }}">
+                    {% for l3 in l2.items|dictsort:"order" %}
+                    <a class="navbar-link hover-green" href="{% url l3.url %}">{{ l3.name }}</a>
+                    {% endfor %}
+                </div>
+                {% else %}{% endif %}
+            </div>
+            
+            {% endfor %}   
+        </div>
+        {% else %} {% endif %}
+        {% endfor %}       
+    </div>
+    <div class="navbar-icons">
+        <a class="navbar-btn navbar-link hover-red" href="{% url 'main:logout_view' %}">{{ user.username }}</a>
+    </div> 
+</nav>

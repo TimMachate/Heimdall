@@ -1,0 +1,168 @@
+{% extends "protocol/templates/variable_overview.html" %}
+
+{% block title %}
+    Protokolle
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="{% if 'create' in request.resolver_match.url_name %}col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12{% else %}col-xxl-8 col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12{% endif %}">
+            <div class="row" style="height:100%">
+                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="row justify-content-between align-items-start">
+                                <h1 class="col card-title mt-3" id="reference_number">
+                                    {% if 'create' in request.resolver_match.url_name %}
+                                    <span>Aktenzeichen</span>
+                                    {% else %}
+                                    <span id="id_reference_number"></span>
+                                    {% endif %}
+                                </h1>
+                                <div class="col btn-group justify-self-end">
+                                    {% if 'create' in request.resolver_match.url_name %}
+                                    {% else %}
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                            <a class="btn btn-primary" href="" id="id_url_update">
+                                                <i class="fas fa-pen"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if 'update' in request.resolver_match.url_name %}
+                                            <a class="btn btn-primary" href="" id="id_url_detail">
+                                                <i class="fas fa-search"></i>
+                                            </a>
+                                        {% endif %}
+                                        <a class="btn btn-danger" href="" id="id_url_delete">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                                <div class="mt-3">
+                                    <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                                    {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-control" type="text" value="" disabled id="id_name">
+                                    {% else %}
+                                    {{ form.name }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <p class="card-text">
+                                <div class="row">
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mt-3">
+                                        <label>Symbol</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_symbol">
+                                        {% else %}
+                                        {{ form.symbol }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mt-3">
+                                        <label>Einheit</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_unit">
+                                        {% else %}
+                                        {{ form.unit }}
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 mt-3">
+                                        <label>Typ</label>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" disabled id="id_input_type">
+                                        {% else %}
+                                        {{ form.input_type }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="row">
+                {% if 'create' in request.resolver_match.url_name %}
+                {% else %}
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Erstellt
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-12 col-xl-12 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                Letztes Update
+                            </h5>
+                            <p class="card-text">
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                </div>
+                                <div class="input-group mt-3">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="row justify-content-between">
+        <div class="col"><a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a></div>
+        <div class="col text-end"><input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen"></div>
+    </div>
+    {% endif %}
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'variable_updatedetail.js' %}"></script>
+<script>
+    variable_updatedetail("{% url 'documentationmanagementAPI:variable_detail' variable=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

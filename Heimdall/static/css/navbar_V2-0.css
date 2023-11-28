@@ -1,0 +1,124 @@
+/********************************************************
+*
+Theme Name:     Navigationbar
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung der Navigationsleiste
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Navigationbar General
+2. Navigationbar Window max-width: 576px
+3. Navigationbar Window min-width: 576px & max-width: 768px
+4. Navigationbar Window min-width: 768px & max-width: 992px
+5. Navigationbar Window min-width: 992px & max-width: 1200px
+6. Navigationbar Window min-width: 1200px
+*/
+/********************************************************
+* Navigationbar Window General                          *
+********************************************************/
+nav.navbar {
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+    display: none;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow: auto;
+    z-index: 100;
+}
+
+nav.navbar a {
+    margin: 0;
+    padding: 5px;
+    color: black;
+    text-decoration: none;
+}
+
+nav.navbar label {
+    margin: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+nav.navbar .navbar-item {
+    margin: 10px;
+    padding: 5px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+nav.navbar .navbar-item .dropdown-btn {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav.navbar .navbar-item .dropdown-btn a {
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+    flex-basis: 230px;
+    height: 100%;
+}
+
+nav.navbar .navbar-item .dropdown-btn label {
+    margin: 0;
+    padding: 5px;
+    box-sizing: border-box;
+    flex-basis: 40px;
+    text-align: center;
+    height: 100%;
+}
+
+nav.navbar .navbar-item .dropdown-content{
+    box-sizing: border-box;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: stretch;
+    align-items: stretch;
+}
+
+/********************************************************
+* Navigationbar Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+}
+/********************************************************
+* Navigationbar Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+}
+/********************************************************
+* Navigationbar Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+}
+/********************************************************
+* Navigationbar Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+}
+/********************************************************
+* Navigationbar Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+}

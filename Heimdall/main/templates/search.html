@@ -1,0 +1,9 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% for result in results %}
+<a href="{{ result.get_absolute_url }}">{{ result }}</a> <br>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,197 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Prozess Übersicht
+{% endblock %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "process/templates/processdata_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<section class="fluid-container">
+    <div class="container mt-3">
+        <div class="card h-100">
+            <form class="card-body" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div id="card-title-{{ obj.id }}" class="">
+                    <div class="row justify-content-between">
+                        <h2 class="col">
+                            <a class="link-dark text-decoration-none" href="{% url 'structuremanagement:processdata_overview' %}">
+                                {{ queryset.count }} Aktive Prozesse
+                            </a>
+                            <label class="dropdown-btn btn btn-success" for="add_processdata">
+                                <i class="fas fa-plus"></i>
+                            </label>
+                        </h2>
+                        <div class="col text-end">
+                            <button class="btn btn-success" type="submit">
+                                Bestätigen
+                            </button>
+                        </div>
+                    </div>
+                    <input type="checkbox" class="dropdown-checkbox" id="add_processdata">
+                    <div class="dropdown-content col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-3">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                                        <label class="col form-label" for="id_device_id">
+                                            Gerät
+                                        </label>
+                                        {{ form.device_id }}
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-3">
+                                        <label class="col form-label" for="id_process_id">
+                                            Prozess
+                                        </label>
+                                        {{ form.process_id }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    {% if queryset %}
+                    {{ formset.management_form }} 
+                    {% for form in formset %}
+                    <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <h4 id="card-title-{{ obj.id }}" class="card-title">
+                                    {{ form.id.as_hidden }}{{ form.slug.as_hidden }}
+                                </h4>
+                                <p class="card-text">
+                                    <div class="row">
+                                        <div class="col-xxl-2 col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12 mt-3">
+                                            <div class="btn-group">
+                                                {% if form.reference_number.value %}
+                                                <a class="btn btn-primary" href="{{ form.url_detail.value }}">
+                                                    {{ form.reference_number.value }}
+                                                </a>
+                                                <a class="btn btn-danger" href="{{ form.url_delete.value }}">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+                                            <div class="input-group w-100">
+                                                {% if 'device_processdata_overview' in request.resolver_match.url_name %}
+                                                    <input class="form-control" type="text" value="{{ queryset.0.device_id }}" disabled id="device_name">
+                                                    {{ form.device_id.as_hidden }}
+                                                {% else %}
+                                                    {{ form.device_id }}
+                                                {% endif %}
+                                                <a class="input-group-text btn btn-primary" href="{{ form.url_detail_device.value }}">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12 mt-3">
+                                            <div class="input-group w-100">
+                                                {{ form.process_id }}
+                                                <a class="input-group-text btn btn-primary" href="{{ form.url_detail_process.value }}">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                            <label class="form-label" for="id_begin_date">Begin</label>
+                                            <div class="input-group w-100">
+                                                {{ form.begin_datetime }}
+                                                <a class="input-group-text btn btn-primary" href="{% url 'structuremanagement:processdata_update_begintime' form.slug.value %}">
+                                                    Jetzt
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div  class="col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                            <label class="form-label" for="id_end_date">Ende</label>
+                                            <div class="input-group w-100">
+                                                {{ form.end_datetime }}
+                                                <a class="input-group-text btn btn-primary" href="{% url 'structuremanagement:processdata_update_endtime' form.slug.value %}">
+                                                    Jetzt
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div  class="col-xxl-2 col-xl-2 col-lg-6 col-md-6 col-sm-6 col-12 mt-3">
+                                            <div class="row">
+                                                <label class="col form-label" for="id_count">
+                                                    Anzahl
+                                                </label>
+                                                <span class="col text-end">{% if form.utilization.value %}{{ form.utilization.value }} %{% endif %}</span>
+                                            </div>
+                                            <div class="input-group w-100">
+                                                {{ form.count }}
+                                                <a class="input-group-text btn btn-primary" href="{% url 'structuremanagement:processdata_update_count' form.slug.value %}">
+                                                    max
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div  class="col-xxl-2 col-xl-2 col-lg-6 col-md-6 col-sm-6 col-12 mt-3 text-end align-self-end">
+                                            <div class="btn-group">
+                                                {% if form.notice.value %}
+                                                <button class="btn btn-danger" disabled>
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </button>
+                                                {% endif %}
+                                                <label class="btn btn-primary dropdown-btn" for="notice-{{ form.slug.value }}">
+                                                    Bemerkungen
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input class="dropdown-checkbox" type="checkbox" id="notice-{{ form.slug.value }}">
+                                    <div class="dropdown-content mt-3">
+                                        {{ form.notice }}
+                                    </div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <h4>
+                        Derzeit gibt es keine aktiven Prozesse
+                    </h4>
+                    {% endif %}
+                </div>
+                <div id="card-title-{{ obj.id }}" class="">
+                    <div class="row justify-content-between">
+                        <div class="col">
+                            <a class="btn btn-primary" href="{% url 'structuremanagement:processdata_overview' %}">
+                                Aktualisieren
+                            </a>
+                        </div>
+                        <div class="col text-end">
+                            <button class="btn btn-success" type="submit">
+                                Bestätigen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+<script src="{% static 'processdata_overview.js' %}"></script>
+<script>
+    processdata_overview("{{ api_data_url }}")
+</script>
+{% endblock scripts %}

@@ -1,0 +1,495 @@
+/********************************************************
+*
+Theme Name:     Tabelle
+Theme URI:
+Description:
+Version:        1.0
+Author:         Tim Machate
+License:        none (public domain)
+Tags:           Darstellung einer Tabelle
+*
+********************************************************/
+/********************************************************
+* Inhaltsverzeichnis                                    *
+********************************************************/
+/*
+1. Tabelle General
+2. Tabelle Window max-width: 576px
+3. Tabelle Window min-width: 576px & max-width: 768px
+4. Tabelle Window min-width: 768px & max-width: 992px
+5. Tabelle Window min-width: 992px & max-width: 1200px
+6. Tabelle Window min-width: 1200px
+*/
+/********************************************************
+* Tabelle Window General                                  *
+********************************************************/
+table {
+    margin:0rem;
+    padding:0rem;
+    position: relative;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 1px;
+    caption-side: top;
+    border-collapse: separate;
+    border-spacing: 2px;
+    background-color: white;
+}
+
+table a {
+    text-decoration: none;
+    color: black;
+}
+
+table a.icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+table a.icon img {
+    margin: 0.25rem;
+    padding: 0.25rem;
+    height: 20px;
+}
+
+table thead th input[type="text"] {
+    box-sizing: border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    background-color: rgba(255,255,255,1);
+}
+
+caption {
+    margin: 0;
+    padding: 0.5vw 1vw 0.25vw 1vw;
+    position: relative;
+    border: none;
+    font-weight: bold;
+    text-align: left;
+    background-color: rgba(75,75,75,1);
+}
+
+caption div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+thead th {
+    background-color: rgba(75,75,75,1);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: rgba(255,255,255,0.70);
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(255,255,255,0.80);
+}
+
+td.left, th.left {
+    text-align:left;
+}
+
+td.center, th.center {
+    text-align:center;
+}
+
+td.right, th.rigth {
+    text-align:right;
+}
+
+td div {
+    display: none;
+}
+
+table.variables {
+    margin: auto;
+    max-width: 92vw;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table.variables caption label {
+    font-size: 1.5vw;
+}
+
+table.variables caption div {
+    font-size: 1vw;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+table.variables td.symbol {
+    text-align: right;
+    vertical-align: middle;
+}
+
+table.variables td.input {
+    text-align: center;
+    vertical-align: middle;
+}
+
+table.variables td.input input {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+table.variables td.unit {
+    text-align: left;
+    vertical-align: middle;
+}
+
+/********************************************************
+* Tabelle Window min-width: 1200px                         *
+********************************************************/
+@media only screen and (min-width: 1200px) {
+    caption {
+        font-size: 2vw;
+    }
+
+    table.responsive-1200 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-992 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-768 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-576 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.variables caption label {
+        font-size: 1.5vw;
+    }
+
+    table.variables td.symbol {
+        font-size: 2.5vw;
+    }
+    
+    table.variables td.input input[type='number'] {
+        font-size: 2.5vw;
+    }
+    
+    table.variables td.unit {
+        font-size: 2.5vw;
+    }
+
+    table.variables td.input input[type='checkbox'] {
+        width: 4vw;
+        height: 4vw;
+    }
+}
+/********************************************************
+* Tabelle Window min-width: 992px & max-width: 1200px      *
+********************************************************/
+@media only screen and (max-width: 1200px) {
+    caption {
+        font-size: 4vw;
+    }
+
+    table.responsive-1200, table.responsive-1200 tbody {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+        align-self: stretch;
+    }
+
+    table.responsive-1200 thead {
+        display: none;
+    }
+
+    table.responsive-1200 tbody tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    table.responsive-1200 tbody tr td div {
+        font-size: 3vw;
+        font-weight: bold;
+        display: block;
+        text-align: left;
+    }
+
+    table.responsive-1200 tbody td.left {
+        text-align:left;
+    }
+    
+    table.responsive-1200 tbody td.center {
+        text-align:left;
+    }
+    
+    table.responsive-1200 tbody td.right {
+        text-align:left;
+    }
+
+    table.responsive-992 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-768 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-576 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.variables caption label {
+        font-size: 2.5vw;
+    }
+
+    table.variables td.symbol {
+        font-size: 3.5vw;
+    }
+    
+    table.variables td.input input[type='number'] {
+        font-size: 3.5vw;
+    }
+    
+    table.variables td.unit {
+        font-size: 3.5vw;
+    }
+
+    table.variables td input[type='checkbox'] {
+        width: 6vw;
+        height: 6vw;
+    }
+}
+/********************************************************
+* Tabelle Window min-width: 768px & max-width: 992px       *
+********************************************************/
+@media only screen and (max-width: 992px) {
+    caption {
+        font-size: 5vw;
+    }
+
+    table.responsive-992, table.responsive-992 tbody {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+        align-self: stretch;
+    }
+
+    table.responsive-992 thead {
+        display: none;
+    }
+
+    table.responsive-992 tbody tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    table.responsive-992 tbody tr td div {
+        font-size: 3vw;
+        font-weight: bold;
+        display: block;
+        text-align: left;
+    }
+
+    table.responsive-992 tbody td.left {
+        text-align:left;
+    }
+    
+    table.responsive-992 tbody td.center {
+        text-align:left;
+    }
+    
+    table.responsive-992 tbody td.right {
+        text-align:left;
+    }
+
+    table.responsive-768 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.responsive-576 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.variables caption label {
+        font-size: 3.5vw;
+    }
+
+    table.variables td.symbol {
+        font-size: 4.5vw;
+    }
+    
+    table.variables td.input input[type='number'] {
+        font-size: 4.5vw;
+    }
+    
+    table.variables td.unit {
+        font-size: 4.5vw;
+    }
+
+    table.variables td input[type='checkbox'] {
+        width: 7vw;
+        height: 7vw;
+    }
+}
+/********************************************************
+* Tabelle Window min-width: 576px & max-width: 768px       *
+********************************************************/
+@media only screen and (max-width: 768px) {
+    caption {
+        font-size: 6vw;
+    }
+
+    table.responsive-768, table.responsive-768 tbody {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+        align-self: stretch;
+    }
+
+    table.responsive-768 thead {
+        display: none;
+    }
+
+    table.responsive-768 tbody tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    table.responsive-768 tbody tr td div {
+        font-size: 3vw;
+        font-weight: bold;
+        display: block;
+        text-align: left;
+    }
+
+    table.responsive-768 tbody td.left {
+        text-align:left;
+    }
+    
+    table.responsive-768 tbody td.center {
+        text-align:left;
+    }
+    
+    table.responsive-768 tbody td.right {
+        text-align:left;
+    }
+
+    table.responsive-576 tbody tr:hover {
+        background-color: rgba(255,255,255,0.50);
+    }
+
+    table.variables caption label {
+        font-size: 4.5vw;
+    }
+
+    table.variables td.symbol {
+        font-size: 5.5vw;
+    }
+    
+    table.variables td.input input[type='number'] {
+        font-size: 5.5vw;
+    }
+    
+    table.variables td.unit {
+        font-size: 5.5vw;
+    }
+
+    table.variables td input[type='checkbox'] {
+        width: 8vw;
+        height: 8vw;
+    }
+}
+/********************************************************
+* Tabelle Window max-width: 576px                          *
+********************************************************/
+@media only screen and (max-width: 576px) {
+    caption {
+        font-size: 7vw;
+    }
+
+    table.responsive-576, table.responsive-576 tbody {
+        height: auto !important;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+        align-self: stretch;
+    }
+
+    table.responsive-576 thead {
+        display: none;
+    }
+
+    table.responsive-576 tbody tr {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: stretch;
+        align-items: stretch;
+    }
+
+    table.responsive-576 tbody tr td div {
+        font-size: 3vw;
+        font-weight: bold;
+        display: block;
+        text-align: left;
+    }
+
+    table.responsive-576 tbody td.left {
+        text-align:left;
+    }
+    
+    table.responsive-576 tbody td.center {
+        text-align:left;
+    }
+    
+    table.responsive-576 tbody td.right {
+        text-align:left;
+    }
+
+    table.variables caption label {
+        font-size: 5.5vw;
+    }
+
+    table.variables td.symbol {
+        font-size: 6.5vw;
+    }
+    
+    table.variables td.input input[type='number'] {
+        font-size: 6.5vw;
+    }
+    
+    table.variables td.unit {
+        font-size: 6.5vw;
+    }
+
+    table.variables td input[type='checkbox'] {
+        width: 9vw;
+        height: 9vw;
+    }
+}

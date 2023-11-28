@@ -1,0 +1,104 @@
+{% extends "statusreport/statusreport.html" %}
+
+{% block title %}
+    Statusmeldungen
+{% endblock %}
+
+{% block static %}
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V3.css' %}">
+{% endblock static %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <!-- Tabelle -->
+    <table class="light" id="StatusReport-Table-1">
+        <col width = "40px" />
+        <col width = "45px" />
+        <col width = "45px" />
+        <col width = "200px" />
+        <col width = "200px" />
+        <col width = "150px" />
+        <caption>
+            <div>
+                <span>Statusmeldungen</span>
+            </div>
+        </caption>
+        <thead>
+            <tr>
+                <th rowspan="2">
+                    Nr
+                </th>
+                <th rowspan="2" colspan="2">
+
+                </th>
+                <th>
+                    Meldung
+                </th>
+                <th colspan="2">
+                    Updated
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="StatusReport-Input-4" onkeyup="tableFilter('StatusReport',1,4)" placeholder="Filter" style="width:100%">
+                </th>
+                <th>
+                    Person
+                </th>
+                <th>
+                    Zeit
+                </th>
+            </tr>
+        </thead>
+        <!-- Table Body -->
+        <tbody>
+            {% for obj in queryset %}
+            <tr>
+                <th>
+                    Meldung
+                </th>
+                <td class="center">
+                    {{ forloop.counter }}
+                </td>
+                <td>
+                    <a class="icon" href="{{ obj.get_absolute_url }}">
+                        <img src="{% static 'icons/detail.png' %}" alt="Icon">
+                    </a>
+                </td>
+                <td>
+                    <a class="icon" href="{% url 'processmanagement:statusreport_update' id=obj.id %}">
+                        <img src="{% static 'icons/bearbeiten.png' %}" alt="Icon">
+                    </a>
+                </td>
+                <td>
+                    {{ obj.name }}
+                </td>
+                <th>
+                    Updated
+                </th>
+                <td>
+                    {{ obj.updateUser }}
+                </td>
+                <td class="center">
+                    {{ obj.updateTime|date:'d.m.Y H:i' }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        <!-- END Table Body -->
+    </table>
+    <!-- END Tabelle -->
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

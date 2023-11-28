@@ -1,0 +1,221 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Structure Management Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class ="pt-1 pe-1 pb-1 ps-1">
+    <div class ="input-group w-100">
+        {% if perms.structuremanagement %}
+        <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:companystructure' %}">
+            Struktur-Management
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start">
+            Struktur-Management
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-structuremanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Structure Management Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-structuremanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.structuremanagement.companystructure %}
+        <!-- Structure Management Level 2 Company Structure Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.structuremanagement %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:companystructure' %}">Unternehmensstruktur</a>
+                {% elif perms.structuremanagement %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:companystructure' %}">Unternehmensstruktur</a>
+                {% elif perms.structuremanagement %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:companystructure' %}">Unternehmensstruktur</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Unternehmensstruktur</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-structuremanagement-companystructure">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Structure Management Level 2 Company Structure Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-structuremanagement-companystructure">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                <!-- Structure Management Level 2 Company Structure Level 3 Department Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:department_overview' %}">Bereiche</a>
+                </div>
+                <!-- END Structure Management Level 2 Company Structure Level 3 Departmant Navbar Item -->
+                <!-- Structure Management Level 2 Company Structure Level 3 Section Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:section_overview' %}">Abteilungen</a>
+                </div>
+                <!-- END Structure Management Level 2 Company Structure Level 3 Section Navbar Item -->
+                <!-- Structure Management Level 2 Company Structure Level 3 Position Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:position_overview' %}">Arbeitsplätze</a>
+                </div>
+                <!-- END Structure Management Level 2 Company Structure Level 3 Position Navbar Item -->
+            </div>
+            <!-- END Structure Management Level 2 Company Structure Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Structure Management Level 2 Company Structure Navbar Item -->
+        {% endif %}
+        {% if perms.structuremanagement.view_device or perms.structuremanagement.list_device or perms.structuremanagement.table_device %}
+        <!-- Structure Management Level 2 Device Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.structuremanagement.view_device %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:device_overview' %}">Geräte</a>
+                {% elif perms.structuremanagement.list_device %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:device_list' %}">Geräte</a>
+                {% elif perms.structuremanagement.table_device %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:device_table' %}">Geräte</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Geräte</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-structuremanagement-device">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Structure Management Level 2 Device Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-structuremanagement-device">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                {% if perms.structuremanagement.view_error or perms.structuremanagement.list_error or perms.structuremanagement.table_error %}
+                <!-- Structure Management Level 2 Device Level 3 Error Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_error %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:error_overview' %}">Fehler</a>
+                    {% elif perms.structuremanagement.list_error %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:error_list' %}">Fehler</a>
+                    {% elif perms.structuremanagement.table_error %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:error_table' %}">Fehler</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Error Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_group or perms.structuremanagement.list_group or perms.structuremanagement.table_group %}
+                <!-- Structure Management Level 2 Device Level 3 Group Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_group %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:group_overview' %}">Gerätegruppen</a>
+                    {% elif perms.structuremanagement.list_group %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:group_list' %}">Gerätegruppen</a>
+                    {% elif perms.structuremanagement.table_group %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:group_table' %}">Gerätegruppen</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Group Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_process or perms.structuremanagement.list_process or perms.structuremanagement.table_process %}
+                <!-- Structure Management Level 2 Device Level 3 Process Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_process %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:process_overview' %}">Prozesse</a>
+                    {% elif perms.structuremanagement.list_process %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:process_list' %}">Prozesse</a>
+                    {% elif perms.structuremanagement.table_process %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:process_table' %}">Prozesse</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Process Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_status or perms.structuremanagement.list_status or perms.structuremanagement.table_status %}
+                <!-- Structure Management Level 2 Device Level 3 Status Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_status %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:status_overview' %}">Status</a>
+                    {% elif perms.structuremanagement.list_status %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:status_list' %}">Status</a>
+                    {% elif perms.structuremanagement.table_status %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:status_table' %}">Status</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Status Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_maintenance or perms.structuremanagement.list_maintenance or perms.structuremanagement.table_maintenance %}
+                <!-- Structure Management Level 2 Device Level 3 Maintenance Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_maintenance %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:maintenance_overview' %}">Wartungen</a>
+                    {% elif perms.structuremanagement.list_maintenance %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:maintenance_list' %}">Wartungen</a>
+                    {% elif perms.structuremanagement.table_maintenance %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:maintenance_table' %}">Wartungen</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Maintenance Navbar Item -->
+                {% endif %}
+            </div>
+            <!-- END Structure Management Level 2 Device Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Structure Management Level 2 Device Navbar Item -->
+        {% endif %}
+        {% if perms.structuremanagement %}
+        <!-- Structure Management Level 2 Data Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.structuremanagement.view_data %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:data_overview' %}">Daten</a>
+                {% elif perms.structuremanagement.list_data %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:data_list' %}">Daten</a>
+                {% elif perms.structuremanagement.table_data %}
+                <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:data_table' %}">Daten</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Daten</span>
+                {% endif %}
+                <label class="input-group-text dropdown-btn" for="dropdown-link-structuremanagement-data">
+                    <i class="fas fa-plus"></i>
+                </label>
+            </div>
+            <!-- Structure Management Level 2 Device Level 3 Content Navbar Item -->
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-structuremanagement-data">
+            <div class="dropdown-content mt-1 mb-1 ms-3">
+                {% if perms.structuremanagement.view_errordata or perms.structuremanagement.list_errordata or perms.structuremanagement.table_errordata %}
+                <!-- Structure Management Level 2 Device Level 3 Error Data Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_errordata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:errordata_overview' %}">Fehlerdaten</a>
+                    {% elif perms.structuremanagement.list_errordata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:errordata_list' %}">Fehlerdaten</a>
+                    {% elif perms.structuremanagement.table_errordata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:errordata_table' %}">Fehlerdaten</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Error Data Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_processdata or perms.structuremanagement.list_processdata or perms.structuremanagement.table_processdata %}
+                <!-- Structure Management Level 2 Device Level 3 Process Data Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_processdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:processdata_overview' %}">Prozessdaten</a>
+                    {% elif perms.structuremanagement.list_processdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:processdata_list' %}">Prozessdaten</a>
+                    {% elif perms.structuremanagement.table_processdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:processdata_table' %}">Prozessdaten</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Process Data Navbar Item -->
+                {% endif %}
+                {% if perms.structuremanagement.view_statusdata or perms.structuremanagement.list_statusdata or perms.structuremanagement.table_statusdata %}
+                <!-- Structure Management Level 2 Device Level 3 Status Data Navbar Item -->
+                <div class="input-group w-100 mt-1">
+                    {% if perms.structuremanagement.view_statusdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:statusdata_overview' %}">Statusdaten</a>
+                    {% elif perms.structuremanagement.list_statusdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:statusdata_list' %}">Statusdaten</a>
+                    {% elif perms.structuremanagement.table_statusdata %}
+                    <a class="btn btn-secondary form-control text-start" href="{% url 'structuremanagement:statusdata_table' %}">Statusdaten</a>
+                    {% endif %}
+                </div>
+                <!-- END Structure Management Level 2 Device Level 3 Status Data Navbar Item -->
+                {% endif %}
+            </div>
+            <!-- END Structure Management Level 2 Device Level 3 Content Navbar Item -->
+        </div>
+        <!-- END Structure Management Level 2 Data Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Structure Management Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Structure Management Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
