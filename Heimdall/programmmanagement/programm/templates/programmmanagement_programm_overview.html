@@ -1,0 +1,65 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Programme
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block style %}
+    <style type="text/css">
+        div.card {
+            width:18rem;
+        }
+        i.fas {
+            width:1rem;
+        }
+    </style>
+{% endblock style %}
+
+{% block menubar %}
+    {% include "programmmanagement_programm_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-3 mb-3 ms-1 me-1">
+            <div class="card-body pt-1 pb-1 ps-1 pe-1">
+                <h5 class="card-title ">
+                    <div class="input-group mt-1 mb-1">
+                        <a href="" class="form-control btn btn-sm btn-primary align-middle" id="id_programm-{{ obj.id }}">
+                            -
+                        </a>
+                    </div>
+                </h5>
+                <div class="mt-1 mb-1">
+                    <div id="id_description-{{ obj.id }}">
+                        -
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'programmmanagement_programm_overview.js' %}"></script>
+<script>
+    programm_overview("{{ api_data_url }}","programm");
+</script>
+{% endblock scripts %}

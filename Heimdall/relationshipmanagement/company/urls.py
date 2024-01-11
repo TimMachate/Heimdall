@@ -1,3 +1,10 @@
+"""
+#--------------------------------------------------------------------------------
+# Url File from Model Company
+# 16.12.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -17,15 +24,119 @@ from relationshipmanagement.company.views import (
     CompanyUpdateView,
     CompanyDeleteView
 )
+from relationshipmanagement.companycontact.views import (
+    CompanyContactView,
+    CompanyContactListView,
+    CompanyContactTableView,
+    CompanyContactCreateView,
+    CompanyContactDetailView,
+    CompanyContactUpdateView,
+)
+from relationshipmanagement.companyitem.views import (
+    CompanyItemView,
+    CompanyItemListView,
+    CompanyItemTableView,
+    CompanyItemCreateView,
+    CompanyItemDetailView,
+    CompanyItemUpdateView,
+)
 #--------------------------------------------------------------------------------
 urlpatterns = [
     # Company
-    path('',CompanyView.as_view(), name='company_overview'),
-    path('list/',CompanyListView.as_view(), name='company_list'),
-    path('table/',CompanyTableView.as_view(), name='company_table'),
-    path('create/',CompanyCreateView.as_view(), name='company_create'),
-    path('update/<slug:company>/',CompanyUpdateView.as_view(), name='company_update'),
-    path('detail/<slug:company>/',CompanyDetailView.as_view(), name='company_detail'),
-    path('delete/<slug:company>/',CompanyDeleteView.as_view(), name='company_delete'),
+    path(
+        '',
+        CompanyView.as_view(),
+        name='company_overview'
+    ),
+    path(
+        'list/',
+        CompanyListView.as_view(),
+        name='company_list'
+    ),
+    path(
+        'table/',
+        CompanyTableView.as_view(),
+        name='company_table'
+    ),
+    path(
+        'create/',
+        CompanyCreateView.as_view(),
+        name='company_create'
+    ),
+    path(
+        'update/<slug:company>/',
+        CompanyUpdateView.as_view(),
+        name='company_update'
+    ),
+    path(
+        'detail/<slug:company>/',
+        CompanyDetailView.as_view(),
+        name='company_detail'
+    ),
+    path(
+        'delete/<slug:company>/',
+        CompanyDeleteView.as_view(),
+        name='company_delete'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/',
+        CompanyContactView.as_view(),
+        name='company_companycontact_overview'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/list/',
+        CompanyContactListView.as_view(),
+        name='company_companycontact_list'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/table/',
+        CompanyContactTableView.as_view(),
+        name='company_companycontact_table'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/create/',
+        CompanyContactCreateView.as_view(),
+        name='company_companycontact_create'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/detail/',
+        CompanyContactDetailView.as_view(),
+        name='company_companycontact_detail'
+    ),
+    path(
+        'detail/<slug:company>/companycontact/update/',
+        CompanyContactUpdateView.as_view(),
+        name='company_companycontact_update'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/',
+        CompanyItemView.as_view(),
+        name='company_companyitem_overview'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/list/',
+        CompanyItemListView.as_view(),
+        name='company_companyitem_list'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/table/',
+        CompanyItemTableView.as_view(),
+        name='company_companyitem_table'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/create/',
+        CompanyItemCreateView.as_view(),
+        name='company_companyitem_create'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/detail/',
+        CompanyItemDetailView.as_view(),
+        name='company_companyitem_detail'
+    ),
+    path(
+        'detail/<slug:company>/companyitem/update/',
+        CompanyItemUpdateView.as_view(),
+        name='company_companyitem_update'
+    ),
 ]
 #--------------------------------------------------------------------------------

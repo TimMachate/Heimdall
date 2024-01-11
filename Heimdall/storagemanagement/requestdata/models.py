@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Models File from Model Request Data
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -11,7 +12,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData
-from storagemanagement.models import ReferenceNumber
-from storagemanagement.models import Slug
-from storagemanagement.models import UpdateData
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -31,6 +31,15 @@ from storagemanagement.models import UpdateData
 # Model
 #--------------------------------------------------------------------------------
 class RequestDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
+    """
+    RequestDataBaseModel
+
+    Args:
+        CreateData (_type_): _description_
+        ReferenceNumber (_type_): _description_
+        Slug (_type_): _description_
+        UpdateData (_type_): _description_
+    """
 
     # Variables
     short_name = "STRE"
@@ -77,13 +86,13 @@ class RequestDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
     )
 
     # Fields/Methodes for the ware
-    companyitem = models.ForeignKey(
+    supplieritem = models.ForeignKey(
         blank = True,
-        name = 'companyitem',
+        name = 'supplieritem',
         null = True,
         on_delete = models.CASCADE,
-        related_name = 'requestdata_companyitem',
-        to = 'storagemanagement.companyitem',
+        related_name = 'requestdata_supplieritem',
+        to = 'storagemanagement.supplierItemBaseModel',
         verbose_name = 'Item',
     )
 
@@ -129,86 +138,194 @@ class RequestDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
     )
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
 #--------------------------------------------------------------------------------
 class RequestData(RequestDataBaseModel):
+    """
+    RequestData
+
+    Args:
+        RequestDataBaseModel (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     # Authorized
     def authorized_date(self):
+        """
+        authorized_date
+
+        Returns:
+            string: date from authorization
+        """
         return self.authorized_datetime_formated().split(" ")[0] if self.authorized_datetime else None
 
     def authorized_datetime_formated(self):
+        """
+        authorized_datetime_formated
+
+        Returns:
+            string: datetime from authorization
+        """
         return self.authorized_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.authorized_datetime else None
 
     def authorized_time(self):
+        """
+        authorized_time
+
+        Returns:
+            string: time from authorization
+        """
         return self.authorized_datetime_formated().split(" ")[1] if self.authorized_datetime else None
 
     def authorized_username(self):
+        """
+        authorized_username
+
+        Returns:
+            string: username from authorization
+        """
         return str(self.authorized_user_id.username) if self.authorized_user_id else None
 
-    # Company
-    def company_id(self):
-        if self.companyitem:
-            result = self.companyitem.company.id if self.companyitem.company else None
+    # Supplier
+    def supplier_id(self):
+        """
+        supplier_id
+
+        Returns:
+            int: id from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.supplier_id()
         else:
             result = None
         return result
 
-    def company_name(self):
-        if self.companyitem:
-            result = self.companyitem.company.name if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.company.reference_number if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_slug(self):
-        if self.companyitem:
-            result = self.companyitem.company.slug if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.company.url_detail() if self.companyitem.company else None
+    def supplier_name(self):
+        """
+        supplier_name
+
+        Returns:
+            string: name from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.supplier_name()
         else:
             result = None
         return result
 
-    # Company Item
-    def companyitem_id(self):
-        result = self.companyitem.id if self.companyitem else None
+    def supplier_reference_number(self):
+        """
+        supplier_reference_number
+
+        Returns:
+            string: reference number from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.supplier_reference_number()
+        else:
+            result = None
         return result
-        
-    def companyitem_name(self):
-        result = self.companyitem.name if self.companyitem else None
+
+    def supplier_slug(self):
+        """
+        supplier_slug
+
+        Returns:
+            string: slug from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.supplier_slug()
+        else:
+            result = None
         return result
-        
-    def companyitem_item_number(self):
-        result = self.companyitem.item_number if self.companyitem else None
+
+    def supplier_url_detail(self):
+        """
+        supplier_url_detail
+
+        Returns:
+            string: url to supplier detail page
+        """
+        if self.supplieritem:
+            result = self.supplieritem.supplier_url_detail()
+        else:
+            result = None
         return result
-        
-    def companyitem_reference_number(self):
-        result = self.companyitem.reference_number if self.companyitem else None
+
+    # Supplier Item
+    def supplieritem_id(self):
+        """
+        supplieritem_id
+
+        Returns:
+            int: id from supplier item
+        """
+        result = self.supplieritem.id if self.supplieritem else None
         return result
-        
-    def companyitem_slug(self):
-        result = self.companyitem.slug if self.companyitem else None
+
+    def supplieritem_name(self):
+        """
+        supplieritem_name
+
+        Returns:
+            string: name from supplier item
+        """
+        result = self.supplieritem.name if self.supplieritem else None
         return result
-        
-    def companyitem_url_detail(self):
-        result = self.companyitem.url_detail() if self.companyitem else None
+
+    def supplieritem_item_number(self):
+        """
+        supplieritem_item_number
+
+        Returns:
+            string: item number from supplier item
+        """
+        result = self.supplieritem.item_number if self.supplieritem else None
+        return result
+
+    def supplieritem_reference_number(self):
+        """
+        supplieritem_reference_number
+
+        Returns:
+            string: reference number from supplier item
+        """
+        result = self.supplieritem.reference_number if self.supplieritem else None
+        return result
+
+    def supplieritem_slug(self):
+        """
+        supplieritem_slug
+
+        Returns:
+            string: slug from supplieritem
+        """
+        result = self.supplieritem.slug if self.supplieritem else None
+        return result
+
+    def supplieritem_url_detail(self):
+        """
+        supplieritem_url_detail
+
+        Returns:
+            string: url to supplieritem detail page
+        """
+        result = self.supplieritem.url_detail() if self.supplieritem else None
         return result
 
     def status(self):
+        """
+        status
+
+        Returns:
+            string: status from request
+        """
         if self.orderprocess:
             result = self.orderprocess.Status(self.orderprocess.status).label
         else:
@@ -217,53 +334,145 @@ class RequestData(RequestDataBaseModel):
 
     # Storage Item
     def storageitem_id(self):
+        """
+        storageitem_id
+
+        Returns:
+            int: url to storageitem id
+        """
         return self.storageitem.id if self.storageitem else None
 
     def storageitem_name(self):
+        """
+        storageitem_name
+
+        Returns:
+            string: url to storageitem name
+        """
         return self.storageitem.name if self.storageitem else None
-        
+
     def storageitem_reference_number(self):
+        """
+        storageitem_reference_number
+
+        Returns:
+            string: url to storageitem reference number
+        """
         return self.storageitem.reference_number if self.storageitem else None
-        
+
     def storageitem_slug(self):
+        """
+        storageitem_slug
+
+        Returns:
+            string: url to storageitem slug
+        """
         return self.storageitem.slug if self.storageitem else None
-        
+
     def storageitem_url_detail(self):
+        """
+        storageitem_url_detail
+
+        Returns:
+            string: url to storageitem detail page
+        """
         return self.storageitem.url_detail() if self.storageitem else None
-    
+
     # Unit
     def unit(self):
-        result = self.companyitem.unit if self.companyitem else None
+        """
+        unit
+
+        Returns:
+            string: unit from supplieritem
+        """
+        result = self.supplieritem.unit if self.supplieritem else None
         return result
 
     # Urls
     def url_authorize_true(self):
-        return reverse('storagemanagement:requestdata_authorize_true',kwargs={'requestdata':self.slug})
+        """
+        url_authorize_true
+
+        Returns:
+            string: url to authorize true page
+        """
+        return reverse(
+            'storagemanagement:requestdata_authorize_true',
+            kwargs={'requestdata':self.slug}
+        )
 
     def url_authorize_false(self):
-        return reverse('storagemanagement:requestdata_authorize_false',kwargs={'requestdata':self.slug})
+        """
+        url_authorize_false
+
+        Returns:
+            string: url to authorize false page
+        """
+        return reverse(
+            'storagemanagement:requestdata_authorize_false',
+            kwargs={'requestdata':self.slug}
+        )
 
     def url_delete(self):
+        """
+        url_delete
+
+        Returns:
+            string: url to delete page
+        """
         return reverse('storagemanagement:requestdata_delete',kwargs={'requestdata':self.slug})
 
     def url_detail(self):
+        """
+        url_detail
+
+        Returns:
+            string: url to detail page
+        """
         return reverse('storagemanagement:requestdata_detail',kwargs={'requestdata':self.slug})
 
     def url_qrcode(self):
+        """
+        url_qrcode
+
+        Returns:
+            string: url to qrcode page
+        """
         return 'http://'+settings.HOST+self.url_detail()
 
     def url_update(self):
+        """
+        url_update
+
+        Returns:
+            string: url to update page
+        """
         return reverse('storagemanagement:requestdata_update',kwargs={'requestdata':self.slug})
-    
+
     # Value
     def value(self):
+        """
+        value
+
+        Returns:
+            float: whole value of all items in request
+        """
         result = self.amount * self.price
         return result
-    
+
     def __str__(self):
-        return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.companyitem.slug)
+        return "{}{}{}_{}".format(
+            self.create_datetime.year,
+            self.create_datetime.month,
+            self.create_datetime.day,
+            self.supplieritem.slug
+        )
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
         ordering = []
@@ -280,3 +489,4 @@ class RequestData(RequestDataBaseModel):
         )
         verbose_name = "Anfrage"
         verbose_name_plural = "Anfragen"
+#--------------------------------------------------------------------------------

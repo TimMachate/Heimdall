@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     #'personalmanagement.apps.PersonalmanagementConfig',
     #'productmanagement.apps.ProductmanagementConfig',
-    #'relationshipmanagement.apps.RelationshipmanagementConfig',
+    'programmmanagement.apps.ProgrammmanagementConfig',
+    'relationshipmanagement.apps.RelationshipmanagementConfig',
     'storagemanagement.apps.StoragemanagementConfig',
     #'structuremanagement.apps.StructuremanagementConfig',
-    #'tools.apps.ToolsConfig',
+    'tools.apps.ToolsConfig',
     # Installed Apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -110,21 +111,20 @@ TEMPLATES = [
             os.path.join(BASE_DIR,"personalmanagement/templates"),
             os.path.join(BASE_DIR,"processmanagement/templates"),
             os.path.join(BASE_DIR,"productmanagement/templates"),
-            os.path.join(BASE_DIR,"programs/templates"),
+            # programmmanagement
+            os.path.join(BASE_DIR,"programmmanagement/templates"),
+            os.path.join(BASE_DIR,"programmmanagement/programm/templates"),
             # relationshipmanagement
             os.path.join(BASE_DIR,"relationshipmanagement/templates"),
             os.path.join(BASE_DIR,"relationshipmanagement/company/templates"),
-            os.path.join(BASE_DIR,"relationshipmanagement/customer/templates"),
-            os.path.join(BASE_DIR,"relationshipmanagement/general/templates"),
-            os.path.join(BASE_DIR,"relationshipmanagement/person/templates"),
-            os.path.join(BASE_DIR,"relationshipmanagement/supplier/templates"),
+            os.path.join(BASE_DIR,"relationshipmanagement/companycontact/templates"),
             os.path.join(BASE_DIR,"relationshipmanagement/companyitem/templates"),
             # storagemanagement
             os.path.join(BASE_DIR,"storagemanagement/templates"),
             os.path.join(BASE_DIR,"storagemanagement/booking/templates"),
-            os.path.join(BASE_DIR,"storagemanagement/company/templates"),
-            os.path.join(BASE_DIR,"storagemanagement/companycontact/templates"),
-            os.path.join(BASE_DIR,"storagemanagement/companyitem/templates"),
+            os.path.join(BASE_DIR,"storagemanagement/supplier/templates"),
+            os.path.join(BASE_DIR,"storagemanagement/suppliercontact/templates"),
+            os.path.join(BASE_DIR,"storagemanagement/supplieritem/templates"),
             os.path.join(BASE_DIR,"storagemanagement/offer/templates"),
             os.path.join(BASE_DIR,"storagemanagement/offerdata/templates"),
             os.path.join(BASE_DIR,"storagemanagement/order/templates"),
@@ -136,8 +136,9 @@ TEMPLATES = [
             os.path.join(BASE_DIR,"structuremanagement/"),
             os.path.join(BASE_DIR,"structuremanagement/templates"),
             os.path.join(BASE_DIR,"structuremanagement/process/templates"),
-            
+
             os.path.join(BASE_DIR,"media"),
+            # visualisationmanagement
             os.path.join(BASE_DIR,"visualisation/templates"),
         ],
         'APP_DIRS': True,
@@ -162,10 +163,42 @@ WSGI_APPLICATION = 'Heimdall.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE':'django.db.backends.sqlite3',
+        'USER': 'admin',
+        'PASSWORD':'Hallo123!',
     },
+    #'main_db':{
+    #    'NAME': BASE_DIR / 'main_db.sqlite3',
+    #    'ENGINE':'django.db.backends.sqlite3',
+    #    'USER': 'admin',
+    #    'PASSWORD':'Hallo123!',
+    #},
+    #'relationshipmanagement_db':{
+    #    'NAME': BASE_DIR / 'relationshipmanagement_db.sqlite3',
+    #    'ENGINE':'django.db.backends.sqlite3',
+    #    'USER': 'admin',
+    #    'PASSWORD':'Hallo123!',
+    #},
+    #'storagemanagement_db':{
+    #    'NAME': BASE_DIR / 'storagemanagement_db.sqlite3',
+    #    'ENGINE':'django.db.backends.sqlite3',
+    #    'USER': 'admin',
+    #    'PASSWORD':'Hallo123!'
+    #},
+    #'users_db':{
+    #    'NAME': BASE_DIR / 'users_db.sqlite3',
+    #    'ENGINE':'django.db.backends.sqlite3',
+    #    'USER': 'admin',
+    #    'PASSWORD':'Hallo123!'
+    #},
 }
+
+#DATABASE_ROUTERS = [
+#    'main.router.MainRouter',
+#    'relationshipmanagement.router.RelationshipmanagementRouter',
+#    'Heimdall.routers.dbrouters.AuthDBRouter',
+#]
 
 
 # Password validation
@@ -221,18 +254,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,"documentationmanagement/technicaldatasheet/js"),
     os.path.join(BASE_DIR,"documentationmanagement/workingdescription/js"),
     os.path.join(BASE_DIR,"documentationmanagement/workinginstruction/js"),
+    # programmmanagement
+    os.path.join(BASE_DIR,"programmmanagement/programm/js"),
     # relationshipmanagement
     os.path.join(BASE_DIR,"relationshipmanagement/company/js"),
-    os.path.join(BASE_DIR,"relationshipmanagement/customer/js"),
-    os.path.join(BASE_DIR,"relationshipmanagement/general/js"),
-    os.path.join(BASE_DIR,"relationshipmanagement/person/js"),
-    os.path.join(BASE_DIR,"relationshipmanagement/supplier/js"),
-    os.path.join(BASE_DIR,"relationshipmanagement/ware/js"),
+    os.path.join(BASE_DIR,"relationshipmanagement/companycontact/js"),
+    os.path.join(BASE_DIR,"relationshipmanagement/companyitem/js"),
     # storagemanagement
     os.path.join(BASE_DIR,"storagemanagement/booking/js"),
-    os.path.join(BASE_DIR,"storagemanagement/company/js"),
-    os.path.join(BASE_DIR,"storagemanagement/companycontact/js"),
-    os.path.join(BASE_DIR,"storagemanagement/companyitem/js"),
+    os.path.join(BASE_DIR,"storagemanagement/supplier/js"),
+    os.path.join(BASE_DIR,"storagemanagement/suppliercontact/js"),
+    os.path.join(BASE_DIR,"storagemanagement/supplieritem/js"),
     os.path.join(BASE_DIR,"storagemanagement/offer/js"),
     os.path.join(BASE_DIR,"storagemanagement/offerdata/js"),
     os.path.join(BASE_DIR,"storagemanagement/order/js"),
@@ -253,7 +285,6 @@ STATICFILES_DIRS = [
     #os.path.join(BASE_DIR,"CompanyStructure/static"),
     #os.path.join(BASE_DIR,"Machines/static"),
     #os.path.join(BASE_DIR,"processmanagement/static"),
-    #os.path.join(BASE_DIR,"programs/static"),
     #os.path.join(BASE_DIR,"visualisation/static"),
     #os.path.join(BASE_DIR,"storage/static"),
 ]

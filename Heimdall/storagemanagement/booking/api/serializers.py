@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Serializers File from Model Booking API
-# 29.10.2023
+# 07.01.2024
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -21,24 +22,22 @@ from storagemanagement.booking.models import Booking
 #--------------------------------------------------------------------------------
 # Serializer
 #--------------------------------------------------------------------------------
-from storagemanagement.api.serializers import BaseSerializer,CreateSerializer,UpdateSerializer
+from tools.api.serializers import (
+    BaseSerializer,
+    CreateSerializer,
+    UpdateSerializer
+)
 #--------------------------------------------------------------------------------
-class BookingBaseSerializer(CreateSerializer,UpdateSerializer):
+class BookingBaseSerializer(
+    CreateSerializer,
+    UpdateSerializer
+):
+    """
+    BookingBaseSerializer
+    contains all base fields for the Booking Object
+    """
 
     amount = serializers.ReadOnlyField()
-
-    company_id = serializers.ReadOnlyField()
-    company_name = serializers.ReadOnlyField()
-    company_reference_number = serializers.ReadOnlyField()
-    company_slug = serializers.ReadOnlyField()
-    company_url_detail = serializers.ReadOnlyField()
-
-    companyitem_id = serializers.ReadOnlyField()
-    companyitem_name = serializers.ReadOnlyField()
-    companyitem_item_number = serializers.ReadOnlyField()
-    companyitem_reference_number = serializers.ReadOnlyField()
-    companyitem_slug = serializers.ReadOnlyField()
-    companyitem_url_detail = serializers.ReadOnlyField()
 
     notice = serializers.ReadOnlyField()
 
@@ -55,14 +54,57 @@ class BookingBaseSerializer(CreateSerializer,UpdateSerializer):
     storageitem_slug = serializers.ReadOnlyField()
     storageitem_url_detail = serializers.ReadOnlyField()
 
+    supplier_id = serializers.ReadOnlyField()
+    supplier_name = serializers.ReadOnlyField()
+    supplier_reference_number = serializers.ReadOnlyField()
+    supplier_slug = serializers.ReadOnlyField()
+    supplier_url_detail = serializers.ReadOnlyField()
+
+    supplieritem_id = serializers.ReadOnlyField()
+    supplieritem_name = serializers.ReadOnlyField()
+    supplieritem_item_number = serializers.ReadOnlyField()
+    supplieritem_reference_number = serializers.ReadOnlyField()
+    supplieritem_slug = serializers.ReadOnlyField()
+    supplieritem_url_detail = serializers.ReadOnlyField()
+
     unit = serializers.ReadOnlyField()
 
-    url_delete = serializers.ReadOnlyField()
-    url_detail = serializers.ReadOnlyField()
-    url_qrcode = serializers.ReadOnlyField()
-    url_update = serializers.ReadOnlyField()
-
     value = serializers.ReadOnlyField()
+
+    url_block = serializers.SerializerMethodField()
+
+    url_delete = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:booking_delete',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'booking',
+    )
+    url_detail = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:booking_detail',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'booking',
+    )
+    url_qrcode = serializers.ReadOnlyField()
+    url_update = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:booking_update',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'booking',
+    )
+
+    def get_url_block(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_delete"] = obj.url_delete()
+        result["url_detail"] = obj.url_detail()
+        result["url_update"] = obj.url_update()
+        return result
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
@@ -79,9 +121,10 @@ class BookingBaseSerializer(CreateSerializer,UpdateSerializer):
                 self.fields.pop(field_name)
 
     class Meta:
+        """ Meta Data for the Serializer """
         model = Booking
         exclude = (
-            'companyitem',
+            'supplieritem',
             'create_user_id',
             'create_datetime',
             'update_user_id',
@@ -89,10 +132,15 @@ class BookingBaseSerializer(CreateSerializer,UpdateSerializer):
         )
 #--------------------------------------------------------------------------------
 class BookingDetailSerializer(BaseSerializer,BookingBaseSerializer):
+    """
+    BookingDetailSerializer
+    contains all special booking detail fields for the Booking Object
+    """
     class Meta:
+        """ Meta Data for the Serializer """
         model = Booking
         exclude = (
-            'companyitem',
+            'supplieritem',
             'create_user_id',
             'create_datetime',
             'update_user_id',
@@ -100,10 +148,15 @@ class BookingDetailSerializer(BaseSerializer,BookingBaseSerializer):
         )
 #--------------------------------------------------------------------------------
 class BookingListSerializer(BaseSerializer,BookingBaseSerializer):
+    """
+    BookingDetailSerializer
+    contains all special booking list fields for the Booking Object
+    """
     class Meta:
+        """ Meta Data for the Serializer """
         model = Booking
         exclude = (
-            'companyitem',
+            'supplieritem',
             'create_user_id',
             'create_datetime',
             'update_user_id',

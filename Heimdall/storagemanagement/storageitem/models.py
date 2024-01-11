@@ -1,27 +1,28 @@
+"""
 #--------------------------------------------------------------------------------
 # Models File from Model StorageItem
 # 05.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
-from django.apps import apps
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData,ReferenceNumber,Slug,UpdateData
 from storagemanagement.booking.models import Booking
-from storagemanagement.companyitem.models import CompanyItem
 from storagemanagement.storage.models import Storage
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -29,21 +30,39 @@ from storagemanagement.storage.models import Storage
 # Model
 #--------------------------------------------------------------------------------
 class StorageItemBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
+    """
+    StorageItemBaseModel
+
+    Args:
+        CreateData (_type_): _description_
+        ReferenceNumber (_type_): _description_
+        Slug (_type_): _description_
+        UpdateData (_type_): _description_
+    """
 
     short_name = "STIT"
 
     # Fields/Methodes for the booking
-    companyitem = models.ForeignKey(
+    supplieritem = models.ForeignKey(
         blank = True,
         help_text = 'Artikel des Standardlieferanten',
-        name = 'companyitem',
+        name = 'supplieritem',
         null = True,
         on_delete = models.CASCADE,
-        related_name = 'storageitem_companyitem',
-        to = 'storagemanagement.companyitem',
+        related_name = 'storageitem_supplieritem',
+        to = 'storagemanagement.SupplierItem',
         verbose_name = 'Standardartikel',
     )
-        
+
+    supplieritem_data = models.ManyToManyField(
+        blank=True,
+        help_text = 'Artikel anderer Lieferanten',
+        name = 'supplieritem_data',
+        related_name = 'storageitem_supplieritem_data',
+        to = 'storagemanagement.SupplierItem',
+        verbose_name = 'Artikel anderer Lieferanten',
+    )
+
     # Fields/Methodes for the maximum
     maximum = models.PositiveIntegerField(
         blank = True,
@@ -85,91 +104,227 @@ class StorageItemBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         )
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
 #--------------------------------------------------------------------------------
 class StorageItem(StorageItemBaseModel):
+    """
+    StorageItem
+
+    Args:
+        StorageItemBaseModel (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     # Fields/Methodes for the booking
-    def booking(self):
-        result = Booking.objects.filter(companyitem__in=self.suppliers())
-        if result == []:
-            result = None
+    def booking_data(self):
+        """
+        booking
+
+        Returns:
+            queryset: contains all booking objects of the storageitem
+        """
+        result = Booking.objects.filter(
+            supplieritem__in=self.supplieritem_data.values_list("booking_supplieritem")
+        )
         return result
 
     def booking_count(self):
-        objects = self.booking()
+        """
+        booking_count
+
+        Returns:
+            int: count of all bookings objects
+        """
+        objects = self.booking_data()
         result = objects.count() if objects else 0
         return result
-    
+
     def booking_last(self):
-        objects = self.booking()
+        """
+        booking_last
+
+        Returns:
+            query: last booking object
+        """
+        objects = self.booking_data()
         result = objects.last() if objects else None
         return result
 
-    # Fields/Methodes for the company
-    def company_id(self):
-        if self.companyitem:
-            result = self.companyitem.company.id if self.companyitem.company else None
-        else:
-            result = None
+    # Fields/Methodes for the supplier
+    def supplier_data(self):
+        """
+        suppliers
+
+        Returns:
+            queryset: contains all supplieritems
+        """
+        result = self.supplieritem_data.values('company')
+        #result = Supplier.objects.filter(id__in = id_list)
         return result
-        
-    def company_name(self):
-        if self.companyitem:
-            result = self.companyitem.company.name if self.companyitem.company else None
-        else:
-            result = None
+
+    def supplier_count(self):
+        """
+        supplier_count
+
+        Returns:
+            int: count of suppliers
+        """
+        queryset = self.supplier_data()
+        result = queryset.all().count() if queryset else 0
         return result
-        
-    def company_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.company.reference_number if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_slug(self):
-        if self.companyitem:
-            result = self.companyitem.company.slug if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.company.url_detail() if self.companyitem.company else None
+
+    def supplier_id(self):
+        """
+        supplier_id
+
+        Returns:
+            int: id from the supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.id if self.supplieritem.company else None
         else:
             result = None
         return result
 
-    # Fields/Methodes for the company
-    def companyitem_id(self):
-        result = self.companyitem.id if self.companyitem else None
+    def supplier_name(self):
+        """
+        supplier_name
+
+        Returns:
+            string: name from the supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.name if self.supplieritem.company else None
+        else:
+            result = None
         return result
 
-    def companyitem_item_number(self):
-        result = self.companyitem.item_number if self.companyitem else None
+    def supplier_reference_number(self):
+        """
+        supplier_reference_number
+
+        Returns:
+            string: reference number from the supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
+        else:
+            result = None
         return result
-        
-    def companyitem_name(self):
-        result = self.companyitem.name if self.companyitem else None
+
+    def supplier_slug(self):
+        """
+        supplier_slug
+
+        Returns:
+            string: slug from the supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.slug if self.supplieritem.company else None
+        else:
+            result = None
         return result
-        
-    def companyitem_reference_number(self):
-        result = self.companyitem.reference_number if self.companyitem else None
+
+    def supplier_url_detail(self):
+        """
+        supplier_url_detail
+
+        Returns:
+            string: url to the supplier detail page
+        """
+        return reverse(
+            "storagemanagement:supplier_detail",
+            kwargs={'supplier':self.supplier_slug()}
+        )
+
+    # Fields/Methodes for the supplier item
+    def supplieritem_count(self):
+        """
+        supplieritem_count
+
+        Returns:
+            int: count of supplier items
+        """
+        queryset = self.supplieritem_data.values_list('id')
+        result = queryset.count() if queryset else 0
         return result
-        
-    def companyitem_slug(self):
-        result = self.companyitem.slug if self.companyitem else None
+
+    def supplieritem_id(self):
+        """
+        supplieritem_id
+
+        Returns:
+            int: id from the supplieritem
+        """
+        result = self.supplieritem.id if self.supplieritem else None
         return result
-        
-    def companyitem_url_detail(self):
-        result = self.companyitem.url_detail() if self.companyitem else None
+
+    def supplieritem_item_number(self):
+        """
+        supplieritem_item_number
+
+        Returns:
+            string: item number from the supplieritem
+        """
+        result = self.supplieritem.item_number if self.supplieritem else None
         return result
+
+    def supplieritem_name(self):
+        """
+        supplieritem_name
+
+        Returns:
+            string: name from the supplieritem
+        """
+        result = self.supplieritem.name if self.supplieritem else None
+        return result
+
+    def supplieritem_reference_number(self):
+        """
+        supplieritem_reference_number
+
+        Returns:
+            string: reference number from the supplieritem
+        """
+        result = self.supplieritem.reference_number if self.supplieritem else None
+        return result
+
+    def supplieritem_slug(self):
+        """
+        supplieritem_slug
+
+        Returns:
+            string: slug from supplieritem
+        """
+        result = self.supplieritem.slug if self.supplieritem else None
+        return result
+
+    def supplieritem_url_detail(self):
+        """
+        supplieritem_url_detail
+
+        Returns:
+            string: url to detail page of supplieritem
+        """
+        return reverse(
+            "storagemanagement:supplieritem_detail",
+            kwargs={"supplieritem":self.supplieritem_slug()}
+        )
 
     # Fields/Methodes for the status
     def status(self):
+        """
+        status
+
+        Returns:
+            string: status of the storage
+        """
         count = self.stock_count()
         if count > self.maximum or self.maximum == 0:
             result = 'overload'
@@ -182,25 +337,52 @@ class StorageItem(StorageItemBaseModel):
         return result
 
     # Fields/Methodes for the stock
-    def stock(self):
-        result = Storage.objects.filter(companyitem__in=self.suppliers(),unload_datetime=None)
+    def stock_data(self):
+        """
+        stock
+
+        Returns:
+            queryset: contains all supplieritems in the stock
+        """
+        result = Storage.objects.filter(
+            supplieritem__in=self.supplieritem_data.all(),
+            unload_datetime=None
+        )
         if result == []:
             result = None
         return result
 
     def stock_count(self):
-        queryset = self.stock()
+        """
+        stock_count
+
+        Returns:
+            int: count of items in the stock
+        """
+        queryset = self.stock_data()
         result = queryset.count() if queryset else 0
         return result
 
     def stock_percentage(self):
+        """
+        stock_percentage
+
+        Returns:
+            float: load of the stock in procentage
+        """
         count = self.stock_count()
         maximum = self.maximum
         result = int(count/maximum*100) if count > 0 and maximum > 0 else int(0)
         return result
 
     def stock_value(self):
-        objects = self.stock()
+        """
+        stock_value
+
+        Returns:
+            float: whole value of supplieritem in the stock
+        """
+        objects = self.stock_data()
         if objects:
             result = 0
             for obj in objects:
@@ -209,80 +391,218 @@ class StorageItem(StorageItemBaseModel):
             result = 0
         return result
 
-    # Fields/Methodes for the suppliers
-    def suppliers(self):
-        result = CompanyItem.objects.filter(storageitem=self)
-        if result == []:
-            result = None
-        return result
-
-    def supplier_count(self):
-        queryset = self.suppliers()
-        result = queryset.count() if queryset else 0
-        return result
-
     # Fields/Methodes for the urls
     def url_booking(self):
-        return reverse('storagemanagement:storageitem_booking_overview',kwargs={'storageitem':self.slug})
+        """
+        url_booking
+
+        Returns:
+            string: url to booking page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_overview',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_booking_list(self):
-        return reverse('storagemanagement:storageitem_booking_list',kwargs={'storageitem':self.slug})
+        """
+        url_booking_list
+
+        Returns:
+            string: url to booking list page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_list',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_booking_table(self):
-        return reverse('storagemanagement:storageitem_booking_table',kwargs={'storageitem':self.slug})
+        """
+        url_booking_table
+
+        Returns:
+            string: url to booking table page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_table',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_booking_add(self):
-        return reverse('storagemanagement:storageitem_booking_add',kwargs={'storageitem':self.slug})
+        """
+        url_booking_add
+
+        Returns:
+            string: url to booking add page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_add',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_booking_create(self):
-        return reverse('storagemanagement:storageitem_booking_create',kwargs={'storageitem':self.slug})
+        """
+        url_booking_create
+
+        Returns:
+            string: url to booking create page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_create',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_booking_remove(self):
-        return reverse('storagemanagement:storageitem_booking_remove',kwargs={'storageitem':self.slug})
-    
-    def url_booking_create_add_remove(self):
-        return reverse('storagemanagement:storageitem_booking_create_add_remove',kwargs={'storageitem':self.slug})
+        """
+        url_booking_remove
+
+        Returns:
+            string: url to booking remove page
+        """
+        return reverse(
+            'storagemanagement:storageitem_booking_remove',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_delete(self):
-        return reverse('storagemanagement:storageitem_delete',kwargs={'storageitem':self.slug})
+        """
+        url_delete
+
+        Returns:
+            string: url to delete page
+        """
+        return reverse(
+            'storagemanagement:storageitem_delete',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_detail(self):
-        return reverse('storagemanagement:storageitem_detail',kwargs={'storageitem':self.slug})
+        """
+        url_detail
+
+        Returns:
+            string: url to detail page
+        """
+        return reverse(
+            'storagemanagement:storageitem_detail',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_qrcode(self):
+        """
+        url_qrcode
+
+        Returns:
+            string: url to qrcode page
+        """
         return 'http://'+settings.HOST+self.url_detail()
 
     def url_qrcode_booking_add(self):
+        """
+        url_qrcode_booking_add
+
+        Returns:
+            string: url to qrcode booking add link
+        """
         return 'http://'+settings.HOST+self.url_booking_add()
 
     def url_qrcode_booking_remove(self):
+        """
+        url_qrcode_booking_remove
+
+        Returns:
+            string: url to qrcode booking remove link
+        """
         return 'http://'+settings.HOST+self.url_booking_remove()
-    
+
     def url_qrcode_request(self):
+        """
+        url_qrcode_request
+
+        Returns:
+            string: url to qrcode request link
+        """
         return 'http://'+settings.HOST+self.url_request_create()
-    
+
     def url_request_create(self):
-        return reverse('storagemanagement:storageitem_request_create',kwargs={'storageitem':self.slug})
+        """
+        url_request_create
+
+        Returns:
+            string: url to request create link
+        """
+        return reverse(
+            'storagemanagement:storageitem_request_create',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_storage(self):
-        return reverse('storagemanagement:storageitem_storage_overview',kwargs={'storageitem':self.slug})
+        """
+        url_storage
+
+        Returns:
+            string: url to storage page
+        """
+        return reverse(
+            'storagemanagement:storageitem_storage_overview',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_storage_list(self):
-        return reverse('storagemanagement:storageitem_storage_list',kwargs={'storageitem':self.slug})
+        """
+        url_storage_list
+
+        Returns:
+            string: url to storage list page
+        """
+        return reverse(
+            'storagemanagement:storageitem_storage_list',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_storage_table(self):
-        return reverse('storagemanagement:storageitem_storage_table',kwargs={'storageitem':self.slug})
+        """
+        url_storage_table
+
+        Returns:
+            string: url to storage table page
+        """
+        return reverse(
+            'storagemanagement:storageitem_storage_table',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_storage_create(self):
-        return reverse('storagemanagement:storageitem_storage_create',kwargs={'storageitem':self.slug})
+        """
+        url_storage_create
+
+        Returns:
+            string: url to storage create page
+        """
+        return reverse(
+            'storagemanagement:storageitem_storage_create',
+            kwargs={'storageitem':self.slug}
+        )
 
     def url_update(self):
-        return reverse('storagemanagement:storageitem_update',kwargs={'storageitem':self.slug})
-    
+        """
+        url_update
+
+        Returns:
+            string: url to storage detail page
+        """
+        return reverse(
+            'storagemanagement:storageitem_update',
+            kwargs={'storageitem':self.slug}
+        )
+
     def __str__(self):
         return "{} ({})".format(str(self.name),str(self.reference_number))
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         ordering = []
         default_permissions = ()
@@ -298,3 +618,4 @@ class StorageItem(StorageItemBaseModel):
         proxy = True
         verbose_name = 'Lagerartikel'
         verbose_name_plural = 'Lagerartikel'
+#--------------------------------------------------------------------------------

@@ -125,14 +125,14 @@
         <div class="card mt-3">
             <div class="card-body">
                 <h3 class="card-title ">
-                    <a href="{% url 'storagemanagement:company_overview' %}" class="btn btn-lg btn-primary align-middle w-100">
+                    <a href="{% url 'storagemanagement:supplier_overview' %}" class="btn btn-lg btn-primary align-middle w-100">
                         Lieferanten
                     </a>
                 </h3>
                 <div class="card-text">
                     <div class="row">
                         <div class="col mt-1">
-                            <a href="{% url 'storagemanagement:company_overview' %}" class="btn btn-primary w-100">
+                            <a href="{% url 'storagemanagement:supplier_overview' %}" class="btn btn-primary w-100">
                                 Anzahl
                             </a>
                             <div class="input-group mt-1">
@@ -145,7 +145,7 @@
                             </div>
                         </div>
                         <div class="col mt-1">
-                            <a href="{% url 'storagemanagement:companycontact_overview' %}" class="btn btn-primary w-100">
+                            <a href="{% url 'storagemanagement:suppliercontact_overview' %}" class="btn btn-primary w-100">
                                 Kontakte
                             </a>
                             <div class="input-group mt-1">
@@ -153,12 +153,12 @@
                                     <i class="fas fa-users"></i>
                                 </label>
                                 <span class="form-control">
-                                    {{ companycontact_count }}
+                                    {{ suppliercontact_count }}
                                 </span>
                             </div>
                         </div>
                         <div class="col mt-1">
-                            <a href="{% url 'storagemanagement:companyitem_overview' %}" class="btn btn-primary w-100">
+                            <a href="{% url 'storagemanagement:supplieritem_overview' %}" class="btn btn-primary w-100">
                                 Artikel
                             </a>
                             <div class="input-group mt-1">
@@ -166,7 +166,7 @@
                                     <i class="fas fa-cubes"></i>
                                 </label>
                                 <span class="form-control">
-                                    {{ companyitem_count }}
+                                    {{ supplieritem_count }}
                                 </span>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                                         <i class="fas fa-box"></i>
                                     </label>
                                     <span class="form-control">
-                                        {{ obj.companyitem.storageitem.name }}
+                                        {{ obj.supplieritem.storageitem.name }}
                                     </span>
                                 </div>
                             </div>

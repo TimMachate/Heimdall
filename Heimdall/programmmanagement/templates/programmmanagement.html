@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Programm-Management
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block menubar %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title ">
+                    <a href="{% url 'programmmanagement:programmmanagement' %}" class="btn btn-lg btn-primary align-middle w-100">
+                        Programm-Management
+                    </a>
+                    <div class="input-group mt-1">
+                        <label class="input-group-text">
+                            &Sigma;
+                        </label>
+                        <span class="form-control">
+                            {{ programm_count }}
+                        </span>
+                    </div>
+                </h3>
+                <div class="card-text">
+                    <div class="row">
+                        {% for query in queryset %}
+                        <div class="col">
+                            <a href="{% url 'programmmanagement:programmmanagement_page' query.slug %}" class="btn btn-primary w-100" target="_blank">
+                                {{ query.name }}
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}

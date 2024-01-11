@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Serializers File from Model Ware API
 # 29.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -15,8 +16,8 @@ from rest_framework import serializers
 # Import necessary Models
 #--------------------------------------------------------------------------------
 from storagemanagement.booking.models import Booking
-from storagemanagement.company.models import Company
-from storagemanagement.companyitem.models import CompanyItem
+from storagemanagement.supplier.models import Supplier
+from storagemanagement.supplieritem.models import SupplierItem
 from storagemanagement.storage.models import Storage
 from storagemanagement.storageitem.models import StorageItem
 #--------------------------------------------------------------------------------
@@ -25,14 +26,49 @@ from storagemanagement.storageitem.models import StorageItem
 #--------------------------------------------------------------------------------
 # Serializer
 #--------------------------------------------------------------------------------
-from storagemanagement.api.serializers import BaseSerializer,CreateSerializer,UpdateSerializer
+from tools.api.serializers import (
+    BaseSerializer,
+    CreateSerializer,
+    UpdateSerializer
+)
+from storagemanagement.api.serializers import (
+    SupplierLinkSerializer,
+    SupplierItemLinkSerializer
+)
 from storagemanagement.booking.api.serializers import BookingBaseSerializer
-from storagemanagement.companyitem.api.serializers import CompanyItemBaseSerializer
+from storagemanagement.supplieritem.api.serializers import SupplierItemBaseSerializer
 from storagemanagement.storage.api.serializers import StorageBaseSerializer
 #--------------------------------------------------------------------------------
-class StorageItemBaseSerializer(CreateSerializer,UpdateSerializer):
+class StorageItemBaseSerializer(
+    CreateSerializer,
+    UpdateSerializer
+):
+    """
+    StorageItemBaseSerializer
 
-    booking_data = None
+    Args:
+        CreateSerializer (_type_): _description_
+        UpdateSerializer (_type_): _description_
+        SupplierLinkSerializer (_type_): _description_
+        SupplierItemLinkSerializer (_type_): _description_
+    """
+    booking_data = BookingBaseSerializer(
+        many=True,
+        read_only = True,
+        fields = (
+            'id',
+            'create_date',
+            'create_time',
+            'supplier_name',
+            'amount',
+            'price',
+            'value',
+            'notice',
+            'url_detail',
+            'url_update',
+            'url_delete',
+        )
+    )
     booking_count = serializers.ReadOnlyField()
     booking_last = BookingBaseSerializer(
         many=False,
@@ -46,19 +82,6 @@ class StorageItemBaseSerializer(CreateSerializer,UpdateSerializer):
         )
     )
 
-    company_id = serializers.ReadOnlyField()
-    company_name = serializers.ReadOnlyField()
-    company_reference_number = serializers.ReadOnlyField()
-    company_slug = serializers.ReadOnlyField()
-    company_url_detail = serializers.ReadOnlyField()
-
-    companyitem_id = serializers.ReadOnlyField()
-    companyitem_item_number = serializers.ReadOnlyField()
-    companyitem_name = serializers.ReadOnlyField()
-    companyitem_reference_number = serializers.ReadOnlyField()
-    companyitem_slug = serializers.ReadOnlyField()
-    companyitem_url_detail = serializers.ReadOnlyField()
-
     maximum = serializers.ReadOnlyField()
 
     minimum = serializers.ReadOnlyField()
@@ -71,29 +94,117 @@ class StorageItemBaseSerializer(CreateSerializer,UpdateSerializer):
 
     status = serializers.ReadOnlyField()
 
-    stock_data = None
+    stock_data = StorageBaseSerializer(
+        many = True,
+        read_only = True,
+        fields = (
+            'id',
+            'create_date',
+            'create_time',
+            'supplier_name',
+            'value',
+            'notice',
+            'url_detail',
+            'url_update',
+            'url_delete',
+            'url_unload',
+        )
+    )
     stock_count = serializers.ReadOnlyField()
     stock_percentage = serializers.ReadOnlyField()
     stock_value = serializers.ReadOnlyField()
 
-    suppliers = None
-    supplier_count = serializers.ReadOnlyField()
+    supplier_id = serializers.ReadOnlyField()
+    supplier_name = serializers.ReadOnlyField()
+    supplier_reference_number = serializers.ReadOnlyField()
+    supplier_slug = serializers.ReadOnlyField()
+    supplier_url_detail = serializers.ReadOnlyField()
 
+    supplieritem_data = SupplierItemBaseSerializer(
+        many = True,
+        read_only = True,
+        fields=(
+            'id',
+            'name',
+            'item_number',
+            'price',
+            'unit',
+            'url_detail',
+            'url_request_create',
+        )
+    )
+    supplieritem_count = serializers.ReadOnlyField()
+    supplieritem_id = serializers.ReadOnlyField()
+    supplieritem_name = serializers.ReadOnlyField()
+    supplieritem_item_number = serializers.ReadOnlyField()
+    supplieritem_reference_number = serializers.ReadOnlyField()
+    supplieritem_slug = serializers.ReadOnlyField()
+    supplieritem_url_detail = serializers.ReadOnlyField()
+
+    url_block = serializers.SerializerMethodField()
+    url_booking = serializers.SerializerMethodField()
     url_booking_add = serializers.ReadOnlyField()
     url_booking_create = serializers.ReadOnlyField()
+    url_booking_create_add_remove = serializers.ReadOnlyField()
     url_booking_remove = serializers.ReadOnlyField()
-    url_delete = serializers.ReadOnlyField()
-    url_detail = serializers.ReadOnlyField()
+    url_delete = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:storageitem_delete',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'storageitem',
+    )
+    url_detail = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:storageitem_detail',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'storageitem',
+    )
     url_qrcode = serializers.ReadOnlyField()
     url_qrcode_booking_add = serializers.ReadOnlyField()
     url_qrcode_booking_remove = serializers.ReadOnlyField()
     url_qrcode_request = serializers.ReadOnlyField()
     url_request_create = serializers.ReadOnlyField()
-    url_update = serializers.ReadOnlyField()
+    url_update = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:storageitem_update',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'storageitem',
+    )
 
     warning = serializers.ReadOnlyField()
 
+    def get_url_block(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_delete"] = obj.url_delete()
+        result["url_detail"] = obj.url_detail()
+        result["url_update"] = obj.url_update()
+        return result
+    
+    def get_url_booking(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_booking_remove"] = obj.url_delete()
+        result["url_booking_add"] = obj.url_detail()
+        return result
+
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = StorageItem
         exclude = (
             'create_user_id',
@@ -103,80 +214,56 @@ class StorageItemBaseSerializer(CreateSerializer,UpdateSerializer):
             )
 #--------------------------------------------------------------------------------
 class StorageItemDetailSerializer(BaseSerializer,StorageItemBaseSerializer):
+    """
+    StorageItemDetailSerializer
 
-    booking_data = BookingBaseSerializer(
-        source = 'booking',
-        many=True,
-        read_only = True,
-        fields = (
-            'id',
-            'create_date',
-            'create_time',
-            'company_name',
-            'amount',
-            'price',
-            'value',
-            'notice',
-            'url_detail',
-            'url_update',
-            'url_delete',
-        )
-    )
+    Args:
+        BaseSerializer (_type_): _description_
+        StorageItemBaseSerializer (_type_): _description_
+    """
+
     booking_last = None
 
-    stock_data = StorageBaseSerializer(
-        source = 'stock',
-        many = True,
-        read_only = True,
-        fields = (
-            'id',
-            'create_date',
-            'create_time',
-            'company_name',
-            'value',
-            'notice',
-            'url_detail',
-            'url_update',
-            'url_delete',
-            'url_unload',
-        )
-    )
-
-    supplier_data = CompanyItemBaseSerializer(
-        source = "suppliers",
-        many = True,
-        read_only = True,
-        fields=(
-            'id',
-            'name',
-            'item_number',
-            'company_name',
-            'price',
-            'url_booking_add',
-            'url_booking_remove',
-            'url_delete',
-            'url_detail',
-            'url_request_create',
-            'url_update',
-        )
-    )
-
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = StorageItem
         exclude = (
             'create_user_id',
             'create_datetime',
+            'supplieritem',
             'update_user_id',
             'update_datetime',
             )
 #--------------------------------------------------------------------------------
 class StorageItemListSerializer(BaseSerializer,StorageItemBaseSerializer):
+    """
+    StorageItemListSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        StorageItemBaseSerializer (_type_): _description_
+    """
+
+    booking_data = None
+
+    stock_data = None
+
+    supplier_data = None
+
+    supplieritem_data = None
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = StorageItem
         exclude = (
             'create_user_id',
             'create_datetime',
+            'supplieritem',
+            'supplieritem_data',
             'update_user_id',
             'update_datetime',
             )

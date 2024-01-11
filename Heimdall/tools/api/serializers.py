@@ -27,43 +27,14 @@ class BaseSerializer(serializers.ModelSerializer):
             for field_name in existing - allowed:
                 self.fields.pop(field_name)
 #--------------------------------------------------------------------------------
-class CreateSerializer(BaseSerializer):
-
-    create = serializers.SerializerMethodField()
-
-    def get_create(self,obj):
-        result = {}
-        if not self.values or 'create__id' in self.values or 'create' in self.values:
-            result["id"] = obj.create_user_id.id
-        if not self.values or 'create__date' in self.values or 'create' in self.values:
-            result["date"] = obj.create_date()
-        if not self.values or 'create__datetime' in self.values or 'create' in self.values:
-            result["datetime"] = obj.create_datetime
-        if not self.values or 'create__datetime_formated' in self.values or 'create' in self.values:
-            result["datetime_formated"] = obj.create_datetime_formated()
-        if not self.values or 'create__time' in self.values or 'create' in self.values:
-            result["time"] = obj.create_time()
-        if not self.values or 'create__username' in self.values or 'create' in self.values:
-            result["username"] = obj.create_username()
-        return result
+class CreateSerializer(serializers.ModelSerializer):
+    """ CreateSerializer contains all fields for info who create a object"""
+    create_date = serializers.ReadOnlyField()
+    create_time = serializers.ReadOnlyField()
+    create_username = serializers.ReadOnlyField()
 #--------------------------------------------------------------------------------
-class UpdateSerializer(BaseSerializer):
-
-    update = serializers.SerializerMethodField()
-
-    def get_update(self,obj):
-        result = {}
-        if not self.values or 'update__id' in self.values or 'update' in self.values:
-            result["id"] = obj.update_user_id.id
-        if not self.values or 'update__date' in self.values or 'update' in self.values:
-            result["date"] = obj.update_date()
-        if not self.values or 'update__datetime' in self.values or 'update' in self.values:
-            result["datetime"] = obj.update_datetime
-        if not self.values or 'update__datetime_formated' in self.values or 'update' in self.values:
-            result["datetime_formated"] = obj.update_datetime_formated()
-        if not self.values or 'update__time' in self.values or 'update' in self.values:
-            result["time"] = obj.update_time()
-        if not self.values or 'update__username' in self.values or 'update' in self.values:
-            result["username"] = obj.update_username()
-        return result
-#--------------------------------------------------------------------------------
+class UpdateSerializer(serializers.ModelSerializer):
+    """ UpdateSerializer contains all fields for info who update a object"""
+    update_date = serializers.ReadOnlyField()
+    update_time = serializers.ReadOnlyField()
+    update_username = serializers.ReadOnlyField()

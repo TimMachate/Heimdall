@@ -1,19 +1,16 @@
+"""
 #--------------------------------------------------------------------------------
 # Views File from Model Offer API
 # 09.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
-from django.apps import apps
-from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter,SearchFilter
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, RetrieveAPIView
-from storagemanagement.api.pagination import PageNumberPagination
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 
@@ -27,7 +24,10 @@ from storagemanagement.offer.models import Offer
 #--------------------------------------------------------------------------------
 # Import necessary Serializers
 #--------------------------------------------------------------------------------
-from storagemanagement.offer.api.serializers import OfferListSerializer,OfferDetailSerializer
+from storagemanagement.offer.api.serializers import (
+    OfferListSerializer,
+    OfferDetailSerializer
+)
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 
@@ -35,8 +35,14 @@ from storagemanagement.offer.api.serializers import OfferListSerializer,OfferDet
 # Views
 #--------------------------------------------------------------------------------
 class OfferListAPIView(ListAPIView):
+    """
+    OfferListAPIView
+
+    Args:
+        ListAPIView (_type_): _description_
+    """
     serializer_class = OfferListSerializer
-    ordering = ('-create_datetime')
+    ordering = ('-create_datetime',)
     queryset = Offer.objects.all()
     filter_backends = [DjangoFilterBackend,OrderingFilter,SearchFilter]
     filterset_fields = {
@@ -47,6 +53,12 @@ class OfferListAPIView(ListAPIView):
     #permission_classes = [IsAdminUser,IsAuthenticatedOrReadOnly]
 #--------------------------------------------------------------------------------
 class OfferDetailAPIView(RetrieveAPIView):
+    """
+    OfferDetailAPIView
+
+    Args:
+        RetrieveAPIView (_type_): _description_
+    """
     serializer_class = OfferDetailSerializer
     queryset = Offer.objects.all()
     pagination_class = None

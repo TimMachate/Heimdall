@@ -1,14 +1,18 @@
+"""
 #--------------------------------------------------------------------------------
 # Urls File from Model Booking API
 # 27.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
 from django.urls import path
-from storagemanagement.booking.api.views import BookingListAPIView,BookingDetailAPIView
+from storagemanagement.booking.api.views import (
+    BookingListAPIView,
+    BookingDetailAPIView
+)
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------

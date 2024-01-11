@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # View File from Model Offer Data
 # 11.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -95,18 +96,45 @@ class OfferDataTableView(OfferDataView):
         self.context["api_data_url"] = reverse("storagemanagementAPI:offerdata_list")+"?values={}".format(self.context["fields"])
 #--------------------------------------------------------------------------------
 class OfferDataCreateUpdateDetailView(OfferDataView):
+    """
+    OfferDataCreateUpdateDetailView
+
+    Args:
+        OfferDataView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     template_name = 'storagemanagement_offerdata_createupdatedetail.html'
-    
+
     form_class = OfferDataForm
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         self.context['queryset'] = self.get_queryset()
         self.get_context_data()
         self.context['form'] = self.form_class(instance=self.context['queryset'])
         return render(request, self.template_name, self.context)
 
-    def post(self,request, *args, **kwargs):
+    def post(self,request):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         form = self.form_class(request.POST,request.FILES,instance=self.context['queryset'])
         user = get_user_model().objects.get(id=request.user.id)
         if form.is_valid():
@@ -115,7 +143,7 @@ class OfferDataCreateUpdateDetailView(OfferDataView):
                 obj.create_user_id = user
             obj.update_user_id = user
             obj.update_datetime = timezone.now()
-            
+
             if obj.price:
                 companyitem = obj.companyitem
                 companyitem.price = obj.price
@@ -124,9 +152,11 @@ class OfferDataCreateUpdateDetailView(OfferDataView):
                 companyitem.save()
             else:
                 obj.price = obj.companyitem.price
-            
+
             if not obj.offer:
-                offers = OfferData.objects.filter(companyitem__company = obj.companyitem.company).exclude(offer__sent = True)
+                offers = OfferData.objects.filter(
+                    companyitem__company = obj.companyitem.company
+                ).exclude(offer__sent = True)
                 if offers.exists():
                     offer = offers.first()
                     offerdatas = offer.offer.offerdata().filter(companyitem=obj.companyitem)
@@ -151,9 +181,18 @@ class OfferDataCreateUpdateDetailView(OfferDataView):
         if request.GET.get('next'):
             return redirect(request.GET.get('next'))
         else:
-            return redirect('storagemanagement:offerdata_update', offerdata=obj.slug if obj else offerdata.slug)
+            return redirect(
+                'storagemanagement:offerdata_update',
+                offerdata=obj.slug if obj else offerdata.slug
+            )
 
     def get_queryset(self, *args, **kwargs):
+        """
+        get_queryset
+
+        Returns:
+            _type_: _description_
+        """
         if self.kwargs.get('offerdata'):
             queryset = OfferData.objects.get(slug=self.kwargs.get('offerdata'))
         else:
@@ -161,19 +200,56 @@ class OfferDataCreateUpdateDetailView(OfferDataView):
         return queryset
 #--------------------------------------------------------------------------------
 class OfferDataCreateView(OfferDataCreateUpdateDetailView):
+    """
+    OfferDataCreateView
+
+    Args:
+        OfferDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.add_offerdata',)
 #--------------------------------------------------------------------------------
 class OfferDataDetailView(OfferDataCreateUpdateDetailView):
+    """
+    OfferDataDetailView
+
+    Args:
+        OfferDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.detail_offerdata',)
 #--------------------------------------------------------------------------------
 class OfferDataUpdateView(OfferDataCreateUpdateDetailView):
+    """
+    OfferDataUpdateView
+
+    Args:
+        OfferDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.change_offerdata',)
 #--------------------------------------------------------------------------------
 class OfferDataDeleteView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataDeleteView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.delete_offerdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         if self.kwargs.get('offerdata'):
             get_object_or_404(OfferData,slug = self.kwargs.get('offerdata')).delete()
             messages.success(request,'Item wurde erfolgreich gelöscht!')
@@ -183,64 +259,140 @@ class OfferDataDeleteView(PermissionRequiredMixin,MainView):
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OfferDataAuthorizedTrueView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataAuthorizedTrueView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_true_offerdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('offerdata'):
-            offerdata = OfferData.objects.get(slug=self.kwargs.get('offerdata'))
-            offerdata.authorized = True
-            offerdata.authorized_datetime = timezone.now()
-            offerdata.authorized_user_id = user
-            offerdata.done = True
-            offerdata.save()
+            obj = OfferData.objects.get(slug=self.kwargs.get('offerdata'))
+            obj.authorized = True
+            obj.authorized_datetime = timezone.now()
+            obj.authorized_user_id = user
+            obj.done = True
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OfferDataAuthorizedFalseView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataAuthorizedFalseView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_false_offerdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('offerdata'):
-            offerdata = OfferData.objects.get(slug=self.kwargs.get('offerdata'))
-            offerdata.authorized = False
-            offerdata.authorized_datetime = timezone.now()
-            offerdata.authorized_user_id = user
-            offerdata.done = True
-            offerdata.save()
+            obj = OfferData.objects.get(slug=self.kwargs.get('offerdata'))
+            obj.authorized = False
+            obj.authorized_datetime = timezone.now()
+            obj.authorized_user_id = user
+            obj.done = True
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OfferDataAuthorizedTrueAllView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataAuthorizedTrueAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_true_offerdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
-        for offerdata in OfferData.objects.filter(authorized=None):
-            offerdata.authorized = True
-            offerdata.authorized_datetime = timezone.now()
-            offerdata.authorized_user_id = user
-            offerdata.done = True
-            offerdata.save()
+        for obj in OfferData.objects.filter(authorized=None):
+            obj.authorized = True
+            obj.authorized_datetime = timezone.now()
+            obj.authorized_user_id = user
+            obj.done = True
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OfferDataAuthorizedFalseAllView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataAuthorizedFalseAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_false_offerdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
-        for offerdata in OfferData.objects.filter(authorized=None):
-            offerdata.authorized = False
-            offerdata.authorized_datetime = timezone.now()
-            offerdata.authorized_user_id = user
-            offerdata.done = True
-            offerdata.save()
+        for obj in OfferData.objects.filter(authorized=None):
+            obj.authorized = False
+            obj.authorized_datetime = timezone.now()
+            obj.authorized_user_id = user
+            obj.done = True
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------

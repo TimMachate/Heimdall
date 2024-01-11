@@ -1,17 +1,15 @@
+"""
 #--------------------------------------------------------------------------------
 # Views File from Model Request Data API
-# 10.11.2023
+# 05.01.2024
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
-from django.apps import apps
-from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter,SearchFilter
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from storagemanagement.api.pagination import PageNumberPagination
 #--------------------------------------------------------------------------------
@@ -27,7 +25,10 @@ from storagemanagement.requestdata.models import RequestData
 #--------------------------------------------------------------------------------
 # Import necessary Serializers
 #--------------------------------------------------------------------------------
-from storagemanagement.requestdata.api.serializers import RequestDataListSerializer,RequestDataDetailSerializer
+from storagemanagement.requestdata.api.serializers import (
+    RequestDataListSerializer,
+    RequestDataDetailSerializer
+)
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 
@@ -35,26 +36,39 @@ from storagemanagement.requestdata.api.serializers import RequestDataListSeriali
 # Views
 #--------------------------------------------------------------------------------
 class RequestDataListAPIView(ListAPIView):
+    """
+    RequestDataListAPIView
+
+    Args:
+        ListAPIView (_type_): _description_
+    """
     serializer_class = RequestDataListSerializer
-    ordering = ('-create_datetime')
     queryset = RequestData.objects.all()
     filter_backends = [DjangoFilterBackend,OrderingFilter,SearchFilter]
     filterset_fields = {
-        'companyitem__company__slug':['exact'],
-        'companyitem__slug':['exact'],
-        'companyitem__storageitem__slug':['exact'],
+        #'supplieritem__company__slug':['exact'],
+        'supplieritem__slug':['exact'],
+        'supplieritem__storageitem__slug':['exact'],
         'authorized':['exact'],
         'done':['exact'],
         }
-    search_fields = ['companyitem__name','companyitem__company__name','companyitem__storageitem__name']
+    search_fields = [
+        'supplieritem__name',
+        'supplieritem__company__name',
+        'supplieritem__storageitem__name'
+    ]
     pagination_class = None
-    #permission_classes = [IsAdminUser,IsAuthenticatedOrReadOnly]
 #--------------------------------------------------------------------------------
 class RequestDataDetailAPIView(RetrieveAPIView):
+    """
+    RequestDataDetailAPIView
+
+    Args:
+        RetrieveAPIView (_type_): _description_
+    """
     serializer_class = RequestDataDetailSerializer
     queryset = RequestData.objects.all()
     pagination_class = None
     lookup_field = "slug"
     lookup_url_kwarg = "requestdata"
-    #permission_classes = [IsAdminUser,IsAuthenticatedOrReadOnly]
 #--------------------------------------------------------------------------------

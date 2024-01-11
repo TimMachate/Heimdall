@@ -1,3 +1,10 @@
+"""
+#--------------------------------------------------------------------------------
+# View File from Model Company
+# 16.12.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -15,16 +22,22 @@ from main.views.main import MainView
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from relationshipmanagement.person.models import Person
 from relationshipmanagement.company.models import Company
+from relationshipmanagement.relationshipmanagementusersetting.models import (
+    RelationshipManagementCompanyListUserSetting,
+    RelationshipManagementCompanyTableUserSetting
+)
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Forms
 #--------------------------------------------------------------------------------
-from relationshipmanagement.company.forms import CompanyForm,TelephoneFormset,EmailFormset,CustomerFormset,SupplierFormset
-from relationshipmanagement.person.forms import PersonForm
+from relationshipmanagement.company.forms import CompanyForm
+from relationshipmanagement.relationshipmanagementusersetting.forms import (
+    RelationshipManagementCompanyListUserSettingForm,
+    RelationshipManagementCompanyTableUserSettingForm
+)
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -32,76 +45,270 @@ from relationshipmanagement.person.forms import PersonForm
 # Views
 #--------------------------------------------------------------------------------
 class CompanyView(PermissionRequiredMixin,MainView):
+    """
+    CompanyView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'relationshipmanagement.view_company'
 
-    template_name = 'company_overview.html'
+    template_name = 'relationshipmanagement_company_overview.html'
 
-    def get_queryset(self, *args, **kwargs):
+    def get_queryset(self):
+        """
+        get_queryset
+
+        Returns:
+            queryset: contains all companys
+        """
         queryset = Company.objects.all().order_by('name')
         return queryset
 
     def get_context_data(self, **kwargs):
+        """
+        get_context_data
+
+        Returns:
+            dict: contains all context data
+        """
         super().get_context_data(**kwargs)
         self.context['model'] = 'company'
+        # Data Url
+        fields = (
+            "id,",
+            "name,",
+            "url_detail,",
+            "telephone,",
+            "email,",
+            "companycontact_count,",
+            "companyitem_count,"
+        )
+        self.context["fields"] = "".join(fields)
+        self.context["api_data_url"] = reverse(
+            "relationshipmanagementAPI:company_list"
+        )+f"?values={self.context['fields']}"
+        return self.context
 #--------------------------------------------------------------------------------
 class CompanyListView(CompanyView):
+    """
+    CompanyListView
+
+    Args:
+        CompanyView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'relationshipmanagement.list_company'
 
-    template_name = 'company_list.html'
+    template_name = 'relationshipmanagement_company_list.html'
+
+    form_setting = RelationshipManagementCompanyListUserSettingForm
 
     def get(self, request, *args, **kwargs):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         self.get_context_data()
-        self.context["queryset"]= self.get_queryset()
-        return render(request, self.template_name, self.context)
-
-    def get_context_data(self, **kwargs):
-        super().get_context_data(**kwargs)
-        # Data Url
-        self.context["fields"] = "id,reference_number,name,customer,supplier,url"
-        self.context["api_data_url"] = reverse("relationshipmanagementAPI:company_list")+"?values={}".format(self.context["fields"])
-#--------------------------------------------------------------------------------
-class CompanyTableView(CompanyView):
-
-    permission_required = 'relationshipmanagement.table_company'
-
-    template_name = 'company_table.html'
-
-    def get(self, request, *args, **kwargs):
-        self.get_context_data()
-        self.context["queryset"]= self.get_queryset()
-        return render(request, self.template_name, self.context)
-
-    def get_context_data(self, **kwargs):
-        super().get_context_data(**kwargs)
-        # Data Url
-        self.context["fields"] = "id,reference_number,name,street,house_number,post_code,city,country,telephones,emails,create,update"
-        self.context["api_data_url"] = reverse("relationshipmanagementAPI:company_list")+"?values={}".format(self.context["fields"])
-#--------------------------------------------------------------------------------
-class CompanyCreateUpdateDetailView(CompanyView):
-
-    permission_required = ('relationshipmanagement.add_company','relationshipmanagement.change_company')
-
-    template_name = 'company_createupdatedetail.html'
-    
-    form_class = CompanyForm
-    formset_customer = CustomerFormset
-    formset_email = EmailFormset
-    formset_supplier = SupplierFormset
-    formset_telephone = TelephoneFormset
-
-    def get(self, request, *args, **kwargs):
-        self.context['queryset'] = self.get_queryset()
-        self.get_context_data()
-        self.context['form'] = self.form_class(instance=self.context['queryset'])
-        self.context['formset_customer'] = self.formset_customer(instance = self.context['queryset'])
-        self.context['formset_email'] = self.formset_email(instance = self.context['queryset'])
-        self.context['formset_supplier'] = self.formset_supplier(instance = self.context['queryset'])
-        self.context['formset_telephone'] = self.formset_telephone(instance = self.context['queryset'])
         return render(request, self.template_name, self.context)
 
     def post(self,request, *args, **kwargs):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+        """
+        form = self.form_setting(
+            request.POST,
+            request.FILES,
+            instance=self.context["form_setting_queryset"]
+        )
+        user = get_user_model().objects.get(id=request.user.id)
+        if form.is_valid():
+            obj = form.save()
+            if not obj.create_user_id:
+                obj.create_user_id = user
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
+        self.context['form'] = form
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+    def get_context_data(self, **kwargs):
+        """
+        get_context_data
+
+        Returns:
+            dict: contains all context data
+        """
+        super().get_context_data(**kwargs)
+        # Setting
+        self.context["form_setting_queryset"] = RelationshipManagementCompanyListUserSetting.objects.get_or_create(
+            user=self.request.user
+        )[0]
+        # Data Url
+        self.context["api_data_url"] = self.get_url_api(
+            queryset=self.context["form_setting_queryset"]
+        )
+        # Queryset
+        self.context["queryset"]= self.get_queryset()
+        # Form
+        self.context["form_setting"] = self.form_setting(
+            instance = self.context["form_setting_queryset"]
+        )
+        return self.context
+
+    def get_url_api(self,queryset):
+        """
+        get_url_api
+
+        Returns:
+            string: url to api
+        """
+        url = reverse(queryset.api)+f"?values={queryset.fields()}"
+        return url
+#--------------------------------------------------------------------------------
+class CompanyTableView(CompanyView):
+    """
+    CompanyTableView
+
+    Args:
+        CompanyView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    permission_required = 'relationshipmanagement.table_company'
+
+    template_name = 'relationshipmanagement_company_table.html'
+
+    form_setting = RelationshipManagementCompanyTableUserSettingForm
+
+    def get(self, request, *args, **kwargs):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        self.get_context_data()
+        return render(request, self.template_name, self.context)
+
+    def post(self,request, *args, **kwargs):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+        """
+        form = self.form_setting(
+            request.POST,
+            request.FILES,
+            instance=self.context["form_setting_queryset"]
+        )
+        user = get_user_model().objects.get(id=request.user.id)
+        if form.is_valid():
+            obj = form.save()
+            if not obj.create_user_id:
+                obj.create_user_id = user
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
+        self.context['form'] = form
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+    def get_context_data(self, **kwargs):
+        """
+        get_context_data
+
+        Returns:
+            dict: contains all context data
+        """
+        super().get_context_data(**kwargs)
+        # Setting
+        self.context["form_setting_queryset"] = RelationshipManagementCompanyTableUserSetting.objects.get_or_create(
+            user=self.request.user
+        )[0]
+        # Data Url
+        self.context["api_data_url"] = self.get_url_api(
+            queryset=self.context["form_setting_queryset"]
+        )
+        # Queryset
+        self.context["queryset"]= self.get_queryset()
+        # Form
+        self.context["form_setting"] = self.form_setting(
+            instance = self.context["form_setting_queryset"]
+        )
+        return self.context
+
+    def get_url_api(self,queryset):
+        """
+        get_url_api
+
+        Returns:
+            string: url to api
+        """
+        url = reverse(queryset.api)+f"?values={queryset.fields()}"
+        return url
+#--------------------------------------------------------------------------------
+class CompanyCreateUpdateDetailView(CompanyView):
+    """
+    CompanyCreateUpdateDetailView
+
+    Args:
+        CompanyView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    template_name = 'relationshipmanagement_company_createupdatedetail.html'
+
+    form_class = CompanyForm
+
+    def get(self, request, *args, **kwargs):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        self.context['queryset'] = self.get_queryset()
+        self.get_context_data()
+        self.context['form'] = self.form_class(instance=self.context['queryset'])
+        return render(request, self.template_name, self.context)
+
+    def post(self,request, *args, **kwargs):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         form = self.form_class(request.POST,request.FILES,instance=self.context['queryset'])
         user = get_user_model().objects.get(id=request.user.id)
         if form.is_valid():
@@ -112,48 +319,19 @@ class CompanyCreateUpdateDetailView(CompanyView):
             obj.update_datetime = timezone.now()
             obj.save()
         self.context['form'] = form
-            
-        formset_customer = self.formset_customer(request.POST,request.FILES,instance=obj)
-        if formset_customer.is_valid():
-            for form in formset_customer:
-                if form.is_valid():
-                    customer = form.save(commit=False)
-                    customer.company_id = obj
-                    customer.save()
-        self.context['formset_customer'] = formset_customer
 
-        formset_email = self.formset_email(request.POST,request.FILES,instance=obj)
-        if formset_email.is_valid():
-            for form in formset_email:
-                if form.is_valid():
-                    email = form.save(commit=False)
-                    email.company_id = obj
-                    if email.email:
-                        email.save()
-        self.context['formset_email'] = formset_email
+        if request.GET.get('next'):
+            return redirect(request.GET.get('next'))
+        else:
+            return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 
-        formset_supplier = self.formset_supplier(request.POST,request.FILES,instance=obj)
-        if formset_supplier.is_valid():
-            for form in formset_supplier:
-                if form.is_valid():
-                    supplier = form.save(commit=False)
-                    supplier.company_id = obj
-                    supplier.save()
-        self.context['formset_supplier'] = formset_supplier
-        
-        formset_telephone = self.formset_telephone(request.POST,request.FILES,instance=obj)
-        if formset_telephone.is_valid():
-            for form in formset_telephone:
-                if form.is_valid():
-                    telephone = form.save(commit=False)
-                    telephone.company_id = obj
-                    if telephone.number:
-                        telephone.save()
-        self.context['formset_telephone'] = formset_telephone
+    def get_queryset(self):
+        """
+        get_queryset
 
-        return redirect('relationshipmanagement:company_update', company=obj.slug)
-
-    def get_queryset(self, *args, **kwargs):
+        Returns:
+            queryset: contains one company
+        """
         if self.kwargs.get('company'):
             queryset = Company.objects.get(slug=self.kwargs.get('company'))
         else:
@@ -161,23 +339,63 @@ class CompanyCreateUpdateDetailView(CompanyView):
         return queryset
 #--------------------------------------------------------------------------------
 class CompanyCreateView(CompanyCreateUpdateDetailView):
+    """
+    CompanyCreateView
+
+    Args:
+        CompanyCreateUpdateDetailView (_type_): _description_
+    """
+
     permission_required = ('relationshipmanagement.add_company',)
 #--------------------------------------------------------------------------------
 class CompanyDetailView(CompanyCreateUpdateDetailView):
+    """
+    CompanyDetailView
+
+    Args:
+        CompanyCreateUpdateDetailView (_type_): _description_
+    """
+
     permission_required = ('relationshipmanagement.detail_company',)
 #--------------------------------------------------------------------------------
 class CompanyUpdateView(CompanyCreateUpdateDetailView):
+    """
+    CompanyUpdateView
+
+    Args:
+        CompanyCreateUpdateDetailView (_type_): _description_
+    """
+
     permission_required = ('relationshipmanagement.change_company',)
 #--------------------------------------------------------------------------------
 class CompanyDeleteView(PermissionRequiredMixin,MainView):
+    """
+    CompanyDeleteView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'relationshipmanagement.delete_company'
 
     def get(self, request, *args, **kwargs):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         if self.kwargs.get('company'):
             get_object_or_404(Company,slug = self.kwargs.get('company')).delete()
             messages.success(request,'Item wurde erfolgreich gelöscht!')
         else:
             messages.error(request,'Item konnte nicht gelöscht werden!')
-        return redirect('relationshipmanagement:company_list')
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------

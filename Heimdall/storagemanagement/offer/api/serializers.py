@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Serializers File from Model Offer API
 # 11.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -21,18 +22,31 @@ from storagemanagement.offer.models import Offer
 #--------------------------------------------------------------------------------
 # Serializer
 #--------------------------------------------------------------------------------
-from storagemanagement.api.serializers import BaseSerializer,CreateSerializer,UpdateSerializer
+from tools.api.serializers import (
+    BaseSerializer,
+    CreateSerializer,
+    UpdateSerializer
+)
+from storagemanagement.api.serializers import (
+    SupplierLinkSerializer
+)
 from storagemanagement.offerdata.api.serializers import OfferDataBaseSerializer
 #--------------------------------------------------------------------------------
-class OfferBaseSerializer(CreateSerializer,UpdateSerializer):
+class OfferBaseSerializer(
+    CreateSerializer,
+    UpdateSerializer,
+    SupplierLinkSerializer
+):
+    """
+    OfferBaseSerializer
+
+    Args:
+        CreateSerializer (_type_): _description_
+        UpdateSerializer (_type_): _description_
+        SupplierLinkSerializer (_type_): _description_
+    """
 
     authorized = serializers.ReadOnlyField()
-
-    company_id = serializers.ReadOnlyField()
-    company_name = serializers.ReadOnlyField()
-    company_reference_number = serializers.ReadOnlyField()
-    company_slug = serializers.ReadOnlyField()
-    company_url_detail = serializers.ReadOnlyField()
 
     done = serializers.ReadOnlyField()
 
@@ -43,8 +57,8 @@ class OfferBaseSerializer(CreateSerializer,UpdateSerializer):
         fields=(
             'id',
             'authorized',
-            'companyitem_name',
-            'companyitem_item_number',
+            'supplieritem_name',
+            'supplieritem_item_number',
             'amount',
             'price',
             'value',
@@ -81,18 +95,47 @@ class OfferBaseSerializer(CreateSerializer,UpdateSerializer):
 
     slug = serializers.ReadOnlyField()
 
+    value = serializers.ReadOnlyField()
+
     url_authorize_true = serializers.ReadOnlyField()
     url_authorize_false = serializers.ReadOnlyField()
-    url_delete = serializers.ReadOnlyField()
-    url_detail = serializers.ReadOnlyField()
+    url_block = serializers.SerializerMethodField()
+    url_delete = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:offer_delete',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'offer',
+    )
+    url_detail = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:offer_detail',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'offer',
+    )
     url_order_true = serializers.ReadOnlyField()
     url_order_false = serializers.ReadOnlyField()
     url_qrcode = serializers.ReadOnlyField()
     url_recived = serializers.ReadOnlyField()
     url_sent = serializers.ReadOnlyField()
-    url_update = serializers.ReadOnlyField()
+    url_update = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:offer_update',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'offer',
+    )
 
-    value = serializers.ReadOnlyField()
+    def get_url_block(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_delete"] = obj.url_delete()
+        result["url_detail"] = obj.url_detail()
+        result["url_update"] = obj.url_update()
+        return result
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
@@ -109,6 +152,9 @@ class OfferBaseSerializer(CreateSerializer,UpdateSerializer):
                 self.fields.pop(field_name)
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = Offer
         exclude = [
             'create_user_id',
@@ -124,8 +170,18 @@ class OfferBaseSerializer(CreateSerializer,UpdateSerializer):
             ]
 #--------------------------------------------------------------------------------
 class OfferListSerializer(BaseSerializer,OfferBaseSerializer):
+    """
+    OfferListSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        OfferBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = Offer
         exclude = [
             'create_user_id',
@@ -141,8 +197,18 @@ class OfferListSerializer(BaseSerializer,OfferBaseSerializer):
             ]
 #--------------------------------------------------------------------------------
 class OfferDetailSerializer(BaseSerializer,OfferBaseSerializer):
+    """
+    OfferDetailSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        OfferBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = Offer
         exclude = [
             'create_user_id',

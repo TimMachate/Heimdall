@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Admin File from Model Storage
 # 03.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -25,7 +26,7 @@ from storagemanagement.storage.models import Storage
 #--------------------------------------------------------------------------------
 @admin.register(Storage)
 class StorageAdmin(admin.ModelAdmin):
-    list_display = ['slug','companyitem','booking','unload_user_id', 'unload_datetime']
+    list_display = ['slug','supplieritem','booking','unload_user_id', 'unload_datetime']
     search_fields = []
     list_filter = []
     list_editable = []

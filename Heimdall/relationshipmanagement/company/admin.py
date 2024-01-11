@@ -1,3 +1,10 @@
+"""
+#--------------------------------------------------------------------------------
+# Admin File from Model Company
+# 16.12.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -10,60 +17,25 @@ from django.utils import timezone
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from relationshipmanagement.company.models import Company, Email, Telephone
-from relationshipmanagement.customer.models import Customer
-from relationshipmanagement.general.models import General
-from relationshipmanagement.supplier.models import Supplier
+from relationshipmanagement.company.models import Company
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Admin
 #--------------------------------------------------------------------------------
-class CustomerInlineAdmin(admin.StackedInline):
-    model = Customer
-    extra = 0
-    max_num = 1
-    fieldsets = (
-        (None, {'fields':(
-            'company_id',
-            'status',
-            )}),
-    )
-#--------------------------------------------------------------------------------
-class EmailInlineAdmin(admin.StackedInline):
-    model = Email
-    extra = 0
-    fieldsets = [(None, {'fields':(('email','target'))})]
-#--------------------------------------------------------------------------------
-class GeneralInlineAdmin(admin.StackedInline):
-    model = General
-    extra = 0
-    max_num = 1
-    fieldsets = (
-        (None, {'fields':(
-            'company_id',
-            )}),
-    )
-#--------------------------------------------------------------------------------
-class SupplierInlineAdmin(admin.StackedInline):
-    model = Supplier
-    extra = 0
-    max_num = 1
-    fieldsets = (
-        (None, {'fields':(
-            'company_id',
-            )}),
-    )
-#--------------------------------------------------------------------------------
-class TelephoneInlineAdmin(admin.StackedInline):
-    model = Telephone
-    extra = 0
-    fieldsets = [(None, {'fields':(('type','number','target'))})]
-#--------------------------------------------------------------------------------
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ['name','customer','supplier']
+    """
+    CompanyAdmin
+
+    Args:
+        admin (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    list_display = ['name','email','telephone']
     search_fields = ['name','notice',]
     list_filter = ['country',]
     list_editable = []
@@ -71,26 +43,35 @@ class CompanyAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields':(
             'name',
-            ('customer','supplier'),
+            )}),
+        ('Bild', {'fields':(
+            'logo',
             )}),
         ('Adresse', {'fields':(
             ('street','house_number'),
             ('post_code','city'),
             'country',
             )}),
+        ('Kontakt', {'fields':(
+            'email',
+            'telephone',
+            )}),
         (None, {'fields':(
             'notice',
             )}),
+        ('Typ', {'fields':(
+            'supplier',
+            )}),
     )
-    inlines = [TelephoneInlineAdmin,EmailInlineAdmin,CustomerInlineAdmin,SupplierInlineAdmin]
-    def save_model(self, request, instance, form, change):
-        user = request.user 
-        instance = form.save(commit=False)
-        if not change or not instance.create_user_id:
-            instance.create_user_id = user
-        instance.update_user_id = user
-        instance.update_datetime = timezone.now()
-        instance.save()
+    inlines = []
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        obj = form.save(commit=False)
+        if not change or not obj.create_user_id:
+            obj.create_user_id = user
+        obj.update_user_id = user
+        obj.update_datetime = timezone.now()
+        obj.save()
         form.save_m2m()
-        return instance
+        return obj
 #--------------------------------------------------------------------------------

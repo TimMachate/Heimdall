@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # View File from Model Order Data
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -103,20 +104,47 @@ class OrderDataTableView(OrderDataView):
         self.context["api_data_url"] = reverse("storagemanagementAPI:orderdata_list")+"?values={}".format(self.context["fields"])
 #--------------------------------------------------------------------------------
 class OrderDataCreateUpdateDetailView(OrderDataView):
+    """
+    OrderDataCreateUpdateDetailView
+
+    Args:
+        OrderDataView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = ('storagemanagement.add_orderdata','storagemanagement.change_orderdata')
 
     template_name = 'storagemanagement_orderdata_createupdatedetail.html'
-    
+
     form_class = OrderDataForm
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         self.context['queryset'] = self.get_queryset()
         self.get_context_data()
         self.context['form'] = self.form_class(instance=self.context['queryset'])
         return render(request, self.template_name, self.context)
 
-    def post(self,request, *args, **kwargs):
+    def post(self,request):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         form = self.form_class(request.POST,request.FILES,instance=self.context['queryset'])
         user = get_user_model().objects.get(id=request.user.id)
         if form.is_valid():
@@ -134,9 +162,11 @@ class OrderDataCreateUpdateDetailView(OrderDataView):
                 companyitem.save()
             else:
                 obj.price = obj.companyitem.price
-            
+
             if not obj.order:
-                orderdatas = OrderData.objects.filter(companyitem__company = obj.companyitem.company).exclude(order__sent = True)
+                orderdatas = OrderData.objects.filter(
+                    companyitem__company = obj.companyitem.company
+                ).exclude(order__sent = True)
                 if orderdatas.exists():
                     orderdata = orderdatas.first()
                     orderdatas = orderdata.order.orderdata().filter(companyitem=obj.companyitem)
@@ -161,6 +191,12 @@ class OrderDataCreateUpdateDetailView(OrderDataView):
         return redirect('storagemanagement:orderdata_update', orderdata=obj.slug)
 
     def get_queryset(self, *args, **kwargs):
+        """
+        get_queryset
+
+        Returns:
+            queryset: contains order data obj
+        """
         if self.kwargs.get('orderdata'):
             queryset = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
         else:
@@ -168,19 +204,56 @@ class OrderDataCreateUpdateDetailView(OrderDataView):
         return queryset
 #--------------------------------------------------------------------------------
 class OrderDataCreateView(OrderDataCreateUpdateDetailView):
+    """
+    OrderDataCreateView
+
+    Args:
+        OrderDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.add_orderdata',)
 #--------------------------------------------------------------------------------
 class OrderDataDetailView(OrderDataCreateUpdateDetailView):
+    """
+    OrderDataDetailView
+
+    Args:
+        OrderDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.detail_orderdata',)
 #--------------------------------------------------------------------------------
 class OrderDataUpdateView(OrderDataCreateUpdateDetailView):
+    """
+    OrderDataUpdateView
+
+    Args:
+        OrderDataCreateUpdateDetailView (_type_): _description_
+    """
     permission_required = ('storagemanagement.change_orderdata',)
 #--------------------------------------------------------------------------------
 class OrderDataDeleteView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataDeleteView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.delete_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         if self.kwargs.get('orderdata'):
             get_object_or_404(OrderData,slug = self.kwargs.get('orderdata')).delete()
             messages.success(request,'Item wurde erfolgreich gelöscht!')
@@ -189,140 +262,292 @@ class OrderDataDeleteView(PermissionRequiredMixin,MainView):
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataAuthorizedTrueView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataAuthorizedTrueView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_true_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('orderdata'):
-            orderdata = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
-            if orderdata.done == False:
-                orderdata.authorized = True
-                orderdata.authorized_user_id = user
-                orderdata.authorized_datetime = timezone.now()
-                orderdata.update_user_id = user
-                orderdata.update_datetime = timezone.now()
-                orderdata.save()
+            obj = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
+            if obj.done is False:
+                obj.authorized = True
+                obj.authorized_user_id = user
+                obj.authorized_datetime = timezone.now()
+                obj.update_user_id = user
+                obj.update_datetime = timezone.now()
+                obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataAuthorizedFalseView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataAuthorizedFalseView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_false_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('orderdata'):
-            orderdata = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
-            if orderdata.done == False:
-                orderdata.authorized = False
-                orderdata.authorized_user_id = user
-                orderdata.authorized_datetime = timezone.now()
-                orderdata.update_user_id = user
-                orderdata.update_datetime = timezone.now()
-                orderdata.save()
+            obj = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
+            if obj.done is False:
+                obj.authorized = False
+                obj.authorized_user_id = user
+                obj.authorized_datetime = timezone.now()
+                obj.update_user_id = user
+                obj.update_datetime = timezone.now()
+                obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataAuthorizedTrueAllView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataAuthorizedTrueAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_true_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
-        for orderdata in OrderData.objects.filter(done=False):
-            orderdata.authorized = True
-            orderdata.authorized_user_id = user
-            orderdata.authorized_datetime = timezone.now()
-            orderdata.update_user_id = user
-            orderdata.update_datetime = timezone.now()
-            orderdata.save()
+        for obj in OrderData.objects.filter(done=False):
+            obj.authorized = True
+            obj.authorized_user_id = user
+            obj.authorized_datetime = timezone.now()
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataAuthorizedFalseAllView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataAuthorizedFalseAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.authorize_false_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
-        for orderdata in OrderData.objects.filter(done=False):
-            orderdata.authorized = False
-            orderdata.authorized_user_id = user
-            orderdata.authorized_datetime = timezone.now()
-            orderdata.update_user_id = user
-            orderdata.update_datetime = timezone.now()
-            orderdata.save()
+        for obj in OrderData.objects.filter(done=False):
+            obj.authorized = False
+            obj.authorized_user_id = user
+            obj.authorized_datetime = timezone.now()
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataBookingTrueView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataBookingTrueView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.booking_true_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('orderdata'):
-            orderdata = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
-            if orderdata.done == False:
-                orderdata.booking = True
-                orderdata.booking_user_id = user
-                orderdata.booking_datetime = timezone.now()
-                orderdata.update_user_id = user
-                orderdata.update_datetime = timezone.now()
-                orderdata.done = True
-                orderdata.save()
+            obj = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
+            if obj.done is False:
+                obj.booking = True
+                obj.booking_user_id = user
+                obj.booking_datetime = timezone.now()
+                obj.update_user_id = user
+                obj.update_datetime = timezone.now()
+                obj.done = True
+                obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataBookingFalseView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataBookingFalseView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.booking_false_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         if self.kwargs.get('orderdata'):
-            orderdata = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
-            if orderdata.done == False:
-                orderdata.booking = True
-                orderdata.booking_user_id = user
-                orderdata.booking_datetime = timezone.now()
-                orderdata.update_user_id = user
-                orderdata.update_datetime = timezone.now()
-                orderdata.done = True
-                orderdata.save()
+            obj = OrderData.objects.get(slug=self.kwargs.get('orderdata'))
+            if obj.done is False:
+                obj.booking = True
+                obj.booking_user_id = user
+                obj.booking_datetime = timezone.now()
+                obj.update_user_id = user
+                obj.update_datetime = timezone.now()
+                obj.done = True
+                obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataBookingTrueAllView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataBookingTrueAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.booking_true_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         for obj in OrderData.objects.filter(done=False):
-            orderdata.booking = True
-            orderdata.booking_user_id = user
-            orderdata.booking_datetime = timezone.now()
-            orderdata.update_user_id = user
-            orderdata.update_datetime = timezone.now()
+            obj.booking = True
+            obj.booking_user_id = user
+            obj.booking_datetime = timezone.now()
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
             obj.done = True
             obj.save()
 
         return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
 #--------------------------------------------------------------------------------
 class OrderDataBookingFalseAllView(PermissionRequiredMixin,MainView):
+    """
+    OrderDataBookingFalseAllView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     permission_required = 'storagemanagement.booking_false_orderdata'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         user = get_user_model().objects.get(id=request.user.id)
         for obj in OrderData.objects.filter(done=False):
-            orderdata.booking = True
-            orderdata.booking_user_id = user
-            orderdata.booking_datetime = timezone.now()
-            orderdata.update_user_id = user
-            orderdata.update_datetime = timezone.now()
+            obj.booking = True
+            obj.booking_user_id = user
+            obj.booking_datetime = timezone.now()
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
             obj.done = True
             obj.save()
 

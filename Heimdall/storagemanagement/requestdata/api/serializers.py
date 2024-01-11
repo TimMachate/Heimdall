@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Serializers File from Model Request Data API
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -21,9 +22,34 @@ from storagemanagement.requestdata.models import RequestData
 #--------------------------------------------------------------------------------
 # Serializer
 #--------------------------------------------------------------------------------
-from storagemanagement.api.serializers import BaseSerializer,CreateSerializer,UpdateSerializer
+from tools.api.serializers import (
+    BaseSerializer,
+    CreateSerializer,
+    UpdateSerializer
+)
+from storagemanagement.api.serializers import (
+    SupplierLinkSerializer,
+    SupplierItemLinkSerializer,
+    StorageItemLinkSerializer
+)
 #--------------------------------------------------------------------------------
-class RequestDataBaseSerializer(CreateSerializer,UpdateSerializer):
+class RequestDataBaseSerializer(
+    CreateSerializer,
+    UpdateSerializer,
+    SupplierLinkSerializer,
+    SupplierItemLinkSerializer,
+    StorageItemLinkSerializer
+):
+    """
+    RequestDataBaseSerializer
+
+    Args:
+        CreateSerializer (_type_): _description_
+        UpdateSerializer (_type_): _description_
+        SupplierLinkSerializer (_type_): _description_
+        SupplierItemLinkSerializer (_type_): _description_
+        StorageItemLinkSerializer (_type_): _description_
+    """
 
     amount = serializers.ReadOnlyField()
 
@@ -31,19 +57,6 @@ class RequestDataBaseSerializer(CreateSerializer,UpdateSerializer):
     authorized_date = serializers.ReadOnlyField()
     authorized_time = serializers.ReadOnlyField()
     authorized_username = serializers.ReadOnlyField()
-
-    company_id = serializers.ReadOnlyField()
-    company_name = serializers.ReadOnlyField()
-    company_reference_number = serializers.ReadOnlyField()
-    company_slug = serializers.ReadOnlyField()
-    company_url_detail = serializers.ReadOnlyField()
-
-    companyitem_id = serializers.ReadOnlyField()
-    companyitem_name = serializers.ReadOnlyField()
-    companyitem_item_number = serializers.ReadOnlyField()
-    companyitem_reference_number = serializers.ReadOnlyField()
-    companyitem_slug = serializers.ReadOnlyField()
-    companyitem_url_detail = serializers.ReadOnlyField()
 
     done = serializers.ReadOnlyField()
 
@@ -55,23 +68,47 @@ class RequestDataBaseSerializer(CreateSerializer,UpdateSerializer):
 
     slug = serializers.ReadOnlyField()
 
-    storageitem_id = serializers.ReadOnlyField()
-    storageitem_name = serializers.ReadOnlyField()
-    storageitem_reference_number = serializers.ReadOnlyField()
-    storageitem_slug = serializers.ReadOnlyField()
-    storageitem_url_detail = serializers.ReadOnlyField()
-
     unit = serializers.ReadOnlyField()
+
+    value = serializers.ReadOnlyField()
+
+    url_block = serializers.SerializerMethodField()
 
     url_authorize_true = serializers.ReadOnlyField()
     url_authorize_false = serializers.ReadOnlyField()
-    url_delete = serializers.ReadOnlyField()
-    url_detail = serializers.ReadOnlyField()
+    url_delete = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:requestdata_delete',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'requestdata',
+    )
+    url_detail = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:requestdata_detail',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'requestdata',
+    )
     url_offer = serializers.ReadOnlyField()
     url_qrcode = serializers.ReadOnlyField()
-    url_update = serializers.ReadOnlyField()
+    url_update = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:requestdata_update',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'requestdata',
+    )
 
-    value = serializers.ReadOnlyField()
+    def get_url_block(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_delete"] = obj.url_delete()
+        result["url_detail"] = obj.url_detail()
+        result["url_update"] = obj.url_update()
+        return result
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
@@ -88,9 +125,12 @@ class RequestDataBaseSerializer(CreateSerializer,UpdateSerializer):
                 self.fields.pop(field_name)
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = RequestData
         exclude = [
-            'companyitem',
+            'supplieritem',
             'storageitem',
             'create_user_id',
             'create_datetime',
@@ -99,11 +139,21 @@ class RequestDataBaseSerializer(CreateSerializer,UpdateSerializer):
             ]
 #--------------------------------------------------------------------------------
 class RequestDataListSerializer(BaseSerializer,RequestDataBaseSerializer):
+    """
+    RequestDataListSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        RequestDataBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = RequestData
         exclude = [
-            'companyitem',
+            'supplieritem',
             'storageitem',
             'create_user_id',
             'create_datetime',
@@ -112,11 +162,21 @@ class RequestDataListSerializer(BaseSerializer,RequestDataBaseSerializer):
             ]
 #--------------------------------------------------------------------------------
 class RequestDataDetailSerializer(BaseSerializer,RequestDataBaseSerializer):
+    """
+    RequestDataDetailSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        RequestDataBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = RequestData
         exclude = [
-            'companyitem',
+            'supplieritem',
             'storageitem',
             'create_user_id',
             'create_datetime',

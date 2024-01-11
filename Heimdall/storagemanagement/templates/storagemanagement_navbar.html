@@ -1,8 +1,8 @@
 <!-- ---------------------------------------------------------------------------------------- -->
 <!-- Navbar Item -->
 <!-- ---------------------------------------------------------------------------------------- -->
-<div class ="pt-1 pe-1 pb-1 ps-1">
-    <div class ="input-group w-100">
+<div class="pt-1 pe-1 pb-1 ps-1">
+    <div class="input-group w-100">
         {% if perms.storagemanagement %}
         <a class="btn btn-secondary form-control text-start {% if 'storagemanagement' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storagemanagement' %}">
             Lagermanagement
@@ -60,9 +60,9 @@
                 {% if perms.storagemanagement %}
                 <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_overview' %}">Lager</a>
                 {% elif perms.storagemanagement %}
-                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_list' %}">Lager</a>
+                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_overview' %}">Lager</a>
                 {% elif perms.storagemanagement %}
-                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_table' %}">Lager</a>
+                <a class="btn btn-secondary form-control text-start {% if 'storage_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:storage_overview' %}">Lager</a>
                 {% else %}
                 <span class="btn btn-secondary form-control text-start">Lager</span>
                 {% endif %}
@@ -95,32 +95,32 @@
         <div class="mt-1 mb-1 ms-2">
             <div class="input-group w-100">
                 {% if perms.storagemanagement %}
-                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_overview' %}">Firmen</a>
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:supplier_overview' %}">Firmen</a>
                 {% elif perms.storagemanagement %}
-                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_list' %}">Firmen</a>
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:supplier_list' %}">Firmen</a>
                 {% elif perms.storagemanagement %}
-                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:company_table' %}">Firmen</a>
+                <a class="btn btn-secondary form-control text-start {% if 'supplier' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:supplier_overview' %}">Firmen</a>
                 {% else %}
                 <span class="btn btn-secondary form-control text-start">Firmen</span>
                 {% endif %}
-                <label class="input-group-text dropdown-btn" for="dropdown-link-storagemanagement-company">
+                <label class="input-group-text dropdown-btn" for="dropdown-link-storagemanagement-supplier">
                     <i class="fas fa-plus"></i>
                 </label>
             </div>
             <!-- Level 2 Level 3 Content Navbar Item -->
-            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-storagemanagement-company">
+            <input class="dropdown-checkbox" type="checkbox" id="dropdown-link-storagemanagement-supplier">
             <div class="dropdown-content mt-1 mb-1 ms-3">
                 {% if perms.storagemanagement.view_contact %}
                 <!-- Level 2 Level 3 Navbar Item -->
                 <div class="input-group w-100 mt-1">
-                    <a class="btn btn-secondary form-control text-start {% if 'companycontact' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:companycontact_overview' %}">Kontakte</a>
+                    <a class="btn btn-secondary form-control text-start {% if 'suppliercontact' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:suppliercontact_overview' %}">Kontakte</a>
                 </div>
                 <!-- END Level 2 Level 3 Navbar Item -->
                 {% endif %}
                 {% if perms.storagemanagement.view_ware %}
                 <!-- Level 2 Level 3 Navbar Item -->
                 <div class="input-group w-100 mt-1">
-                    <a class="btn btn-secondary form-control text-start {% if 'companyitem' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:companyitem_overview' %}">Artikel</a>
+                    <a class="btn btn-secondary form-control text-start {% if 'supplieritem' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'storagemanagement:supplieritem_overview' %}">Artikel</a>
                 </div>
                 <!-- END Level 2 Level 3 Navbar Item -->
                 {% endif %}

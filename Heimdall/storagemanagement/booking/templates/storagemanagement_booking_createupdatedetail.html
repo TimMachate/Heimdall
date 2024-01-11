@@ -2,7 +2,7 @@
 
 {% block title %}
     Buchen
-{% endblock %}
+{% endblock title %}
 
 {% block static %}
 {% load static %}
@@ -150,33 +150,33 @@
 
                             {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
                             {% else %}
-                            <!-- Company -->
+                            <!-- Supplier -->
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="company"><i class="fas fa-industry"></i></label>
-                                    <input class="form-control" type="text" value="" disabled id="id_company">
-                                    <a class="input-group-text btn btn-primary" href="" id="id_company_url_detail"><i class="fas fa-info"></i></a>
+                                    <label class="input-group-text" for="supplier"><i class="fas fa-industry"></i></label>
+                                    <input class="form-control" type="text" value="" disabled id="id_supplier">
+                                    <a class="input-group-text btn btn-primary" href="" id="id_supplier_url_detail"><i class="fas fa-info"></i></a>
                                 </div>
                             </div>
-                            <!-- END Company -->
+                            <!-- END Supplier -->
                             {% endif %}
 
-                            <!-- CompanyItem -->
+                            <!-- SupplierItem -->
                             <div class="col mt-1">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="{{ form.companyitem.id_for_label }}"><i class="fas fa-cube"></i></label>
+                                    <label class="input-group-text" for="{{ form.supplieritem.id_for_label }}"><i class="fas fa-cube"></i></label>
                                     {% if 'detail' in request.resolver_match.url_name %}
-                                    <input class="form-control" type="text" value="" disabled id="id_companyitem">
+                                    <input class="form-control" type="text" value="" disabled id="id_supplieritem">
                                     {% else %}
-                                    {{ form.companyitem }}
+                                    {{ form.supplieritem }}
                                     {% endif %}
                                     {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
                                     {% else %}
-                                    <a class="input-group-text btn btn-primary" href="" id="id_companyitem_url_detail"><i class="fas fa-info"></i></a>
+                                    <a class="input-group-text btn btn-primary" href="" id="id_supplieritem_url_detail"><i class="fas fa-info"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
-                            <!-- END CompanyItem -->
+                            <!-- END SupplierItem -->
 
                         </div>
                     </div>

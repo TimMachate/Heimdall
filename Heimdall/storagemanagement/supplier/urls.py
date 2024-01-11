@@ -1,0 +1,176 @@
+"""
+#--------------------------------------------------------------------------------
+# Url File from Model Supplier
+# 25.10.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
+#--------------------------------------------------------------------------------
+# Import necessary Moduls
+#--------------------------------------------------------------------------------
+from django.urls import path
+#--------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Import necessary Models
+#--------------------------------------------------------------------------------
+from storagemanagement.booking.views import (
+    BookingView,
+    BookingListView,
+    BookingTableView,
+    BookingCreateView
+)
+from storagemanagement.supplier.views import (
+    SupplierView,
+    SupplierListView,
+    SupplierTableView,
+    SupplierCreateView,
+    SupplierDetailView,
+    SupplierUpdateView,
+    SupplierDeleteView
+)
+from storagemanagement.suppliercontact.views import (
+    SupplierContactView,
+    SupplierContactListView,
+    SupplierContactTableView,
+    SupplierContactCreateView,
+    SupplierContactDetailView,
+    SupplierContactUpdateView,
+    SupplierContactDeleteView
+)
+from storagemanagement.supplieritem.views import (
+    SupplierItemView,
+    SupplierItemListView,
+    SupplierItemTableView,
+    SupplierItemCreateView,
+    SupplierItemDetailView,
+    SupplierItemUpdateView,
+    SupplierItemDeleteView
+)
+from storagemanagement.storage.views import (
+    StorageView,
+    StorageListView,
+    StorageTableView,
+    StorageCreateView
+)
+#--------------------------------------------------------------------------------
+urlpatterns = [
+    # Supplier
+    path(
+        '',
+        SupplierView.as_view(),
+        name='supplier_overview'
+    ),
+    path(
+        'list/',
+        SupplierListView.as_view(),
+        name='supplier_list'
+    ),
+    path(
+        'table/',
+        SupplierTableView.as_view(),
+        name='supplier_table'
+    ),
+    path(
+        'create/',
+        SupplierCreateView.as_view(),
+        name='supplier_create'
+    ),
+    path(
+        'update/<slug:supplier>/',
+        SupplierUpdateView.as_view(),
+        name='supplier_update'
+    ),
+    path(
+        'detail/<slug:supplier>/',
+        SupplierDetailView.as_view(),
+        name='supplier_detail'
+    ),
+    path(
+        'delete/<slug:supplier>/',
+        SupplierDeleteView.as_view(),
+        name='supplier_delete'
+    ),
+    path(
+        'detail/<slug:supplier>/booking/',
+        BookingView.as_view(),
+        name='supplier_booking_overview'
+    ),
+    path(
+        'detail/<slug:supplier>/booking/list/',
+        BookingListView.as_view(),
+        name='supplier_booking_list'
+    ),
+    path(
+        'detail/<slug:supplier>/booking/table/',
+        BookingTableView.as_view(),
+        name='supplier_booking_table'
+    ),
+    path(
+        'detail/<slug:supplier>/booking/create/',
+        BookingCreateView.as_view(),
+        name='supplier_booking_create'
+    ),
+    path(
+        'detail/<slug:supplier>/storage/',
+        StorageView.as_view(),
+        name='supplier_storage_overview'
+    ),
+    path(
+        'detail/<slug:supplier>/storage/list/',
+        StorageListView.as_view(),
+        name='supplier_storage_list'
+    ),
+    path(
+        'detail/<slug:supplier>/storage/table/',
+        StorageTableView.as_view(),
+        name='supplier_storage_table'
+    ),
+    path(
+        'detail/<slug:supplier>/storage/create/',
+        StorageCreateView.as_view(),
+        name='supplier_storage_create'
+    ),
+    path(
+        'detail/<slug:supplier>/suppliercontact/',
+        SupplierContactView.as_view(),
+        name='supplier_suppliercontact_overview'
+    ),
+    path(
+        'detail/<slug:supplier>/suppliercontact/list/',
+        SupplierContactListView.as_view(),
+        name='supplier_suppliercontact_list'
+    ),
+    path(
+        'detail/<slug:supplier>/suppliercontact/table/',
+        SupplierContactTableView.as_view(),
+        name='supplier_suppliercontact_table'
+    ),
+    path(
+        'detail/<slug:supplier>/suppliercontact/create/',
+        SupplierContactCreateView.as_view(),
+        name='supplier_suppliercontact_create'
+    ),
+    path(
+        'detail/<slug:supplier>/supplieritem/',
+        SupplierItemView.as_view(),
+        name='supplier_supplieritem_overview'
+    ),
+    path(
+        'detail/<slug:supplier>/supplieritem/list/',
+        SupplierItemListView.as_view(),
+        name='supplier_supplieritem_list'
+    ),
+    path(
+        'detail/<slug:supplier>/supplieritem/table/',
+        SupplierItemTableView.as_view(),
+        name='supplier_supplieritem_table'
+    ),
+    path(
+        'detail/<slug:supplier>/supplieritem/create/',
+        SupplierItemCreateView.as_view(),
+        name='supplier_supplieritem_create'
+    ),
+]
+#--------------------------------------------------------------------------------

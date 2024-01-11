@@ -1,0 +1,44 @@
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->
+<div class="pt-1 pe-1 pb-1 ps-1">
+    <div class="input-group w-100">
+        {% if perms.programmmanagement %}
+        <a class="btn btn-secondary form-control text-start {% if 'programmmanagement' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'programmmanagement:programmmanagement' %}">
+            Programm-Management
+        </a>
+        {% else %}
+        <span class="btn btn-secondary form-control text-start {% if 'programmmanagement' in request.resolver_match.url_name %}bg-success{% endif %}">
+            Programm-Management
+        </span>
+        {% endif %}
+        <label class="input-group-text dropdown-btn" for="navbar-link-programmmanagement">
+            <i class="fas fa-plus"></i>
+        </label>
+    </div>
+    <!-- Structure Level 2 Content Navbar Item -->
+    <input class="dropdown-checkbox" type="checkbox" id="navbar-link-programmmanagement">
+    <div class="dropdown-content mt-1 mb-1">
+        {% if perms.programmmanagement %}
+        <!-- Level 2 Navbar Item -->
+        <div class="mt-1 mb-1 ms-2">
+            <div class="input-group w-100">
+                {% if perms.programmmanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'programm_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'programmmanagement:programm_overview' %}">Programme</a>
+                {% elif perms.programmmanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'programm_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'programmmanagement:programm_list' %}">Programme</a>
+                {% elif perms.programmmanagement %}
+                <a class="btn btn-secondary form-control text-start {% if 'programm_' in request.resolver_match.url_name %}bg-success{% endif %}" href="{% url 'programmmanagement:programm_table' %}">Programme</a>
+                {% else %}
+                <span class="btn btn-secondary form-control text-start">Programme</span>
+                {% endif %}
+            </div>
+        </div>
+        <!-- END Level 2 Navbar Item -->
+        {% endif %}
+    </div>
+    <!-- END Level 2 Content Navbar Item -->
+</div>
+<!-- ---------------------------------------------------------------------------------------- -->
+<!-- END Navbar Item -->
+<!-- ---------------------------------------------------------------------------------------- -->

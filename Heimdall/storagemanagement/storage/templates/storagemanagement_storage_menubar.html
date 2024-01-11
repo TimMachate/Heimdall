@@ -82,24 +82,24 @@
         </ul>
         <ul class="nav ms-auto mb-0">
 
-            {% if perms.storagemanagement.view_company %}
-            <!-- Company -->
+            {% if perms.storagemanagement.view_supplier %}
+            <!-- Supplier -->
             <li class="nav-item">
-                <a class="btn {% if 'company_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:company_overview' %}">
+                <a class="btn {% if 'supplier_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:supplier_overview' %}">
                     <i class="fas fa-industry"></i>
                 </a>
             </li>
-            <!-- ENDE Company -->
+            <!-- ENDE Supplier -->
             {% endif %}
 
-            {% if perms.storagemanagement.view_companyitem %}
-            <!-- Company Item -->
+            {% if perms.storagemanagement.view_supplieritem %}
+            <!-- Supplier Item -->
             <li class="nav-item">
-                <a class="btn {% if 'companyitem_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:companyitem_overview' %}">
+                <a class="btn {% if 'supplieritem_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'storagemanagement:supplieritem_overview' %}">
                     <i class="fas fa-cubes"></i>
                 </a>
             </li>
-            <!-- ENDE Company Item -->
+            <!-- ENDE Supplier Item -->
             {% endif %}
 
             {% if perms.storagemanagement.view_storage %}

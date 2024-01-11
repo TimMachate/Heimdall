@@ -31,17 +31,23 @@ function storage_updatedetail(api_url,model) {
                     if(dataset.update_username && document.getElementById('id_update_username')){
                         document.getElementById('id_update_username').setAttribute('value',dataset.update_username);
                     };
-                    if(dataset.companyitem_name && document.getElementById("id_companyitem")){
-                        document.getElementById("id_companyitem").setAttribute("value",dataset.companyitem_name);
+                    if(dataset.unload_date && dataset.create_time && document.getElementById('id_unload_datetime')){
+                        document.getElementById('id_unload_datetime').setAttribute('value',dataset.unload_date+' '+dataset.unload_time);
                     };
-                    if(dataset.companyitem_url_detail && document.getElementById("id_companyitem_url_detail")){
-                        document.getElementById("id_companyitem_url_detail").setAttribute("href",dataset.companyitem_url_detail);
+                    if(dataset.unload_username && document.getElementById('id_unload_username')){
+                        document.getElementById('id_unload_username').setAttribute('value',dataset.unload_username);
                     };
-                    if(dataset.company_name && document.getElementById("id_company")){
-                        document.getElementById("id_company").setAttribute("value",dataset.company_name);
+                    if(dataset.supplieritem_name && document.getElementById("id_supplieritem")){
+                        document.getElementById("id_supplieritem").setAttribute("value",dataset.supplieritem_name);
                     };
-                    if(dataset.company_url_detail && document.getElementById("id_company_url_detail")){
-                        document.getElementById("id_company_url_detail").setAttribute("href",dataset.company_url_detail);
+                    if(dataset.supplieritem_url_detail && document.getElementById("id_supplieritem_url_detail")){
+                        document.getElementById("id_supplieritem_url_detail").setAttribute("href",dataset.supplieritem_url_detail);
+                    };
+                    if(dataset.supplier_name && document.getElementById("id_supplier")){
+                        document.getElementById("id_supplier").setAttribute("value",dataset.supplier_name);
+                    };
+                    if(dataset.supplier_url_detail && document.getElementById("id_supplier_url_detail")){
+                        document.getElementById("id_supplier_url_detail").setAttribute("href",dataset.supplier_url_detail);
                     };
                     if(dataset.unit && document.getElementById("id_unit")){
                         document.getElementById("id_unit").setAttribute("value",dataset.unit);

@@ -1,0 +1,66 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Artikel
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block style %}
+    <style type="text/css">
+        div.card {
+            width:18rem;
+        }
+        i.fas {
+            width:1rem;
+        }
+    </style>
+{% endblock style %}
+
+{% block menubar %}
+    {% include "relationshipmanagement_companyitem_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-3 mb-3 ms-1 me-1">
+            <img src="" height="300px" width="300px" class="card-img-top" alt="picture from item" id="id_image-{{ obj.id }}">
+            <div class="card-body">
+                <div class="input-group mt-1 mb-1">
+                    <span class="input-group-text"><i class="fas fa-cube"></i></span>
+                    <a href="" class="form-control btn btn-primary align-middle" id="id_companyitem-{{ obj.id }}">
+                        -
+                    </a>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="fas fa-industry"></i></span>
+                    <a href="" class="form-control btn btn-sm btn-primary align-middle" id="id_company-{{ obj.id }}">
+                        -
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'relationshipmanagement_companyitem_overview.js' %}"></script>
+<script>
+    companyitem_overview("{{ api_data_url }}","companyitem");
+</script>
+{% endblock scripts %}

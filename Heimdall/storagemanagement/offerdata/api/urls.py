@@ -1,14 +1,18 @@
+"""
 #--------------------------------------------------------------------------------
 # Urls File from Model Offer Data API
 # 09.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
 from django.urls import path
-from storagemanagement.offerdata.api.views import OfferDataListAPIView,OfferDataDetailAPIView
+from storagemanagement.offerdata.api.views import (
+    OfferDataListAPIView,
+    OfferDataDetailAPIView
+)
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------

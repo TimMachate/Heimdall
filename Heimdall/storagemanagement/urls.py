@@ -1,8 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Url File from App Storagemanagement
 # 27.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
+"""
 
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -35,14 +37,12 @@ urlpatterns = [
      path('',StorageManagementView.as_view(), name='storagemanagement'),
      # Booking
      path('booking/',include('storagemanagement.booking.urls')),
-     # Company
-     path('company/',include('storagemanagement.company.urls')),
-     # CompanyContact
-     path('companycontact/',include('storagemanagement.companycontact.urls')),
-     # CompanyItem
-     path('companyitem/',include('storagemanagement.companyitem.urls')),
-     # Items
-     path('storageitem/',include('storagemanagement.storageitem.urls')),
+     # Supplier
+     path('supplier/',include('storagemanagement.supplier.urls')),
+     # SupplierContact
+     path('suppliercontact/',include('storagemanagement.suppliercontact.urls')),
+     # SupplierItem
+     path('supplieritem/',include('storagemanagement.supplieritem.urls')),
      # Offer
      path('offer/',include('storagemanagement.offer.urls')),
      # Offer Data
@@ -57,5 +57,7 @@ urlpatterns = [
      path('requestdata/',include('storagemanagement.requestdata.urls')),
      # Storage
      path('storage/',include('storagemanagement.storage.urls')),
+     # Items
+     path('storageitem/',include('storagemanagement.storageitem.urls')),
 ]
 #--------------------------------------------------------------------------------

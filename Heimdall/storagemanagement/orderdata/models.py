@@ -20,10 +20,10 @@ from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData
-from storagemanagement.models import ReferenceNumber
-from storagemanagement.models import Slug
-from storagemanagement.models import UpdateData
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -33,7 +33,7 @@ from storagemanagement.models import UpdateData
 class OrderDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
 
     # Variables
-    short_name = "STDA"
+    short_name = "STORDA"
 
     # Fields/Methodes for the amount
     amount = models.PositiveIntegerField(
@@ -117,14 +117,14 @@ class OrderDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Bucher',
     )
 
-    # Fields/Methodes for the companyitem
-    companyitem = models.ForeignKey(
+    # Fields/Methodes for the supplieritem
+    supplieritem = models.ForeignKey(
         blank = True,
-        name = 'companyitem',
+        name = 'supplieritem',
         null = True,
         on_delete = models.CASCADE,
-        related_name = 'orderdata_companyitem',
-        to = 'storagemanagement.companyitem',
+        related_name = 'orderdata_supplieritem',
+        to = 'storagemanagement.supplieritem',
         verbose_name = 'Firmenartikel',
     )
 
@@ -215,63 +215,63 @@ class OrderData(OrderDataBaseModel):
 
     # Company
     def company_id(self):
-        if self.companyitem:
-            result = self.companyitem.company.id if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.id if self.supplieritem.company else None
         else:
             result = None
         return result
 
     def company_name(self):
-        if self.companyitem:
-            result = self.companyitem.company.name if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.name if self.supplieritem.company else None
         else:
             result = None
         return result
         
     def company_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.company.reference_number if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
         else:
             result = None
         return result
         
     def company_slug(self):
-        if self.companyitem:
-            result = self.companyitem.company.slug if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.slug if self.supplieritem.company else None
         else:
             result = None
         return result
         
     def company_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.company.url_detail() if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.url_detail() if self.supplieritem.company else None
         else:
             result = None
         return result
 
     # Company Item
-    def companyitem_id(self):
-        result = self.companyitem.id if self.companyitem else None
+    def supplieritem_id(self):
+        result = self.supplieritem.id if self.supplieritem else None
         return result
         
-    def companyitem_name(self):
-        result = self.companyitem.name if self.companyitem else None
+    def supplieritem_name(self):
+        result = self.supplieritem.name if self.supplieritem else None
         return result
         
-    def companyitem_item_number(self):
-        result = self.companyitem.item_number if self.companyitem else None
+    def supplieritem_item_number(self):
+        result = self.supplieritem.item_number if self.supplieritem else None
         return result
         
-    def companyitem_reference_number(self):
-        result = self.companyitem.reference_number if self.companyitem else None
+    def supplieritem_reference_number(self):
+        result = self.supplieritem.reference_number if self.supplieritem else None
         return result
         
-    def companyitem_slug(self):
-        result = self.companyitem.slug if self.companyitem else None
+    def supplieritem_slug(self):
+        result = self.supplieritem.slug if self.supplieritem else None
         return result
         
-    def companyitem_url_detail(self):
-        result = self.companyitem.url_detail() if self.companyitem else None
+    def supplieritem_url_detail(self):
+        result = self.supplieritem.url_detail() if self.supplieritem else None
         return result
     
     # Offer
@@ -323,37 +323,37 @@ class OrderData(OrderDataBaseModel):
     # Storage Item
     def storageitem_id(self):
         result = None
-        if self.companyitem:
-            result = self.companyitem.storageitem.id if self.companyitem.storageitem else None
+        if self.supplieritem:
+            result = self.supplieritem.storageitem.id if self.supplieritem.storageitem else None
         return result
         
     def storageitem_name(self):
         result = None
-        if self.companyitem:
-            result = self.companyitem.storageitem.name if self.companyitem.storageitem else None
+        if self.supplieritem:
+            result = self.supplieritem.storageitem.name if self.supplieritem.storageitem else None
         return result
         
     def storageitem_reference_number(self):
         result = None
-        if self.companyitem:
-            result = self.companyitem.storageitem.reference_number if self.companyitem.storageitem else None
+        if self.supplieritem:
+            result = self.supplieritem.storageitem.reference_number if self.supplieritem.storageitem else None
         return result
         
     def storageitem_slug(self):
         result = None
-        if self.companyitem:
-            result = self.companyitem.storageitem.slug if self.companyitem.storageitem else None
+        if self.supplieritem:
+            result = self.supplieritem.storageitem.slug if self.supplieritem.storageitem else None
         return result
         
     def storageitem_url_detail(self):
         result = None
-        if self.companyitem:
-            result = self.companyitem.storageitem.url_detail() if self.companyitem.storageitem else None
+        if self.supplieritem:
+            result = self.supplieritem.storageitem.url_detail() if self.supplieritem.storageitem else None
         return result
 
     # Unit
     def unit(self):
-        result = self.companyitem.unit if self.companyitem else None
+        result = self.supplieritem.unit if self.supplieritem else None
         return result
 
     # Urls
@@ -388,7 +388,7 @@ class OrderData(OrderDataBaseModel):
         return reverse('storagemanagement:orderdata_update',kwargs={'orderdata':self.slug})
     
     def __str__(self):
-        return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.companyitem.slug)
+        return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.supplieritem.slug)
 
     def value(self):
         return self.price * self.amount
@@ -412,3 +412,4 @@ class OrderData(OrderDataBaseModel):
         )
         verbose_name = "Bestellung Artikel"
         verbose_name_plural = "Bestellungen Artikel"
+#--------------------------------------------------------------------------------

@@ -100,7 +100,7 @@
                                     <!-- Create -->
                                     <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
                                         <h5>
-                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="create">Erstellt</label>
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="create">Erstellt</label>
                                         </h5>
                                         <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
                                         <div class="dropdown-content">
@@ -119,7 +119,7 @@
                                     <!-- Update -->
                                     <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
                                         <h5>
-                                            <label class="dropdown-btn btn btn-secondary btn-lg text-start w-100" for="update">Letztes Update</label> 
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="update">Letztes Update</label> 
                                         </h5>
                                         <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
                                         <div class="dropdown-content">
@@ -148,38 +148,66 @@
 
                 <p class="card-text">
 
+                    <!-- Unload -->
+                    <div class="mt-3">
+                        <div class="input-group w-100">
+                            {% if queryset.unload_datetime %}
+                            <span class="input-group-text btn btn-danger disabled">
+                                <i class="fas fa-check"></i>
+                            </span>
+                            {% endif %}
+                            <label class="form-control btn btn-secondary dropdown-btn text-start" for="unload">
+                                Entnahme
+                            </label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="unload" checked>
+                        <div class="dropdown-content mt-1">
+                            <div class="row">
+                                <div class="col input-group mt-1">
+                                    <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_unload_datetime">
+                                </div>
+                                <div class="col input-group mt-1">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    <input class="form-control" type="text" value="" disabled id="id_unload_username">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Unload -->
+
                     <div class="mt-1">
                         <div class="row">
 
                             {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
                             {% else %}
-                            <!-- Company -->
+                            <!-- Supplier -->
                             <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="company"><i class="fas fa-industry"></i></label>
-                                    <input class="form-control" type="text" value="" disabled id="id_company">
-                                    <a class="input-group-text btn btn-primary" href="" id="id_company_url_detail"><i class="fas fa-info"></i></a>
+                                    <label class="input-group-text" for="supplier"><i class="fas fa-industry"></i></label>
+                                    <input class="form-control" type="text" value="" disabled id="id_supplier">
+                                    <a class="input-group-text btn btn-primary" href="" id="id_supplier_url_detail"><i class="fas fa-info"></i></a>
                                 </div>
                             </div>
-                            <!-- END Company -->
+                            <!-- END Supplier -->
                             {% endif %}
 
-                            <!-- CompanyItem -->
+                            <!-- SupplierItem -->
                             <div class="col mt-1">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="{{ form.companyitem.id_for_label }}"><i class="fas fa-cube"></i></label>
+                                    <label class="input-group-text" for="{{ form.supplieritem.id_for_label }}"><i class="fas fa-cube"></i></label>
                                     {% if 'detail' in request.resolver_match.url_name %}
-                                    <input class="form-control" type="text" value="" disabled id="id_companyitem">
+                                    <input class="form-control" type="text" value="" disabled id="id_supplieritem">
                                     {% else %}
-                                    {{ form.companyitem }}
+                                    {{ form.supplieritem }}
                                     {% endif %}
                                     {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
                                     {% else %}
-                                    <a class="input-group-text btn btn-primary" href="" id="id_companyitem_url_detail"><i class="fas fa-info"></i></a>
+                                    <a class="input-group-text btn btn-primary" href="" id="id_supplieritem_url_detail"><i class="fas fa-info"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
-                            <!-- END CompanyItem -->
+                            <!-- END SupplierItem -->
 
                         </div>
                     </div>

@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Admin File from Model Offer
 # 09.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -27,6 +28,15 @@ from storagemanagement.offerdata.admin import OfferDataFormsetAdmin
 #--------------------------------------------------------------------------------
 @admin.register(Offer)
 class OfferAdmin(admin.ModelAdmin):
+    """
+    OfferAdmin
+
+    Args:
+        admin (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
     list_display = ['__str__']
     search_fields = []
     list_filter = []
@@ -53,14 +63,14 @@ class OfferAdmin(admin.ModelAdmin):
             )}),
     )
     inlines = [OfferDataFormsetAdmin]
-    def save_model(self, request, instance, form, change):
-        user = request.user 
-        instance = form.save(commit=False)
-        if not change or not instance.create_user_id:
-            instance.create_user_id = user
-        instance.update_user_id = user
-        instance.update_datetime = timezone.now()
-        instance.save()
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        obj = form.save(commit=False)
+        if not change or not obj.create_user_id:
+            obj.create_user_id = user
+        obj.update_user_id = user
+        obj.update_datetime = timezone.now()
+        obj.save()
         form.save_m2m()
-        return instance
+        return obj
 #--------------------------------------------------------------------------------

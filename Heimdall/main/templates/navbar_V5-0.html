@@ -3,12 +3,19 @@
     {% if perms.documentationmanagement and documentationmanagement %}
     {% include "documentationmanagement_navbar.html" %}
     {% endif %}
-    {% if perms.relationshipmanagement and relationshipmanagement %}
+    
+    {% if perms.relationshipmanagement %}
     {% include "relationshipmanagement_navbar.html" %}
     {% endif %}
+    
     {% if perms.storagemanagement %}
     {% include "storagemanagement_navbar.html" %}
     {% endif %}
+
+    {% if perms.programmmanagement %}
+    {% include "programmmanagement_navbar.html" %}
+    {% endif %}
+
     {% if perms.structuremanagement and structuremanagement %}
     {% include "structuremanagement_navbar.html" %}
     {% endif %}

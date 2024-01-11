@@ -1,0 +1,107 @@
+{% load static %}
+<nav class="navbar navbar-expand-sm bg-dark sticky-top">
+    <div class="container-fluid">
+        <ul class="nav me-auto mb-0">
+
+            {% if perms.relationshipmanagement.view_companyitem %}
+            <!-- Overview -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_overview' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_overview }}">
+                    <i class="fas fa-eye"></i>
+                </a>
+            </li>
+            <!-- END Overview -->
+            {% endif %}
+
+            {% if perms.relationshipmanagement.list_companyitem %}
+            <!-- List -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_list' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_list }}">
+                    <i class="fas fa-list"></i>
+                </a>
+            </li>
+            <!-- END List -->
+            {% endif %}
+
+            {% if perms.relationshipmanagement.table_companyitem %}
+            <!-- Table -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_table' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_table }}">
+                    <i class="fas fa-table"></i>
+                </a>
+            </li>
+            <!-- END Table -->
+            {% endif %}
+
+            {% if perms.relationshipmanagement.add_companyitem %}
+            <!-- Create -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_create' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{{ url_create }}">
+                    <i class="fas fa-plus"></i>
+                </a>
+            </li>
+            <!-- END Create -->
+            {% endif %}
+
+            {% if perms.relationshipmanagement.detail_companyitem %}
+            {% if 'companyitem_delete' in request.resolver_match.url_name or 'companyitem_detail' in request.resolver_match.url_name or 'companyitem_update' in request.resolver_match.url_name and perms.relationshipmanagement.detail_companyitem %}
+            <!-- Detail -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_detail' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'relationshipmanagement:companyitem_detail' companyitem=queryset.slug %}">
+                    <i class="fas fa-search"></i>
+                </a>
+            </li>
+            <!-- END Detail -->
+            {% endif %}
+            {% endif %}
+
+            {% if perms.relationshipmanagement.update_companyitem %}
+            {% if 'companyitem_delete' in request.resolver_match.url_name or 'companyitem_detail' in request.resolver_match.url_name or 'companyitem_update' in request.resolver_match.url_name and perms.relationshipmanagement.change_companyitem %}
+            <!-- Update -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_update' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'relationshipmanagement:companyitem_update' companyitem=queryset.slug %}">
+                    <i class="fas fa-pen"></i>
+                </a>
+            </li>
+            <!-- END Update -->
+            {% endif %}
+            {% endif %}
+
+            {% if perms.relationshipmanagement.delete_companyitem %}
+            {% if 'companyitem_delete' in request.resolver_match.url_name or 'companyitem_detail' in request.resolver_match.url_name or 'companyitem_update' in request.resolver_match.url_name and perms.relationshipmanagement.delete_companyitem %}
+            <!-- Delete -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_delete' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'relationshipmanagement:companyitem_delete' companyitem=queryset.slug %}">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </li>
+            <!-- END Delete -->
+            {% endif %}
+            {% endif %}
+
+        </ul>
+        <ul class="nav ms-auto mb-0">
+
+            {% if perms.relationshipmanagement.view_company %}
+            <!-- Company -->
+            <li class="nav-item">
+                <a class="btn {% if 'company_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'relationshipmanagement:company_overview' %}">
+                    <i class="fas fa-industry"></i>
+                </a>
+            </li>
+            <!-- ENDE Company -->
+            {% endif %}
+
+            {% if perms.relationshipmanagement.view_companyitem %}
+            <!-- Company Item -->
+            <li class="nav-item">
+                <a class="btn {% if 'companyitem_' in request.resolver_match.url_name %}btn-success{% else %}btn-secondary{% endif %} me-2" href="{% url 'relationshipmanagement:companyitem_overview' %}">
+                    <i class="fas fa-cubes"></i>
+                </a>
+            </li>
+            <!-- ENDE Company Item -->
+            {% endif %}
+
+        </ul>
+    </div>
+</nav>

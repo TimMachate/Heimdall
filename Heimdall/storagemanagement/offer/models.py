@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Models File from Model Offer
 # 15.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -11,7 +12,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
@@ -20,12 +20,11 @@ from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData
-from storagemanagement.models import ReferenceNumber
-from storagemanagement.models import Slug
-from storagemanagement.models import UpdateData
-
 from storagemanagement.offerdata.models import OfferData
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -33,6 +32,15 @@ from storagemanagement.offerdata.models import OfferData
 # Model
 #--------------------------------------------------------------------------------
 class OfferBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
+    """
+    OfferBaseModel
+
+    Args:
+        CreateData (_type_): _description_
+        ReferenceNumber (_type_): _description_
+        Slug (_type_): _description_
+        UpdateData (_type_): _description_
+    """
 
     # Variables
     short_name = "STOF"
@@ -165,10 +173,22 @@ class OfferBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
     )
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
 #--------------------------------------------------------------------------------
 class Offer(OfferBaseModel):
+    """
+    Offer
+
+    Args:
+        OfferBaseModel (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     # Authorized
     def authorized(self):
@@ -183,7 +203,7 @@ class Offer(OfferBaseModel):
     def company(self):
         queryset = self.offerdata()
         if queryset:
-            result = queryset.first().companyitem.company
+            result = queryset.first().supplieritem.company
         else:
             result = None
         return result
@@ -193,13 +213,13 @@ class Offer(OfferBaseModel):
 
     def company_name(self):
         return self.company().name if self.company() else None
-        
+
     def company_reference_number(self):
         return self.company().reference_number if self.company() else None
-        
+
     def company_slug(self):
         return self.company().slug if self.company() else None
-        
+
     def company_url_detail(self):
         return self.company().url_detail() if self.company() else None
 
@@ -293,7 +313,7 @@ class Offer(OfferBaseModel):
 
     def url_update(self):
         return reverse('storagemanagement:offer_update',kwargs={'offer':self.slug})
-    
+
     def value(self):
         queryset=self.offerdata()
         result = 0
@@ -305,6 +325,9 @@ class Offer(OfferBaseModel):
         return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.company_name())
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
         ordering = []
@@ -325,3 +348,4 @@ class Offer(OfferBaseModel):
         )
         verbose_name = "Angebot"
         verbose_name_plural = "Angebote"
+#--------------------------------------------------------------------------------

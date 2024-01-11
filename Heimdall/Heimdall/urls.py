@@ -25,14 +25,43 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('documentationmanagement/', include('documentationmanagement.urls')),
     #path('personalmanagement/',include('personalmanagement.urls')),
-    # path('productmanagement/',include('productmanagement.urls')),
-    #path('relationshipmanagement/',include('relationshipmanagement.urls')),
-    path('storagemanagement/',include('storagemanagement.urls')),
+    #path('productmanagement/',include('productmanagement.urls')),
+    path(
+        'programmmanagement/',
+        include('programmmanagement.urls')
+    ),
+    path(
+        'relationshipmanagement/',
+        include('relationshipmanagement.urls')
+    ),
+    path(
+        'storagemanagement/',
+        include('storagemanagement.urls')
+    ),
     #path('structuremanagement/',include('structuremanagement.urls')),
+
     # Rest Framework urls
     #path('api/documentationmanagement/', include('documentationmanagement.api.urls', namespace = 'documentationmanagementAPI')),
-    #path('api/relationshipmanagement/', include('relationshipmanagement.api.urls', namespace = 'relationshipmanagementAPI')),
-    path('api/storagemanagement/', include('storagemanagement.api.urls', namespace = 'storagemanagementAPI')),
+    path(
+        'api/programmmanagement/',
+        include('programmmanagement.api.urls',
+            namespace = 'programmmanagementAPI'
+        )
+    ),
+    path(
+        'api/relationshipmanagement/',
+        include(
+            'relationshipmanagement.api.urls',
+            namespace = 'relationshipmanagementAPI'
+        )
+    ),
+    path(
+        'api/storagemanagement/',
+        include(
+            'storagemanagement.api.urls',
+            namespace = 'storagemanagementAPI'
+        )
+    ),
     #path('api/structuremanagement/', include('structuremanagement.api.urls', namespace = 'structuremanagementAPI')),
     # Thirdparty packages
     path('tinymce/', include('tinymce.urls')),

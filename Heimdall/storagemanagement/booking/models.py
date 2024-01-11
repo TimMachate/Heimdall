@@ -1,16 +1,16 @@
+"""
 #--------------------------------------------------------------------------------
 # Models File from Model Booking
 # 05.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
@@ -19,10 +19,10 @@ from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData
-from storagemanagement.models import ReferenceNumber
-from storagemanagement.models import Slug
-from storagemanagement.models import UpdateData
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -30,7 +30,10 @@ from storagemanagement.models import UpdateData
 # Model
 #--------------------------------------------------------------------------------
 class BookingBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
-
+    """
+    BookingBaseModel
+    contains all model fields for the base booking obj
+    """
     # Variables
     short_name = "STBO"
 
@@ -44,14 +47,25 @@ class BookingBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Menge',
     )
 
-    # Fields/Methodes for the companyitem
-    companyitem = models.ForeignKey(
+    # Fields/Methodes for the supplieritem
+    storageitem = models.ForeignKey(
         blank = True,
-        name = 'companyitem',
+        name = 'storageitem',
         null = True,
         on_delete = models.CASCADE,
-        related_name = 'booking_companyitem',
-        to = 'storagemanagement.companyitem',
+        related_name = 'booking_storageitem',
+        to = 'storagemanagement.storageitem',
+        verbose_name = 'Artikel',
+    )
+
+    # Fields/Methodes for the supplieritem
+    supplieritem = models.ForeignKey(
+        blank = True,
+        name = 'supplieritem',
+        null = True,
+        on_delete = models.CASCADE,
+        related_name = 'booking_supplieritem',
+        to = 'storagemanagement.SupplierItem',
         verbose_name = 'Artikel',
     )
 
@@ -88,137 +102,231 @@ class BookingBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
     )
 
     class Meta:
+        """ Meta Data for the Model """
         app_label = 'storagemanagement'
         default_permissions = ()
 #--------------------------------------------------------------------------------
 class Booking(BookingBaseModel):
+    """
+    Booking
+    contains all model fields for the booking obj
+    """
 
-    # Company
-    def company_id(self):
-        if self.companyitem:
-            result = self.companyitem.company.id if self.companyitem.company else None
+    # Supplier
+    def supplier_id(self):
+        """
+        supplier_id
+        returns id from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.id if self.supplieritem.company else None
         else:
             result = None
-        return result
-
-    def company_name(self):
-        if self.companyitem:
-            result = self.companyitem.company.name if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.company.reference_number if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_slug(self):
-        if self.companyitem:
-            result = self.companyitem.company.slug if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    def company_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.company.url_detail() if self.companyitem.company else None
-        else:
-            result = None
-        return result
-        
-    # Company Item
-    def companyitem_id(self):
-        result = self.companyitem.id if self.companyitem else None
-        return result
-        
-    def companyitem_name(self):
-        result = self.companyitem.name if self.companyitem else None
-        return result
-        
-    def companyitem_item_number(self):
-        result = self.companyitem.item_number if self.companyitem else None
-        return result
-        
-    def companyitem_reference_number(self):
-        result = self.companyitem.reference_number if self.companyitem else None
-        return result
-        
-    def companyitem_slug(self):
-        result = self.companyitem.slug if self.companyitem else None
-        return result
-        
-    def companyitem_url_detail(self):
-        result = self.companyitem.url_detail() if self.companyitem else None
         return result
 
-    # Company
+    def supplier_name(self):
+        """
+        supplier_name
+        returns name from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.name if self.supplieritem.company else None
+        else:
+            result = None
+        return result
+
+    def supplier_reference_number(self):
+        """
+        supplier_reference_number
+        returns reference number from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
+        else:
+            result = None
+        return result
+
+    def supplier_slug(self):
+        """
+        supplier_slug
+        returns slug from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.slug if self.supplieritem.company else None
+        else:
+            result = None
+        return result
+
+    def supplier_url_detail(self):
+        """
+        supplier_url_detail
+        returns url from supplier
+        """
+        if self.supplieritem:
+            result = self.supplieritem.company.url_detail() if self.supplieritem.company else None
+        else:
+            result = None
+        return result
+
+    # Supplier Item
+    def supplieritem_id(self):
+        """
+        supplieritem_id
+        returns id from supplier item
+        """
+        result = self.supplieritem.id if self.supplieritem else None
+        return result
+
+    def supplieritem_name(self):
+        """
+        supplieritem_name
+        returns name from supplier item
+        """
+        result = self.supplieritem.name if self.supplieritem else None
+        return result
+
+    def supplieritem_item_number(self):
+        """
+        supplieritem_item_number
+        returns item number from supplier item
+        """
+        result = self.supplieritem.item_number if self.supplieritem else None
+        return result
+
+    def supplieritem_reference_number(self):
+        """
+        supplieritem_reference_number
+        returns supplier from supplier item
+        """
+        result = self.supplieritem.reference_number if self.supplieritem else None
+        return result
+
+    def supplieritem_slug(self):
+        """
+        supplieritem_slug
+        returns slug from supplier item
+        """
+        result = self.supplieritem.slug if self.supplieritem else None
+        return result
+
+    def supplieritem_url_detail(self):
+        """
+        supplieritem_url_detail
+        returns url from supplier item
+        """
+        result = self.supplieritem.url_detail() if self.supplieritem else None
+        return result
+
+    # Storage Item
     def storageitem_id(self):
-        if self.companyitem:
-            result = self.companyitem.storageitem.id if self.companyitem.storageitem else None
+        """
+        storageitem_id
+        returns id from storage item
+        """
+        if self.supplieritem:
+            result = self.storageitem.id if self.storageitem else None
         else:
             result = None
         return result
 
     def storageitem_name(self):
-        if self.companyitem:
-            result = self.companyitem.storageitem.name if self.companyitem.storageitem else None
+        """
+        storageitem_name
+        returns name from storage item
+        """
+        if self.supplieritem:
+            result = self.storageitem.name if self.storageitem else None
         else:
             result = None
         return result
-        
+
     def storageitem_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.storageitem.reference_number if self.companyitem.storageitem else None
+        """
+        storageitem_reference_number
+        returns reference number from storage item
+        """
+        if self.supplieritem:
+            result = self.storageitem.reference_number if self.storageitem else None
         else:
             result = None
         return result
-        
+
     def storageitem_slug(self):
-        if self.companyitem:
-            result = self.companyitem.storageitem.slug if self.companyitem.storageitem else None
+        """
+        storageitem_slug
+        returns slug from storage item
+        """
+        if self.supplieritem:
+            result = self.storageitem.slug if self.storageitem else None
         else:
             result = None
         return result
-        
+
     def storageitem_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.storageitem.url_detail() if self.companyitem.storageitem else None
+        """
+        storageitem_url_detail
+        returns url from storage item
+        """
+        if self.supplieritem:
+            result = self.storageitem.url_detail() if self.storageitem else None
         else:
             result = None
         return result
 
     # Unit
     def unit(self):
-        if self.companyitem:
-            result = self.companyitem.unit
+        """
+        unit
+        returns the unit from the booking
+        """
+        if self.supplieritem:
+            result = self.supplieritem.unit
         else:
             result = None
         return result
 
     # Urls
     def url_delete(self):
+        """
+        url_delete
+        returns url from delete page
+        """
         return reverse('storagemanagement:booking_delete',kwargs={'booking':self.slug})
 
     def url_detail(self):
+        """
+        url_detail
+        returns url from detail page
+        """
         return reverse('storagemanagement:booking_detail',kwargs={'booking':self.slug})
 
     def url_qrcode(self):
+        """
+        url_qrcode
+        returns url from qrcode page
+        """
         return 'http://'+settings.HOST+self.url_detail()
 
     def url_update(self):
+        """
+        url_update
+        returns url from update page
+        """
         return reverse('storagemanagement:booking_update',kwargs={'booking':self.slug})
 
     def value(self):
+        """
+        value
+        returns the value of the whole booking
+        """
         return self.price * self.amount
 
     def __str__(self):
-        return "{}{:02d}{:02d}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.reference_number)
+        return f"""{self.create_datetime.year}{self.create_datetime.month:02d}
+        {self.create_datetime.day:02d}_{self.reference_number}"""
 
-    
     class Meta:
+        """ Meta Data for the Model """
         app_label = 'storagemanagement'
         default_permissions = ()
         ordering = []
@@ -231,5 +339,8 @@ class Booking(BookingBaseModel):
             ('table_booking','Booking can view table'),
             ('view_booking','Booking can view overview'),
         )
+        proxy = True
         verbose_name = "Buchung"
         verbose_name_plural = "Buchungen"
+#--------------------------------------------------------------------------------
+        

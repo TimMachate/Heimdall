@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Admin File from Model Offer
 # 09.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -24,12 +25,18 @@ from storagemanagement.offerdata.models import OfferData
 # Admin
 #--------------------------------------------------------------------------------
 class OfferDataFormsetAdmin(admin.TabularInline):
+    """
+    OfferDataFormsetAdmin
+
+    Args:
+        admin (_type_): _description_
+    """
     model = OfferData
     extra = 1
     min_num = 5
     fieldsets = (
         ('Artikel', {'fields':(
-            'companyitem',
+            'supplieritem',
             )}),
         ('Daten', {'fields':(
             'amount',
@@ -46,7 +53,16 @@ class OfferDataFormsetAdmin(admin.TabularInline):
 
 @admin.register(OfferData)
 class OfferDataAdmin(admin.ModelAdmin):
-    list_display = ['__str__','offer','storageitem','companyitem','amount','authorized','done']
+    """
+    OfferDataAdmin
+
+    Args:
+        admin (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    list_display = ['__str__','offer','storageitem','supplieritem','amount','authorized','done']
     search_fields = []
     list_filter = []
     list_editable = ['authorized',]
@@ -56,7 +72,7 @@ class OfferDataAdmin(admin.ModelAdmin):
             'offer',
             )}),
         ('Artikel', {'fields':(
-            'companyitem',
+            'supplieritem',
             )}),
         ('Daten', {'fields':(
             'amount',
@@ -71,14 +87,14 @@ class OfferDataAdmin(admin.ModelAdmin):
             )}),
     )
     inlines = []
-    def save_model(self, request, instance, form, change):
-        user = request.user 
-        instance = form.save(commit=False)
-        if not change or not instance.create_user_id:
-            instance.create_user_id = user
-        instance.update_user_id = user
-        instance.update_datetime = timezone.now()
-        instance.save()
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        obj = form.save(commit=False)
+        if not change or not obj.create_user_id:
+            obj.create_user_id = user
+        obj.update_user_id = user
+        obj.update_datetime = timezone.now()
+        obj.save()
         form.save_m2m()
-        return instance
+        return obj
 #--------------------------------------------------------------------------------

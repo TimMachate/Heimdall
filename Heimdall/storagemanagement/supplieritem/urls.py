@@ -1,0 +1,139 @@
+"""
+#--------------------------------------------------------------------------------
+# Urls File from Model SupplierItem
+# 27.10.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
+
+#--------------------------------------------------------------------------------
+# Import necessary Moduls
+#--------------------------------------------------------------------------------
+from django.urls import path
+#--------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Import necessary Models
+#--------------------------------------------------------------------------------
+from storagemanagement.booking.views import (
+    BookingView,
+    BookingListView,
+    BookingTableView,
+    BookingCreateView
+)
+from storagemanagement.supplieritem.views import (
+    SupplierItemView,
+    SupplierItemListView,
+    SupplierItemTableView,
+    SupplierItemCreateView,
+    SupplierItemUpdateView,
+    SupplierItemDeleteView,
+    SupplierItemDetailView
+)
+from storagemanagement.storage.views import (
+    StorageView,
+    StorageListView,
+    StorageTableView,
+    StorageCreateView
+)
+#--------------------------------------------------------------------------------
+urlpatterns = [
+    # SupplierItem
+    path(
+        '',
+        SupplierItemView.as_view(),
+        name='supplieritem_overview'
+    ),
+    path(
+        'list/',
+        SupplierItemListView.as_view(),
+        name='supplieritem_list'
+    ),
+    path(
+        'table/',
+        SupplierItemTableView.as_view(),
+        name='supplieritem_table'
+    ),
+    path(
+        'create/',
+        SupplierItemCreateView.as_view(),
+        name='supplieritem_create'
+    ),
+    path(
+        'update/<slug:supplieritem>/',
+        SupplierItemUpdateView.as_view(),
+        name='supplieritem_update'
+    ),
+    path(
+        'detail/<slug:supplieritem>/',
+        SupplierItemDetailView.as_view(),
+        name='supplieritem_detail'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/',
+        BookingView.as_view(),
+        name='supplieritem_booking_overview'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/list/',
+        BookingListView.as_view(),
+        name='supplieritem_booking_list'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/table/',
+        BookingTableView.as_view(),
+        name='supplieritem_booking_table'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/create/',
+        BookingCreateView.as_view(),
+        name='supplieritem_booking_create'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/add/',
+        BookingCreateView.as_view(),
+        name='supplieritem_booking_add'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/remove/',
+        BookingCreateView.as_view(),
+        name='supplieritem_booking_remove'
+    ),
+    path(
+        'detail/<slug:supplieritem>/booking/remove/<int:value>/',
+        BookingCreateView.as_view(),
+        name='supplieritem_booking_remove_value'
+    ),
+    path(
+        'detail/<slug:supplieritem>/storage/',
+        StorageView.as_view(),
+        name='supplieritem_storage_overview'
+    ),
+    path(
+        'detail/<slug:supplieritem>/storage/list/',
+        StorageListView.as_view(),
+        name='supplieritem_storage_list'
+    ),
+    path(
+        'detail/<slug:supplieritem>/storage/table/',
+        StorageTableView.as_view(),
+        name='supplieritem_storage_table'
+    ),
+    path(
+        'detail/<slug:supplieritem>/storage/create/',
+        StorageCreateView.as_view(),
+        name='supplieritem_storage_create'
+    ),
+    path(
+        'detail/<slug:supplieritem>/request/',
+        SupplierItemDetailView.as_view(),
+        name='supplieritem_request_create'
+    ),
+    path(
+        'delete/<slug:supplieritem>/',
+        SupplierItemDeleteView.as_view(),
+        name='supplieritem_delete'
+    ),
+]
+#--------------------------------------------------------------------------------

@@ -20,20 +20,31 @@
     <div class="row justify-content-around">
         {% for obj in queryset %}
         <div class="card mt-1 mb-1 ms-1 me-1 pt-1 pe-1 pb-1 ps-1" style="width: 18rem;" id="id_status-{{ obj.id }}">
-            <img src="{{ obj.image_id.url_file }}" class="card-img-top" alt="image of item">
+            {% if form_setting_queryset.image %}
+            <img src="{{ obj.image_id.url_file }}" height="300px" width="300px" class="card-img-top" alt="image of item">
+            {% endif %}
             <div class="card-body pt-1 pe-1 pb-1 ps-1 bg-white">
+                {% if form_setting_queryset.name %}
                 <div class="input-group mt-1 mb-1">
                     <a href="" class="form-control btn btn-sm btn-primary align-middle" id="id_name-{{ obj.id }}">-</a>
                 </div>
+                {% endif %}
                 <div class="input-group mt-1 mb-1">
+                    {% if form_setting_queryset.url_booking_remove %}
                     <a href="" class="input-group-text btn btn-danger" id="id_booking_rm-{{ obj.id }}">
                         <i class="fas fa-minus"></i>
                     </a>
+                    {% endif %}
+                    {% if form_setting_queryset.stock_count %}
                     <a href="" class="form-control text-center btn btn-primary" id="id_stock-{{ obj.id }}">0</a>
+                    {% endif %}
+                    {% if form_setting_queryset.url_booking_add %}
                     <a href="" class="input-group-text btn btn-success" id="id_booking_add-{{ obj.id }}">
                         <i class="fas fa-plus"></i>
                     </a>
+                    {% endif %}
                 </div>
+                {% if form_setting_queryset.stock_percentage %}
                 <div class="mt-1 mb-1">
                     <div class="progress" style="height:1.5rem">
                         <div class="progress-bar" role="progressbar" aria-valuenow="" aria-valuemin="0" aria-valuemax="100" id="id_progressbar-{{ obj.id }}">
@@ -42,25 +53,34 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 <div class="row">
                     <div class="col">
                         <div class="input-group mt-1 mb-1">
+                            {% if form_setting_queryset.url_offer %}
                             <a href="" class="input-group-text btn btn-primary" id="id_request-{{ obj.id }}">
                                 <i class="fas fa-shopping-cart"></i>
                             </a>
+                            {% endif %}
+                            {% if form_setting_queryset.offer_count %}
                             <span class="form-control text-center" id="id_request_count-{{ obj.id }}">
                                 0
                             </span>
-                        </div>
+                            {% endif %}
+                    </div>
                     </div>
                     <div class="col">
                         <div class="input-group mt-1 mb-1">
+                            {% if form_setting_queryset.url_order %}
                             <a href="" class="input-group-text btn btn-primary" id="id_order-{{ obj.id }}">
                                 <i class="fas fa-shipping-fast"></i>
                             </a>
+                            {% endif %}
+                            {% if form_setting_queryset.order_count %}
                             <span class="form-control text-center" id="id_order_count-{{ obj.id }}">
                                 0
                             </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

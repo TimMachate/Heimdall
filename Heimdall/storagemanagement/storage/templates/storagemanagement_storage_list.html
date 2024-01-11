@@ -43,21 +43,21 @@
                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                               </div>
                                               <div class="modal-body">
-                                                  {% csrf_token %}
-                                                  {% for f in form_data %}
-                                                  <div class="mt-3 text-start">
-                                                      {% if f.field.widget.input_type == "checkbox" %}
-                                                          {{ f }}
-                                                          <label class="fs-6" for="f.id_for_label">{{ f.label }}</label>
-                                                      {% else %}
-                                                          <label class="fs-6" for="f.id_for_label">{{ f.label }}</label>
-                                                          {{ f }}
-                                                      {% endif %}
-                                                      {% if f.help_text %}
-                                                          <p class="form-text">{{ f.help_text|safe }}</p>
-                                                      {% endif %}
-                                                  </div>
-                                                  {% endfor %}
+                                                    {% csrf_token %}
+                                                    {% for form in form_setting %}
+                                                    <div class="mt-3 text-start">
+                                                        {% if form.field.widget.input_type == "checkbox" %}
+                                                            {{ form }}
+                                                            <label class="fs-6" for="form.id_for_label">{{ form.label }}</label>
+                                                        {% else %}
+                                                            <label class="fs-6" for="form.id_for_label">{{ form.label }}</label>
+                                                            {{ form }}
+                                                        {% endif %}
+                                                        {% if form.help_text %}
+                                                            <p class="form-text">{{ form.help_text|safe }}</p>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% endfor %}
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-danger mt-3" data-bs-dismiss="modal">Schließen</button>
@@ -77,7 +77,7 @@
                               Liste 1: Auflistung aller Lagerartikel
                           </caption>
                           <thead id="{{ model }}-head" class="thead-dark">
-                              <tr class="" id="{{ model }}-head-row2">
+                              <tr id="{{ model }}-head-row2">
                                   <th scope="col"></th>
                                   <th scope="col">Erstellt<br>Datum</th>
                                   <th scope="col">Erstellt<br>Zeit</th>
@@ -85,14 +85,19 @@
                                   <th scope="col">Update<br>Datum</th>
                                   <th scope="col">Update<br>Zeit</th>
                                   <th scope="col">Update<br>Person</th>
+                                  <th scope="col">Entnahme<br>Datum</th>
+                                  <th scope="col">Entnahme<br>Zeit</th>
+                                  <th scope="col">Entnahme<br>Person</th>
                                   <th scope="col">Referenz</th>
                                   <th scope="col">Lagerartikel</th>
                                   <th scope="col">Lagerartikel-<br>nummer</th>
                                   <th scope="col">Artikel</th>
+                                  <th scope="col">Artikel<br>Referenz</th>
                                   <th scope="col">Artikelnummer</th>
                                   <th scope="col">Firma</th>
                                   <th scope="col">Einheit</th>
                                   <th scope="col">Wert</th>
+                                  <th scope="col"></th>
                                   <th scope="col"></th>
                                   <th scope="col"></th>
                                   <th scope="col"></th>

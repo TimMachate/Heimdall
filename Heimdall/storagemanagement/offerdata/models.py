@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Models File from Model Offer Data
 # 15.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -11,7 +12,6 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.utils import timezone
 
 from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
@@ -20,10 +20,10 @@ from tinymce import models as tinymce_models
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.models import CreateData
-from storagemanagement.models import ReferenceNumber
-from storagemanagement.models import Slug
-from storagemanagement.models import UpdateData
+from tools.createdata.models import CreateData
+from tools.referencenumber.models import ReferenceNumber
+from tools.slug.models import Slug
+from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 
 #--------------------------------------------------------------------------------
@@ -31,10 +31,19 @@ from storagemanagement.models import UpdateData
 # Model
 #--------------------------------------------------------------------------------
 class OfferDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
+    """
+    OfferDataBaseModel
+
+    Args:
+        CreateData (_type_): _description_
+        ReferenceNumber (_type_): _description_
+        Slug (_type_): _description_
+        UpdateData (_type_): _description_
+    """
 
     # Variables
-    short_name = "STOD"
-    
+    short_name = "STOFDA"
+
     # Fields/Methodes for the amount
     amount = models.PositiveIntegerField(
         blank = True,
@@ -77,14 +86,14 @@ class OfferDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Autorisierer',
     )
 
-    # Fields/Methodes for the companyitem
-    companyitem = models.ForeignKey(
+    # Fields/Methodes for the supplieritem
+    supplieritem = models.ForeignKey(
         blank = True,
-        name = 'companyitem',
+        name = 'supplieritem',
         null = True,
         on_delete = models.CASCADE,
-        related_name = 'offerdata_companyitem',
-        to = 'storagemanagement.companyitem',
+        related_name = 'offerdata_supplieritem',
+        to = 'storagemanagement.SupplierItemBaseModel',
         verbose_name = 'Firmenartikel',
     )
 
@@ -142,10 +151,22 @@ class OfferDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
     )
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
 #--------------------------------------------------------------------------------
 class OfferData(OfferDataBaseModel):
+    """
+    OfferData
+
+    Args:
+        OfferDataBaseModel (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
 
     # Authorized
     def authorized_date(self):
@@ -162,78 +183,78 @@ class OfferData(OfferDataBaseModel):
 
     # Company
     def company_id(self):
-        if self.companyitem:
-            result = self.companyitem.company.id if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.id if self.supplieritem.company else None
         else:
             result = None
         return result
 
     def company_name(self):
-        if self.companyitem:
-            result = self.companyitem.company.name if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.name if self.supplieritem.company else None
         else:
             result = None
         return result
-        
+
     def company_reference_number(self):
-        if self.companyitem:
-            result = self.companyitem.company.reference_number if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
         else:
             result = None
         return result
-        
+
     def company_slug(self):
-        if self.companyitem:
-            result = self.companyitem.company.slug if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.slug if self.supplieritem.company else None
         else:
             result = None
         return result
-        
+
     def company_url_detail(self):
-        if self.companyitem:
-            result = self.companyitem.company.url_detail() if self.companyitem.company else None
+        if self.supplieritem:
+            result = self.supplieritem.company.url_detail() if self.supplieritem.company else None
         else:
             result = None
         return result
 
     # Company Item
-    def companyitem_id(self):
-        result = self.companyitem.id if self.companyitem else None
+    def supplieritem_id(self):
+        result = self.supplieritem.id if self.supplieritem else None
         return result
-        
-    def companyitem_name(self):
-        result = self.companyitem.name if self.companyitem else None
+
+    def supplieritem_name(self):
+        result = self.supplieritem.name if self.supplieritem else None
         return result
-        
-    def companyitem_item_number(self):
-        result = self.companyitem.item_number if self.companyitem else None
+
+    def supplieritem_item_number(self):
+        result = self.supplieritem.item_number if self.supplieritem else None
         return result
-        
-    def companyitem_reference_number(self):
-        result = self.companyitem.reference_number if self.companyitem else None
+
+    def supplieritem_reference_number(self):
+        result = self.supplieritem.reference_number if self.supplieritem else None
         return result
-        
-    def companyitem_slug(self):
-        result = self.companyitem.slug if self.companyitem else None
+
+    def supplieritem_slug(self):
+        result = self.supplieritem.slug if self.supplieritem else None
         return result
-        
-    def companyitem_url_detail(self):
-        result = self.companyitem.url_detail() if self.companyitem else None
+
+    def supplieritem_url_detail(self):
+        result = self.supplieritem.url_detail() if self.supplieritem else None
         return result
 
     # Offer
     def offer_id(self):
         result = self.offer.id if self.offer else None
         return result
-        
+
     def offer_reference_number(self):
         result = self.offer.reference_number if self.offer else None
         return result
-        
+
     def offer_slug(self):
         result = self.offer.slug if self.offer else None
         return result
-        
+
     def offer_url_detail(self):
         result = self.offer.url_detail() if self.offer else None
         return result
@@ -244,19 +265,19 @@ class OfferData(OfferDataBaseModel):
 
     def storageitem_name(self):
         return self.storageitem.name if self.storageitem else None
-        
+
     def storageitem_reference_number(self):
         return self.storageitem.reference_number if self.storageitem else None
-        
+
     def storageitem_slug(self):
         return self.storageitem.slug if self.storageitem else None
-        
+ 
     def storageitem_url_detail(self):
         return self.storageitem.url_detail() if self.storageitem else None
-    
+
     # Unit
     def unit(self):
-        result = self.companyitem.unit if self.companyitem else None
+        result = self.supplieritem.unit if self.supplieritem else None
         return result
 
     # Urls
@@ -283,7 +304,7 @@ class OfferData(OfferDataBaseModel):
 
     def url_update(self):
         return reverse('storagemanagement:offerdata_update',kwargs={'offerdata':self.slug})
-    
+
     def __str__(self):
         return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.reference_number)
 
@@ -292,6 +313,9 @@ class OfferData(OfferDataBaseModel):
         return result
 
     class Meta:
+        """
+        Meta Data from Model
+        """
         app_label = 'storagemanagement'
         default_permissions = ()
         ordering = []
@@ -309,3 +333,4 @@ class OfferData(OfferDataBaseModel):
         )
         verbose_name = "Angebot Artikel"
         verbose_name_plural = "Angebote Artikel"
+#--------------------------------------------------------------------------------

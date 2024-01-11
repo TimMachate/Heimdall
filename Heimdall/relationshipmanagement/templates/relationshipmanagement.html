@@ -1,15 +1,11 @@
 {% extends "main.html" %}
 
 {% block title %}
-    Visualisierung
-{% endblock %}
+    Beziehungsmanagement
+{% endblock title %}
 
 {% block static %}
 {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'grid.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/menubar.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/items.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/table_V1.css' %}">
 {% endblock static %}
 
 {% block menubar %}
@@ -19,8 +15,61 @@
 {% endblock aside %}
 
 {% block content %}
-<section style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around;align-items:stretch;width:100%;">
-    <h1>Beziehungs-Management</h1>
+<section>
+    <div class="container">
+        <div class="card mt-3">
+            <div class="card-body">
+                <h3 class="card-title ">
+                    <a href="{% url 'relationshipmanagement:relationshipmanagement' %}" class="btn btn-lg btn-primary align-middle w-100">
+                        Beziehungsmanagement
+                    </a>
+                </h3>
+                <div class="card-text">
+                    <div class="row">
+                        <div class="col">
+                            <a href="{% url 'relationshipmanagement:company_overview' %}" class="btn btn-primary w-100">
+                                Firmen
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-industry"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ company_count }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'relationshipmanagement:companycontact_overview' %}" class="btn btn-primary w-100">
+                                Kontakte
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-users"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ companycontact_count }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href="{% url 'relationshipmanagement:companyitem_overview' %}" class="btn btn-primary w-100">
+                                Artikel
+                            </a>
+                            <div class="input-group mt-1">
+                                <label class="input-group-text">
+                                    <i class="fas fa-cubes"></i>
+                                </label>
+                                <span class="form-control">
+                                    {{ companyitem_count }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% endblock content %}
 

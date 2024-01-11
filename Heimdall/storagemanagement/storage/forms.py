@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Forms File from Model Storage
 # 03.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -23,6 +24,12 @@ from storagemanagement.storage.models import Storage
 # Forms
 #--------------------------------------------------------------------------------
 class StorageForm(ModelForm):
+    """
+    StorageForm
+
+    Args:
+        ModelForm (_type_): _description_
+    """
     def __init__(self, *args, **kwargs):
         super(StorageForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
@@ -34,6 +41,9 @@ class StorageForm(ModelForm):
                 visible.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
+        """
+        Meta Data from Form
+        """
         model = Storage
         fields = '__all__'
 #--------------------------------------------------------------------------------

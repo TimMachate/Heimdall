@@ -1,4 +1,15 @@
-from rest_framework.pagination import PageNumberPagination
+"""
+#--------------------------------------------------------------------------------
+# pagination File from App Relationshipmanagement API
+# 27.10.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
 
-class PageNumberPagination(PageNumberPagination):
-    page_size = 10
+#--------------------------------------------------------------------------------
+# Import necessary Moduls
+#--------------------------------------------------------------------------------
+# No necessary Moduls
+#--------------------------------------------------------------------------------
+from tools.api.pagination import PageNumberPagination
+#--------------------------------------------------------------------------------

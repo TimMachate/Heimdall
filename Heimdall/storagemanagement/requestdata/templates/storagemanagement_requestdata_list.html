@@ -2,7 +2,7 @@
 
 {% block title %}
     Anfrage Liste
-{% endblock %}
+{% endblock title %}
 
 {% block static %}
 {% load static %}
@@ -43,21 +43,21 @@
                                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                               </div>
                                               <div class="modal-body">
-                                                  {% csrf_token %}
-                                                  {% for f in form_data %}
-                                                  <div class="mt-3 text-start">
-                                                      {% if f.field.widget.input_type == "checkbox" %}
-                                                          {{ f }}
-                                                          <label class="fs-6" for="f.id_for_label">{{ f.label }}</label>
-                                                      {% else %}
-                                                          <label class="fs-6" for="f.id_for_label">{{ f.label }}</label>
-                                                          {{ f }}
-                                                      {% endif %}
-                                                      {% if f.help_text %}
-                                                          <p class="form-text">{{ f.help_text|safe }}</p>
-                                                      {% endif %}
-                                                  </div>
-                                                  {% endfor %}
+                                                {% csrf_token %}
+                                                {% for form in form_setting %}
+                                                <div class="mt-3 text-start">
+                                                    {% if form.field.widget.input_type == "checkbox" %}
+                                                        {{ form }}
+                                                        <label class="fs-6" for="form.id_for_label">{{ form.label }}</label>
+                                                    {% else %}
+                                                        <label class="fs-6" for="form.id_for_label">{{ form.label }}</label>
+                                                        {{ form }}
+                                                    {% endif %}
+                                                    {% if form.help_text %}
+                                                        <p class="form-text">{{ form.help_text|safe }}</p>
+                                                    {% endif %}
+                                                </div>
+                                                {% endfor %}
                                               </div>
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-danger mt-3" data-bs-dismiss="modal">Schließen</button>
@@ -77,7 +77,7 @@
                               Liste 1: Auflistung aller Anfragen
                           </caption>
                           <thead id="{{ model }}-head" class="thead-dark">
-                              <tr class="" id="{{ model }}-head-row2">
+                              <tr id="{{ model }}-head-row2">
                                     <th scope="col"></th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Autorisiert<br>Datum</th>

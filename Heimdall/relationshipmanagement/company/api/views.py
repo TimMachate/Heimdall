@@ -1,12 +1,16 @@
+"""
+#--------------------------------------------------------------------------------
+# Views File from Model Company API
+# 16.12.2023
+# Tim Machate
+#--------------------------------------------------------------------------------
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
-from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
-from relationshipmanagement.api.pagination import PageNumberPagination
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 
@@ -20,7 +24,10 @@ from relationshipmanagement.company.models import Company
 #--------------------------------------------------------------------------------
 # Import necessary Serializers
 #--------------------------------------------------------------------------------
-from relationshipmanagement.company.api.serializers import CompanyListSerializer,CompanyDetailSerializer
+from relationshipmanagement.company.api.serializers import (
+    CompanyListSerializer,
+    CompanyDetailSerializer
+)
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 
@@ -28,6 +35,12 @@ from relationshipmanagement.company.api.serializers import CompanyListSerializer
 # Views
 #--------------------------------------------------------------------------------
 class CompanyListAPIView(ListCreateAPIView):
+    """
+    CompanyListAPIView
+
+    Args:
+        ListCreateAPIView (_type_): _description_
+    """
     serializer_class = CompanyListSerializer
     queryset = Company.objects.all()
     filter_backends = [DjangoFilterBackend,OrderingFilter]
@@ -39,6 +52,12 @@ class CompanyListAPIView(ListCreateAPIView):
     #permission_classes = [IsAdminUser,IsAuthenticatedOrReadOnly]
 #--------------------------------------------------------------------------------
 class CompanyDetailAPIView(RetrieveAPIView):
+    """
+    CompanyDetailAPIView
+
+    Args:
+        RetrieveAPIView (_type_): _description_
+    """
     serializer_class = CompanyDetailSerializer
     queryset = Company.objects.all()
     pagination_class = None

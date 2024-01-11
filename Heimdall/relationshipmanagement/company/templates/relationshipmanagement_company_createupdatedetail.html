@@ -1,0 +1,385 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Firma
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block style %}
+    <style type="text/css">
+        span.input-group-text {
+            width:3rem;
+        }
+    </style>
+{% endblock style %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block menubar %}
+    {% include "relationshipmanagement_company_menubar.html" %}
+{% endblock menubar %}
+
+{% block content %}
+<form class="fluid-container" method="post" enctype="multipart/form-data">
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    {% csrf_token %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+    <div class="container">
+
+        <div class="card mt-3">
+            <div class="card-body">
+
+                <!-- Values -->
+                <div class="row justify-content-between align-items-start">
+                    {% if 'create' in request.resolver_match.url_name %}
+                    {% else %}
+                    <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_qrcode" target="_blank">
+                        {% load qr_code %}
+                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_qrcode size='m' image_format='png' %}" width="300px" height="300px" alt="Link to File" id="id_image_file_url">
+                    </a>
+                    {% endif %}
+                    <div class="col">
+                        <div class="row justify-content-between align-items-start">
+
+                            <h1 class="col card-title mt-3" id="reference_number">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                <span>Aktenzeichen</span>
+                                {% else %}
+                                <span id="id_reference_number"></span>
+                                {% endif %}
+                            </h1>
+                            <div class="col text-end">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-cog"></i>
+                                        </button>
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Name -->
+                            <div class="mt-3">
+                                <label class="form-label" for="{{ form.name.id_for_label }}">Name</label>
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                <input class="form-control" type="text" value="" disabled id="id_name">
+                                {% else %}
+                                {{ form.name }}
+                                {% endif %}
+                            </div>
+                            <!-- END Name -->
+
+                            <!-- Create and Update -->
+                            <div class="mt-1">
+                                {% if 'create' in request.resolver_match.url_name %}
+                                {% else %}
+                                <div class="row">
+
+                                    <!-- Create -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="create">Erstellt</label>
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="create" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_datetime">
+                                            </div>
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_create_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Create -->
+
+                                    <!-- Update -->
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                        <h5>
+                                            <label class="dropdown-btn btn btn-secondary text-start w-100" for="update">Letztes Update</label> 
+                                        </h5>
+                                        <input type="checkbox" class="dropdown-checkbox" id="update" {% if 'detail' in request.resolver_match.url_name %}checked{% endif %}>
+                                        <div class="dropdown-content">
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-clock"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_datetime">
+                                            </div>
+                                            <div class="input-group mt-1">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input class="form-control" type="text" value="" disabled id="id_update_username">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END Update -->
+
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- END Create and Update -->
+
+                        </div>
+                    </div>
+
+                </div>
+                <!-- END Values -->
+
+                <p class="card-text">
+
+                    <!-- Image -->
+                    <div class="mt-3">
+                        <div class="input-group">
+                            {% if not 'create' in request.resolver_match.url_name %}
+                            <a class="input-group-text btn btn-primary" href="" id="id_logo_url" target="_blank"><i class="fas fa-image"></i></a>
+                            {% endif %}
+                            {% if 'detail' in request.resolver_match.url_name %}
+                            <span class="form-control disabled" id="id_logo">-</span>
+                            {% else %}
+                            <input type="file" class="form-control" name="logo" id="id_logo">
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Image -->
+
+                    <!-- Address -->
+                    <div class="mt-3">
+                        <label class="btn btn-secondary dropdown-btn text-start w-100" for="address">Adresse</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="address" checked>
+                        <div class="dropdown-content">
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-road"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_street" disabled>
+                                        {% else %}
+                                        {{ form.street }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-sort-numeric-up"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_house_number" disabled>
+                                        {% else %}
+                                        {{ form.house_number }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-code"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_post_code" disabled>
+                                        {% else %}
+                                        {{ form.post_code }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-city"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_city" disabled>
+                                        {% else %}
+                                        {{ form.city }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_country" disabled>
+                                        {% else %}
+                                        {{ form.country }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Address -->
+
+                    <!-- Contact -->
+                    <div class="mt-1">
+                        <label class="btn btn-secondary dropdown-btn text-start w-100" for="contact">Kontakt</label>
+                        <input class="dropdown-checkbox" type="checkbox" id="contact" checked>
+                        <div class="dropdown-content">
+                            <div class="row">
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <a class="input-group-text btn btn-primary" href="mailto:{{ queryset.email }}">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_email" disabled>
+                                        {% else %}
+                                        {{ form.email }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 mt-1">
+                                    <div class="input-group w-100">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-phone"></i>
+                                        </span>
+                                        {% if 'detail' in request.resolver_match.url_name %}
+                                        <input class="form-control" type="text" value="" id="id_telephone" disabled>
+                                        {% else %}
+                                        {{ form.telephone }}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Contact -->
+
+                    <!-- Notice -->
+                    <div class="mt-1">
+                        <div class="input-group w-100">
+                            {% if queryset.notice %}
+                            <span class="input-group-text btn btn-danger disabled" id="id_notice_icon"><i class="fas fa-exclamation-triangle"></i></span>
+                            {% endif %}
+                            <label class="btn btn-secondary dropdown-btn form-control text-start" for="notice">Bemerkung</label>
+                        </div>
+                        <input class="dropdown-checkbox" type="checkbox" id="notice" checked>
+                        <div class="dropdown-content mt-1">
+                            {% if 'detail' in request.resolver_match.url_name %}
+                                <div id="id_notice"></div>
+                            {% else %}
+                                {{ form.notice }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- END Notice -->
+
+                    <!-- Supplier -->
+                    <div class="mt-1">
+                        <div class="input-group w-100">
+                            <span class="input-group-text">
+                                {% if 'detail' in request.resolver_match.url_name %}
+                                    <input class="form-check-input" type="checkbox" value="" id="id_supplier" disabled>
+                                {% else %}
+                                    {{ form.supplier }}
+                                {% endif %}
+                            </span>
+                            <input class="form-control" type="text" value="Lieferant" disabled>
+                        </div>
+                    </div>
+                    <!-- END Supplier -->
+
+                    {% if 'create' in request.resolver_match.url_name %}
+                    {% else %}
+                    <div class="row">
+                        <!-- Company Contact -->
+                        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-1">
+                            <div class="input-group">
+                                <label class="btn btn-secondary dropdown-btn form-control text-start" for="contacts">
+                                    Kontakte
+                                </label>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companycontact }}"><i class="fas fa-eye"></i></a>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companycontact_list }}"><i class="fas fa-list"></i></a>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companycontact_table }}"><i class="fas fa-table"></i></a>
+                                <a class="btn btn-success input-group-text" href="{{ queryset.url_companycontact_create }}?next={{ request.get_full_path }}"><i class="fas fa-plus"></i></a>
+                            </div>
+                            <input class="dropdown-checkbox" type="checkbox" id="contacts" checked>
+                            <div class="dropdown-content mt-1">
+                                <div class="input-group">
+                                    <span class="input-group-text text-center">
+                                        &Sigma;
+                                    </span>
+                                    <input class="form-control" type="text" value="0" id="id_companycontact_count" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Company Contact -->
+
+                        <!-- Company Item -->
+                        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 mt-1">
+                            <div class="input-group">
+                                <label class="btn btn-secondary dropdown-btn form-control text-start" for="companyitem">
+                                    Artikel
+                                </label>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companyitem }}"><i class="fas fa-eye"></i></a>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companyitem_list }}"><i class="fas fa-list"></i></a>
+                                <a class="btn btn-primary input-group-text" href="{{ queryset.url_companyitem_table }}"><i class="fas fa-table"></i></a>
+                                <a class="btn btn-success input-group-text" href="{{ queryset.url_companyitem_create }}?next={{ request.get_full_path }}"><i class="fas fa-plus"></i></a>
+                            </div>
+                            <input class="dropdown-checkbox" type="checkbox" id="companyitem" checked>
+                            <div class="dropdown-content mt-1">
+                                <div class="input-group">
+                                    <span class="input-group-text text-center">
+                                        &Sigma;
+                                    </span>
+                                    <input class="form-control" type="text" value="0" id="id_companyitem_count" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END Company Item -->
+                    </div>
+                    {% endif %}
+                    
+                </p>
+                
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Break and Submit Button -->
+    {% if 'detail' in request.resolver_match.url_name %}
+    {% else %}
+    <div class="container text-end">
+        <a class="btn btn-danger mt-3" href="javascript:history.back()">Abbrechen</a>
+        <input class="btn btn-primary mt-3" type="submit" name="add_value" value="Bestätigen">
+    </div>
+    {% endif %}
+    <!-- END Break and Submit Button -->
+
+</form>
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block scripts %}
+{% if 'create' in request.resolver_match.url_name %}
+{% else %}
+<script src="{% static 'js/transformTable.js' %}"></script>
+<script src="{% static 'relationshipmanagement_company_updatedetail.js' %}"></script>
+<script>
+    company_updatedetail("{% url 'relationshipmanagementAPI:company_detail' company=queryset.slug %}")
+</script>
+{% endif %}
+{% endblock scripts %}

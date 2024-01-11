@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Admin File from Model Request
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -25,7 +26,16 @@ from storagemanagement.requestdata.models import RequestData
 #--------------------------------------------------------------------------------
 @admin.register(RequestData)
 class RequestDataAdmin(admin.ModelAdmin):
-    list_display = ['__str__','storageitem','companyitem','amount','authorized','done']
+    """
+    RequestDataAdmin
+
+    Args:
+        admin (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    list_display = ['__str__','storageitem','supplieritem','amount','authorized','done']
     search_fields = []
     list_filter = []
     list_editable = ['authorized','done']
@@ -33,7 +43,7 @@ class RequestDataAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Artikel', {'fields':(
             'storageitem',
-            'companyitem',
+            'supplieritem',
             )}),
         ('Daten', {'fields':(
             'amount',
@@ -42,7 +52,7 @@ class RequestDataAdmin(admin.ModelAdmin):
     )
     inlines = []
     def save_model(self, request, instance, form, change):
-        user = request.user 
+        user = request.user
         instance = form.save(commit=False)
         if not change or not instance.create_user_id:
             instance.create_user_id = user

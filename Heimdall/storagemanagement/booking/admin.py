@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Admin File from Model Booking
 # 15.10.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
@@ -25,14 +26,19 @@ from storagemanagement.booking.models import Booking
 #--------------------------------------------------------------------------------
 @admin.register(Booking)
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ['__str__','companyitem','amount']
+    """
+    BookingAdmin
+    Settings for the Booking Admin Page
+    """
+    list_display = ['__str__','supplieritem','storageitem','amount']
     search_fields = []
     list_filter = []
     list_editable = []
     ordering = ['-create_datetime']
     fieldsets = (
         ("Artikel", {'fields':(
-            'companyitem',
+            'storageitem',
+            'supplieritem',
             )}),
         ("Menge", {'fields':(
             'amount',
@@ -45,14 +51,14 @@ class BookingAdmin(admin.ModelAdmin):
             )}),
     )
     inlines = []
-    def save_model(self, request, instance, form, change):
-        user = request.user 
-        instance = form.save(commit=False)
-        if not change or not instance.create_user_id:
-            instance.create_user_id = user
-        instance.update_user_id = user
-        instance.update_datetime = timezone.now()
-        instance.save()
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        obj = form.save(commit=False)
+        if not change or not obj.create_user_id:
+            obj.create_user_id = user
+        obj.update_user_id = user
+        obj.update_datetime = timezone.now()
+        obj.save()
         form.save_m2m()
-        return instance
+        return obj
 #--------------------------------------------------------------------------------

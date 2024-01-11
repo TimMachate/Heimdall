@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Forms File from Model Request Data
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -22,11 +23,17 @@ from storagemanagement.requestdata.models import RequestData
 # Forms
 #--------------------------------------------------------------------------------
 class RequestDataForm(ModelForm):
+    """
+    RequestDataForm
+
+    Args:
+        ModelForm (_type_): _description_
+    """
 
     def __init__(self, *args, **kwargs):
         super(RequestDataForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            if visible.name in ['companyitem','storageitem']:
+            if visible.name in ['supplieritem','storageitem']:
                 visible.field.widget.attrs['class'] = 'form-select'
             elif visible.name in ['authorized','done']:
                 visible.field.widget.attrs['class'] = 'form-check-input'
@@ -35,6 +42,9 @@ class RequestDataForm(ModelForm):
             visible.field.label_classes = ('form-label', )
 
     class Meta:
+        """
+        Meta Data from Form
+        """
         model = RequestData
         fields = '__all__'
 #--------------------------------------------------------------------------------

@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Serializers File from Model Order Data API
 # 10.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -21,9 +22,37 @@ from storagemanagement.orderdata.models import OrderData
 #--------------------------------------------------------------------------------
 # Serializer
 #--------------------------------------------------------------------------------
-from storagemanagement.api.serializers import BaseSerializer,CreateSerializer,UpdateSerializer
+from tools.api.serializers import (
+    BaseSerializer,
+    CreateSerializer,
+    UpdateSerializer,
+)
+from storagemanagement.api.serializers import (
+    BookingLinkSerializer,
+    SupplierLinkSerializer,
+    SupplierItemLinkSerializer,
+    StorageItemLinkSerializer
+)
 #--------------------------------------------------------------------------------
-class OrderDataBaseSerializer(CreateSerializer,UpdateSerializer):
+class OrderDataBaseSerializer(
+    CreateSerializer,
+    UpdateSerializer,
+    BookingLinkSerializer,
+    SupplierLinkSerializer,
+    SupplierItemLinkSerializer,
+    StorageItemLinkSerializer
+):
+    """
+    OrderDataBaseSerializer
+
+    Args:
+        CreateSerializer (_type_): _description_
+        UpdateSerializer (_type_): _description_
+        BookingLinkSerializer (_type_): _description_
+        SupplierLinkSerializer (_type_): _description_
+        SupplierItemLinkSerializer (_type_): _description_
+        StorageItemLinkSerializer (_type_): _description_
+    """
 
     amount = serializers.ReadOnlyField()
     amount_recived = serializers.ReadOnlyField()
@@ -32,24 +61,6 @@ class OrderDataBaseSerializer(CreateSerializer,UpdateSerializer):
     authorized_date = serializers.ReadOnlyField()
     authorized_time = serializers.ReadOnlyField()
     authorized_username = serializers.ReadOnlyField()
-
-    booking = serializers.ReadOnlyField()
-    booking_date = serializers.ReadOnlyField()
-    booking_time = serializers.ReadOnlyField()
-    booking_username = serializers.ReadOnlyField()
-
-    company_id = serializers.ReadOnlyField()
-    company_name = serializers.ReadOnlyField()
-    company_reference_number = serializers.ReadOnlyField()
-    company_slug = serializers.ReadOnlyField()
-    company_url_detail = serializers.ReadOnlyField()
-
-    companyitem_id = serializers.ReadOnlyField()
-    companyitem_name = serializers.ReadOnlyField()
-    companyitem_item_number = serializers.ReadOnlyField()
-    companyitem_reference_number = serializers.ReadOnlyField()
-    companyitem_slug = serializers.ReadOnlyField()
-    companyitem_url_detail = serializers.ReadOnlyField()
 
     done = serializers.ReadOnlyField()
 
@@ -73,24 +84,48 @@ class OrderDataBaseSerializer(CreateSerializer,UpdateSerializer):
 
     slug = serializers.ReadOnlyField()
 
-    storageitem_id = serializers.ReadOnlyField()
-    storageitem_name = serializers.ReadOnlyField()
-    storageitem_reference_number = serializers.ReadOnlyField()
-    storageitem_slug = serializers.ReadOnlyField()
-    storageitem_url_detail = serializers.ReadOnlyField()
-
     unit = serializers.ReadOnlyField()
+
+    value = serializers.ReadOnlyField()
+
+    url_block = serializers.SerializerMethodField()
 
     url_authorize_true = serializers.ReadOnlyField()
     url_authorize_false = serializers.ReadOnlyField()
     url_booking_true = serializers.ReadOnlyField()
     url_booking_false = serializers.ReadOnlyField()
-    url_delete = serializers.ReadOnlyField()
-    url_detail = serializers.ReadOnlyField()
+    url_delete = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:orderdata_delete',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'orderdata',
+    )
+    url_detail = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:orderdata_detail',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'orderdata',
+    )
     url_qrcode = serializers.ReadOnlyField()
-    url_update = serializers.ReadOnlyField()
+    url_update = serializers.HyperlinkedIdentityField(
+        view_name = 'storagemanagement:orderdata_update',
+        lookup_field = 'slug',
+        lookup_url_kwarg = 'orderdata',
+    )
 
-    value = serializers.ReadOnlyField()
+    def get_url_block(self,obj):
+        """
+        get_url_block
+
+        Args:
+            obj (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        result = {}
+        result["url_delete"] = obj.url_delete()
+        result["url_detail"] = obj.url_detail()
+        result["url_update"] = obj.url_update()
+        return result
 
     def __init__(self, *args, **kwargs):
         # Don't pass the 'fields' arg up to the superclass
@@ -107,10 +142,13 @@ class OrderDataBaseSerializer(CreateSerializer,UpdateSerializer):
                 self.fields.pop(field_name)
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = OrderData
-        ordering = ('id')
+        ordering = ('id',)
         exclude = [
-            'companyitem',
+            'supplieritem',
             'authorized_datetime',
             'authorized_user_id',
             'booking_datetime',
@@ -123,11 +161,21 @@ class OrderDataBaseSerializer(CreateSerializer,UpdateSerializer):
             ]
 #--------------------------------------------------------------------------------
 class OrderDataListSerializer(BaseSerializer,OrderDataBaseSerializer):
+    """
+    OrderDataListSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        OrderDataBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = OrderData
         exclude = [
-            'companyitem',
+            'supplieritem',
             'authorized_datetime',
             'authorized_user_id',
             'booking_datetime',
@@ -140,11 +188,21 @@ class OrderDataListSerializer(BaseSerializer,OrderDataBaseSerializer):
             ]
 #--------------------------------------------------------------------------------
 class OrderDataDetailSerializer(BaseSerializer,OrderDataBaseSerializer):
+    """
+    OrderDataDetailSerializer
+
+    Args:
+        BaseSerializer (_type_): _description_
+        OrderDataBaseSerializer (_type_): _description_
+    """
 
     class Meta:
+        """
+        Meta Data from Serializer
+        """
         model = OrderData
         exclude = [
-            'companyitem',
+            'supplieritem',
             'authorized_datetime',
             'authorized_user_id',
             'booking_datetime',

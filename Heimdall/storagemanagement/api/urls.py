@@ -1,9 +1,10 @@
+"""
 #--------------------------------------------------------------------------------
 # Url File from App Storagemanagement API
 # 04.11.2023
 # Tim Machate
 #--------------------------------------------------------------------------------
-
+"""
 #--------------------------------------------------------------------------------
 # Import necessary Moduls
 #--------------------------------------------------------------------------------
@@ -20,12 +21,12 @@ app_name = 'storagemanagementAPI'
 urlpatterns = [
     # Booking
     path('booking/',include('storagemanagement.booking.api.urls')),
-    # Company
-    path('company/',include('storagemanagement.company.api.urls')),
-    # CompanyContact
-    path('companycontact/',include('storagemanagement.companycontact.api.urls')),
-    # CompanyItem
-    path('companyitem/',include('storagemanagement.companyitem.api.urls')),
+    # Supplier
+    path('supplier/',include('storagemanagement.supplier.api.urls')),
+    # SupplierContact
+    path('suppliercontact/',include('storagemanagement.suppliercontact.api.urls')),
+    # SupplierItem
+    path('supplieritem/',include('storagemanagement.supplieritem.api.urls')),
     # Offer Data
     path('offerdata/',include('storagemanagement.offerdata.api.urls')),
     # Offer
@@ -40,6 +41,5 @@ urlpatterns = [
     path('storage/',include('storagemanagement.storage.api.urls')),
     # Storage Item
     path('storageitem/',include('storagemanagement.storageitem.api.urls')),
-    
 ]
 #--------------------------------------------------------------------------------

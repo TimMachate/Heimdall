@@ -1,0 +1,121 @@
+{% extends "main.html" %}
+
+{% block title %}
+    Firmen
+{% endblock title %}
+
+{% block static %}
+{% load static %}
+{% endblock static %}
+
+{% block style %}
+    <style type="text/css">
+        div.card {
+            width:18rem;
+        }
+        i.fas {
+            width:1rem;
+        }
+    </style>
+{% endblock style %}
+
+{% block menubar %}
+    {% include "storagemanagement_supplier_menubar.html" %}
+{% endblock menubar %}
+
+{% block aside %}
+{% endblock aside %}
+
+{% block content %}
+<section>
+    <div class="row justify-content-around">
+        {% for obj in queryset %}
+        <div class="card mt-3 mb-3 ms-1 me-1">
+            {% if form_setting_queryset.logo %}
+            <img src="" height="300px" width="300px" class="card-img-top" alt="logo from supplier" id="id_logo-{{ obj.id }}">
+            {% endif %}
+            <div class="card-body pt-1 pb-1 ps-1 pe-1">
+                {% if form_setting_queryset.name %}
+                <h5 class="card-title ">
+                    <div class="input-group mt-1 mb-1">
+                        {% if form_setting_queryset.url_detail %}
+                        <a href="" class="form-control btn btn-sm btn-primary align-middle" id="id_supplier-{{ obj.id }}">
+                            -
+                        </a>
+                        {% else %}
+                        <span class="form-control align-middle text-center" id="id_supplier-{{ obj.id }}">
+                            -
+                        </span>
+                        {% endif %}
+                    </div>
+                </h5>
+                {% endif %}
+                {% if form_setting_queryset.phone %}
+                <div class="input-group mt-1 mb-1">
+                    <div class="input-group-text">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <span class="form-control">
+                        <small id="id_telephone-{{ obj.id }}">
+                            -
+                        </small>
+                    </span>
+                </div>
+                {% endif %}
+                {% if form_setting_queryset.email %}
+                <div class="input-group mt-1 mb-1">
+                    <a class="input-group-text btn btn-primary" href="mailto:{{ obj.email }}">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <span class="form-control">
+                        <small id="id_email-{{ obj.id }}">
+                            -
+                        </small>
+                    </span>
+                </div>
+                {% endif %}
+                <div class="row">
+                    {% if form_setting_queryset.contact %}
+                    <div class="col">
+                        <div class="input-group mt-1 mb-1">
+                            <a href="" class="input-group-text btn btn-primary">
+                                <i class="fas fa-user"></i>
+                            </a>
+                            <span class="form-control text-center" id="id_suppliercontact_count-{{ obj.id }}">
+                                -
+                            </span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if form_setting_queryset.item %}
+                    <div class="col">
+                        <div class="input-group mt-1 mb-1">
+                            <a href="" class="input-group-text btn btn-primary">
+                                <i class="fas fa-cubes"></i>
+                            </a>
+                            <span class="form-control text-center" id="id_supplieritem_count-{{ obj.id }}">
+                                -
+                            </span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block aside_mail %}
+{% endblock aside_mail %}
+
+{% block footer %}
+{% endblock footer %}
+
+{% block scripts %}
+<script src="{% static 'storagemanagement_supplier_overview.js' %}"></script>
+<script>
+    supplier_overview("{{ api_data_url }}","supplier");
+</script>
+{% endblock scripts %}
