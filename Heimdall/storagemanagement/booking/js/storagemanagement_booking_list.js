@@ -242,6 +242,28 @@ function booking_list(api_url,model) {
                                 };
                             }
                         },
+                        {
+                            "name":"url_block",
+                            "data":"url_block",
+                            "defaultContent": "",
+                            "width":"35px",
+                            "className":"",
+                            "visible": "url_block" in dataset[0] ? true : false,
+                            "render":function(data,type,row,meta){
+                                if(row.url_block){
+                                    if (row.url_block.url_detail){
+                                        detail = '<a class="btn btn-primary" href="'+ row.url_block.url_detail +'"><i class="fas fa-search"></i></a>'
+                                    } else {detail = ""};
+                                    if (row.url_block.url_update){
+                                        update = '<a class="btn btn-primary" href="'+ row.url_block.url_update +'"><i class="fas fa-pen"></i></a>'
+                                    } else {update = ""};
+                                    if (row.url_block.url_delete){
+                                        del = '<a class="btn btn-danger" href="'+ row.url_block.url_delete +'"><i class="fas fa-trash"></i></a>'
+                                    } else {del = ""};
+                                    return '<div class="btn-group">'+detail+update+del+'</div>'
+                                }
+                            }
+                        },
                     ];
                     let print = [];
                     for (let i = 0; i < col.length; i++){

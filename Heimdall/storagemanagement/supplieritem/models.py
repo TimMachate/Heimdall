@@ -45,16 +45,57 @@ class SupplierItemBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         UpdateData (_type_): _description_
     """
 
+    class Types(models.TextChoices):
+        """
+        Types
+
+        Args:
+            models (_type_): _description_
+        """
+        CHEMIE = "CH",_("Chemie")
+        ERSATZTEIL = "ET",_("Ersatzteil")
+        SONSTIGES = "SO",_("Sonstiges")
+        VERBRAUCHSMATERIAL = "VM",_("Verbrauchsmaterial")
+
     short_name = "STSI"
 
-    supplieritem = models.OneToOneField(
+    companyitem = models.OneToOneField(
         blank = True,
-        name = "supplieritem",
+        name = "companyitem",
         null = True,
         on_delete = models.CASCADE,
-        related_name = "supplieritem_supplieritem",
-        to = "storagemanagement.supplieritem",
+        related_name = "supplieritem_companyitem",
+        to = "relationshipmanagement.companyitembasemodel",
         verbose_name = "Artikel",
+    )
+
+    delivery_time = models.IntegerField(
+        blank = True,
+        help_text = 'Lieferzeit in Tagen.',
+        name = "delivery_time",
+        null = True,
+        verbose_name = "Lieferzeit",
+    )
+
+    storageitem = models.ForeignKey(
+        blank = True,
+        name = "storageitem",
+        null = True,
+        on_delete = models.CASCADE,
+        related_name = "supplieritem_storageitem",
+        to = "storagemanagement.storageitem",
+        verbose_name = "Lagerartikel",
+    )
+
+    types = models.CharField(
+        blank = True,
+        choices = Types.choices,
+        default = Types.SONSTIGES,
+        help_text = "Art des Artikels",
+        max_length = 3,
+        name = 'types',
+        null = True,
+        verbose_name = 'Art',
     )
 
     class Meta:
@@ -151,7 +192,7 @@ class SupplierItem(CompanyItemBaseModel):
         return result
 
     # Storage Item
-    def storageitem(self):
+    def get_storageitem_object(self):
         """
         storageitem
 
@@ -168,7 +209,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: id from storageitem
         """
-        result = self.storageitem().id if self.storageitem() else None
+        result = self.get_storageitem_object().id if self.get_storageitem_object() else None
         return result
 
     def storageitem_name(self):
@@ -178,7 +219,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: name from storageitem
         """
-        result = self.storageitem().name if self.storageitem() else None
+        result = self.get_storageitem_object().name if self.get_storageitem_object() else None
         return result
 
     def storageitem_reference_number(self):
@@ -188,7 +229,8 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: reference number from storageitem
         """
-        result = self.storageitem().reference_number if self.storageitem() else None
+        obj = self.get_storageitem_object()
+        result = obj.reference_number if obj else None
         return result
 
     def storageitem_slug(self):
@@ -198,7 +240,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: slug from storageitem
         """
-        result = self.storageitem().slug if self.storageitem() else None
+        result = self.get_storageitem_object().slug if self.get_storageitem_object() else None
         return result
 
     def storageitem_url_detail(self):
@@ -208,10 +250,21 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: url to storageitem detail page
         """
-        result = self.storageitem().url_detail() if self.storageitem() else None
+        obj = self.get_storageitem_object()
+        result = obj.url_detail() if obj else None
         return result
 
     # Company
+    def get_supplier_object(self):
+        """
+        get_supplier_object
+
+        Returns:
+            query: contains supplier object
+        """
+        result = self.company if self.company else None
+        return result
+
     def supplier_id(self):
         """
         supplier_id
@@ -219,7 +272,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             int: id from supplier
         """
-        result = self.company.id if self.company else None
+        result = self.get_supplier_object().id if self.get_supplier_object() else None
         return result
 
     def supplier_name(self):
@@ -229,7 +282,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: name from supplier
         """
-        result = self.company.name if self.company else None
+        result = self.get_supplier_object().name if self.get_supplier_object() else None
         return result
 
     def supplier_reference_number(self):
@@ -239,7 +292,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: reference number from supplier
         """
-        result = self.company.reference_number if self.company else None
+        result = self.get_supplier_object().reference_number if self.get_supplier_object() else None
         return result
 
     def supplier_slug(self):
@@ -249,7 +302,7 @@ class SupplierItem(CompanyItemBaseModel):
         Returns:
             string: slug from supplier
         """
-        result = self.company.slug if self.company else None
+        result = self.get_supplier_object().slug if self.get_supplier_object() else None
         return result
 
     def supplier_url_detail(self):

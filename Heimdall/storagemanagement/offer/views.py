@@ -39,17 +39,71 @@ from storagemanagement.offer.forms import OfferForm,OfferDataFormset
 #--------------------------------------------------------------------------------
 # Views
 #--------------------------------------------------------------------------------
-class OfferView(PermissionRequiredMixin,MainView):
+class OfferBaseView(PermissionRequiredMixin,MainView):
+    """
+    OfferDataBaseView
 
-    permission_required = 'storagemanagement.view_offer'
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+    """
 
-    template_name = 'storagemanagement_offer_overview.html'
+    form_setting = None
+    model_setting = None
 
-    def get_queryset(self, *args, **kwargs):
-        queryset = Offer.objects.filter(ordered=False)
-        return queryset
+    def get(self, request, *args, **kwargs):
+        """
+        get
 
-    def get_context_data(self, **kwargs):
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        self.get_context_data()
+        return render(request, self.template_name, self.context)
+
+    def post(self,request, *args, **kwargs):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+        """
+        form = self.form_setting(
+            request.POST,
+            request.FILES,
+            instance=self.context["form_setting_queryset"]
+        )
+        user = get_user_model().objects.get(id=request.user.id)
+        if form.is_valid():
+            obj = form.save()
+            if not obj.create_user_id:
+                obj.create_user_id = user
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
+        self.context['form'] = form
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+    def get_initial(self, *args, **kwargs):
+        """
+        get_initial
+
+        Returns:
+            dict: contains all initial values
+        """
+        result = {}
+        return result
+
+    def get_context_data(self, *args, **kwargs):
+        """
+        get_context_data
+
+        Returns:
+            dict: contains all context data
+        """
         super().get_context_data(**kwargs)
         self.context['model'] = 'offer'
         # Urls
@@ -57,51 +111,101 @@ class OfferView(PermissionRequiredMixin,MainView):
         self.context['url_list'] = reverse('storagemanagement:offer_list')
         self.context['url_table'] = reverse('storagemanagement:offer_table')
         self.context['url_create'] = reverse('storagemanagement:offer_create')
-        # Data Url
-        self.context["fields"] = "id,authorized,sent,recived,ordered,create_date,create_time,create_username,supplier_name,supplier_reference_number,supplier_url_detail,item_data,value,notice,url_detail,url_sent,url_recived,url_order_true,url_order_false"
-        self.context["api_data_url"] = reverse("storagemanagementAPI:offer_list")+"?values={}&done=false".format(
-            self.context["fields"]
-        )
+        # Setting
+        if self.model_setting and self.form_setting:
+            self.context["form_setting_queryset"] = self.model_setting.objects.get_or_create(
+                user=self.request.user
+            )[0]
+            # Data Url
+            self.context["api_data_url"] = self.get_url_api(
+                queryset=self.context["form_setting_queryset"]
+            )
+            # Form
+            self.context["form_setting"] = self.form_setting(
+                instance = self.context["form_setting_queryset"]
+            )
+        else:
+            self.context["form_setting_queryset"] = None
+            self.context["api_data_url"] = None
+            self.context["form_setting"] = None
+        # Queryset
+        self.context["queryset"]= self.get_queryset()
+        return self.context
+
+    def get_queryset(self, *args, **kwargs):
+        """
+        get_queryset
+
+        Returns:
+            queryset: contains the offer object
+        """
+        if self.kwargs.get('offer'):
+            queryset = Offer.objects.get(slug=self.kwargs.get('offer'))
+        else:
+            queryset = Offer.objects.all()
+        return queryset
+
+    def get_url_api(self,queryset):
+        """
+        get_url_api
+
+        Returns:
+            string: url to api
+        """
+        url = reverse(
+            queryset.api
+        )+f"?values={queryset.fields()}"
+        return url
 #--------------------------------------------------------------------------------
-class OfferListView(OfferView):
+class OfferView(OfferBaseView):
+    """
+    OfferView
+
+    Args:
+        OfferBaseView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    permission_required = 'storagemanagement.view_offer'
+
+    template_name = 'storagemanagement_offer_overview.html'
+
+    form_setting = None
+    model_setting = None
+#--------------------------------------------------------------------------------
+class OfferListView(OfferBaseView):
+    """
+    OfferListView
+
+    Args:
+        OfferBaseView (_type_): _description_
+    """
 
     permission_required = 'storagemanagement.list_offer'
 
     template_name = 'storagemanagement_offer_list.html'
 
-    def get(self, request, *args, **kwargs):
-        self.get_context_data()
-        self.context["queryset"]= self.get_queryset()
-        return render(request, self.template_name, self.context)
-
-    def get_context_data(self, **kwargs):
-        super().get_context_data(**kwargs)
-        # Data Url
-        self.context["fields"] = "id,authorized,sent,recived,ordered,create_date,create_time,reference_number,supplier_name,value,item_count,notice,url_detail,url_delete,url_update"
-        self.context["api_data_url"] = reverse("storagemanagementAPI:offer_list")+"?values={}".format(
-            self.context["fields"]
-        )
+    form_setting = None
+    model_setting = None
 #--------------------------------------------------------------------------------
-class OfferTableView(OfferView):
+class OfferTableView(OfferBaseView):
+    """
+    OfferTableView
+
+    Args:
+        OfferBaseView (_type_): _description_
+    """
 
     permission_required = 'storagemanagement.table_offer'
 
     template_name = 'storagemanagement_offer_table.html'
 
-    def get(self, request, *args, **kwargs):
-        self.get_context_data()
-        self.context["queryset"]= self.get_queryset()
-        return render(request, self.template_name, self.context)
-
-    def get_context_data(self, **kwargs):
-        super().get_context_data(**kwargs)
-        # Data Url
-        self.context["fields"] = "id,authorized,sent,recived,ordered,create_date,create_time,create_user,create_username,update_date,update_time,update_username,supplier_name,reference_number,value,notice,item_count"
-        self.context["api_data_url"] = reverse("storagemanagementAPI:offer_list")+"?values={}".format(
-            self.context["fields"]
-        )
+    form_setting = None
+    model_setting = None
 #--------------------------------------------------------------------------------
-class OfferCreateUpdateDetailView(OfferView):
+class OfferCreateUpdateDetailView(OfferBaseView):
     """
     OfferCreateUpdateDetailView
 
@@ -117,7 +221,10 @@ class OfferCreateUpdateDetailView(OfferView):
     form_class = OfferForm
     formset_class = OfferDataFormset
 
-    def get(self, request):
+    form_setting = None
+    model_setting = None
+
+    def get(self, request, *args, **kwargs):
         """
         get
 
@@ -136,11 +243,11 @@ class OfferCreateUpdateDetailView(OfferView):
         if self.context['queryset']:
             for form in self.context['formset']:
                 form.fields["supplieritem"].queryset = SupplierItem.objects.filter(
-                    supplier=self.context['queryset'].supplier()
+                    company=self.context['queryset'].get_supplier_object()
                 )
         return render(request, self.template_name, self.context)
 
-    def post(self,request):
+    def post(self,request, *args, **kwargs):
         """
         post
 
@@ -453,7 +560,7 @@ class OfferOrderTrueView(PermissionRequiredMixin,MainView):
                             amount=item.amount,
                             supplieritem=item.supplieritem,
                             create_user_id=user,
-                            offer=offer,
+                            offer=obj,
                             order=order,
                             price=item.price,
                             update_user_id=user,

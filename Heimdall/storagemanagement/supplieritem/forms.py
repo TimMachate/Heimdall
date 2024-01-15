@@ -50,7 +50,7 @@ class SupplierItemForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SupplierItemForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
-            if visible.name in ['company','unit','storageitem']:
+            if visible.name in ['company','unit','companyitem']:
                 visible.field.widget.attrs['class'] = 'form-select'
             elif visible.name in ['store']:
                 visible.field.widget.attrs['class'] = 'form-check-input'
@@ -67,7 +67,7 @@ class SupplierItemForm(ModelForm):
 SupplierItemFormset = inlineformset_factory(
     extra = 0,
     fields = '__all__',
-    fk_name = 'supplieritem',
+    fk_name = 'companyitem',
     form = SupplierItemForm,
     formset = SupplierItemBaseFormset,
     max_num = 1,

@@ -46,16 +46,16 @@ class RequestDataListAPIView(ListAPIView):
     queryset = RequestData.objects.all()
     filter_backends = [DjangoFilterBackend,OrderingFilter,SearchFilter]
     filterset_fields = {
-        #'supplieritem__company__slug':['exact'],
+        'supplieritem__company__slug':['exact'],
         'supplieritem__slug':['exact'],
-        'supplieritem__storageitem__slug':['exact'],
+        #'supplieritem__storageitem__slug':['exact'],
         'authorized':['exact'],
         'done':['exact'],
         }
     search_fields = [
         'supplieritem__name',
         'supplieritem__company__name',
-        'supplieritem__storageitem__name'
+        #'supplieritem__storageitem__name'
     ]
     pagination_class = None
 #--------------------------------------------------------------------------------

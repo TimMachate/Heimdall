@@ -192,6 +192,12 @@ class Offer(OfferBaseModel):
 
     # Authorized
     def authorized(self):
+        """
+        authorized
+
+        Returns:
+            boolean: is authorized (true) or rejected (false)
+        """
         queryset = self.offerdata()
         result = False
         if queryset.exists():
@@ -200,7 +206,13 @@ class Offer(OfferBaseModel):
         return result
 
     # Company
-    def company(self):
+    def get_supplier_object(self):
+        """
+        supplier
+
+        Returns:
+            query: contains supplier object
+        """
         queryset = self.offerdata()
         if queryset:
             result = queryset.first().supplieritem.company
@@ -208,37 +220,91 @@ class Offer(OfferBaseModel):
             result = None
         return result
 
-    def company_id(self):
-        return self.company().id if self.company() else None
+    def supplier_id(self):
+        """
+        supplier_id
 
-    def company_name(self):
-        return self.company().name if self.company() else None
+        Returns:
+            int: id from supplier
+        """
+        return self.get_supplier_object().id if self.get_supplier_object() else None
 
-    def company_reference_number(self):
-        return self.company().reference_number if self.company() else None
+    def supplier_name(self):
+        """
+        supplier_name
 
-    def company_slug(self):
-        return self.company().slug if self.company() else None
+        Returns:
+            string: name from supplier
+        """
+        return self.get_supplier_object().name if self.get_supplier_object() else None
 
-    def company_url_detail(self):
-        return self.company().url_detail() if self.company() else None
+    def supplier_reference_number(self):
+        """
+        supplier_reference_number
+
+        Returns:
+            string: reference_number from supplier
+        """
+        return self.get_supplier_object().reference_number if self.get_supplier_object() else None
+
+    def supplier_slug(self):
+        """
+        supplier_slug
+
+        Returns:
+            string: slug from supplier
+        """
+        return self.get_supplier_object().slug if self.get_supplier_object() else None
+
+    def supplier_url_detail(self):
+        """
+        supplier_url_detail
+
+        Returns:
+            string: url to detail page from supplier
+        """
+        return self.get_supplier_object().url_detail() if self.get_supplier_object() else None
 
     # Offer Data
     def offerdata(self):
+        """
+        offerdata
+
+        Returns:
+            queryset: contains all offerdata objects
+        """
         result = OfferData.objects.filter(offer=self)
         return result if result.exists() else None
 
     def offerdata_count(self):
+        """
+        offerdata_count
+
+        Returns:
+            int: count from the offerdata
+        """
         return self.offerdata().count() if self.offerdata() else 0
 
     # Offer File
     def offer_file_name(self):
+        """
+        offer_file_name
+
+        Returns:
+            string: name of offer file
+        """
         result = None
         if self.offer_file:
             result = self.offer_file.name.split('/')[-1]
         return result
 
     def offer_file_url(self):
+        """
+        offer_file_url
+
+        Returns:
+            string: url to offer file
+        """
         result = None
         if self.offer_file:
             result = self.offer_file.url
@@ -246,75 +312,216 @@ class Offer(OfferBaseModel):
 
     # Ordered
     def ordered_date(self):
+        """
+        ordered_date
+
+        Returns:
+            string: date of the order
+        """
         return self.ordered_datetime_formated().split(" ")[0] if self.ordered_datetime else None
 
     def ordered_datetime_formated(self):
-        return self.ordered_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.ordered_datetime else None
+        """
+        ordered_datetime_formated
+
+        Returns:
+            string: date and time formated from order
+        """
+        obj = self.ordered_datetime
+        return obj.strftime("%d.%m.%Y %H:%M:%S") if obj else None
 
     def ordered_time(self):
+        """
+        ordered_time
+
+        Returns:
+            string: time from order
+        """
         return self.ordered_datetime_formated().split(" ")[1] if self.ordered_datetime else None
 
     def ordered_username(self):
+        """
+        ordered_username
+
+        Returns:
+            string: username from the person who ordered
+        """
         return str(self.ordered_user_id.username) if self.ordered_user_id else None
 
     # Recived
     def recived_date(self):
+        """
+        recived_date
+
+        Returns:
+            string: recive date of the offer
+        """
         return self.recived_datetime_formated().split(" ")[0] if self.recived_datetime else None
 
     def recived_datetime_formated(self):
-        return self.recived_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.recived_datetime else None
+        """
+        recived_datetime_formated
+
+        Returns:
+            string: recive date time formated of the offer
+        """
+        obj = self.recived_datetime
+        return obj.strftime("%d.%m.%Y %H:%M:%S") if obj else None
 
     def recived_time(self):
+        """
+        recived_time
+
+        Returns:
+            string: recived time of the offer
+        """
         return self.recived_datetime_formated().split(" ")[1] if self.recived_datetime else None
 
     def recived_username(self):
+        """
+        recived_username
+
+        Returns:
+            string: recive username of the offer
+        """
         return str(self.recived_user_id.username) if self.recived_user_id else None
 
     # Sent
     def sent_date(self):
+        """
+        sent_date
+
+        Returns:
+            string: sent date of the offer
+        """
         return self.sent_datetime_formated().split(" ")[0] if self.sent_datetime else None
 
     def sent_datetime_formated(self):
-        return self.sent_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.sent_datetime else None
+        """
+        sent_datetime_formated
+
+        Returns:
+            string: sent date time formated of the offer
+        """
+        obj = self.sent_datetime
+        return obj.strftime("%d.%m.%Y %H:%M:%S") if obj else None
 
     def sent_time(self):
+        """
+        sent_time
+
+        Returns:
+            string: sent time of the offer
+        """
         return self.sent_datetime_formated().split(" ")[1] if self.sent_datetime else None
 
     def sent_username(self):
+        """
+        sent_username
+
+        Returns:
+            string: sent username of the offer
+        """
         return str(self.sent_user_id.username) if self.sent_user_id else None
 
     # Urls
     def url_authorize_true(self):
+        """
+        url_authorize_true
+
+        Returns:
+            string: url to set authorization to true
+        """
         return reverse('storagemanagement:offer_authorize_true',kwargs={'offer':self.slug})
 
     def url_authorize_false(self):
+        """
+        url_authorize_false
+
+        Returns:
+            string: url to set authorization to false
+        """
         return reverse('storagemanagement:offer_authorize_false',kwargs={'offer':self.slug})
 
     def url_delete(self):
+        """
+        url_delete
+
+        Returns:
+            string: url to delete page
+        """
         return reverse('storagemanagement:offer_delete',kwargs={'offer':self.slug})
 
     def url_detail(self):
+        """
+        url_detail
+
+        Returns:
+            string: url to detail page
+        """
         return reverse('storagemanagement:offer_detail',kwargs={'offer':self.slug})
 
     def url_order_true(self):
+        """
+        url_order_true
+
+        Returns:
+            string: url to set the order to true
+        """
         return reverse('storagemanagement:offer_order_true',kwargs={'offer':self.slug})
 
     def url_order_false(self):
+        """
+        url_order_false
+
+        Returns:
+            string: url to set the order to false
+        """
         return reverse('storagemanagement:offer_order_false',kwargs={'offer':self.slug})
 
     def url_qrcode(self):
+        """
+        url_qrcode
+
+        Returns:
+            string: url to qrcode page
+        """
         return 'http://'+settings.HOST+self.url_detail()
 
     def url_recived(self):
+        """
+        url recived
+
+        Returns:
+            string: url to set recive to true
+        """
         return reverse('storagemanagement:offer_recived',kwargs={'offer':self.slug})
 
     def url_sent(self):
+        """
+        url_sent
+
+        Returns:
+            string: url to set sent to true
+        """
         return reverse('storagemanagement:offer_sent',kwargs={'offer':self.slug})
 
     def url_update(self):
+        """
+        url_update
+
+        Returns:
+            string: url to the update page
+        """
         return reverse('storagemanagement:offer_update',kwargs={'offer':self.slug})
 
     def value(self):
+        """
+        value
+
+        Returns:
+            float: contains the summary value of the offer
+        """
         queryset=self.offerdata()
         result = 0
         for query in queryset:
@@ -322,7 +529,12 @@ class Offer(OfferBaseModel):
         return result
 
     def __str__(self):
-        return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.company_name())
+        return "{}{}{}_{}".format(
+            self.create_datetime.year,
+            self.create_datetime.month,
+            self.create_datetime.day,
+            self.supplier_name()
+        )
 
     class Meta:
         """

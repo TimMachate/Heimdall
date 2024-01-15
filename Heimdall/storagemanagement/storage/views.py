@@ -206,7 +206,7 @@ class StorageBaseView(PermissionRequiredMixin,MainView):
         Returns:
             string: url to api
         """
-        url = queryset.api_url() + "&supplieritem__company__slug={}&supplieritem__slug={}&storageitem__slug={}".format(
+        url = queryset.api_url() + "&supplieritem__company__slug={}&supplieritem__slug={}&storageitem__slug={}&unload=false".format(
             supplier,
             supplieritem,
             storageitem
@@ -453,31 +453,34 @@ class StorageUnloadView(PermissionRequiredMixin,MainView):
         """
         user = get_user_model().objects.get(id=request.user.id)
         query = self.get_queryset()
-        query.unload_user_id = user
-        query.unload_datetime = timezone.now()
-        query.save()
+        if query.unload is False:
+            query.unload = True
+            query.unload_user_id = user
+            query.unload_datetime = timezone.now()
+            query.save()
 
-        old_stock = Booking.objects.filter(
-            supplieritem = query.supplieritem
-        ).last().stock if Booking.objects.filter(
-            supplieritem = query.supplieritem
-        ) else 0
-        new_stock = old_stock -1
+            old_stock = Booking.objects.filter(
+                supplieritem = query.supplieritem
+            ).last().stock if Booking.objects.filter(
+                supplieritem = query.supplieritem
+            ) else 0
+            new_stock = old_stock -1
 
-        # set stock to 0 if new_stock is smaller then 0
-        if new_stock <0:
-            new_stock = 0
+            # set stock to 0 if new_stock is smaller then 0
+            if new_stock <0:
+                new_stock = 0
 
-        booking = Booking(
-            amount = -1,
-            create_user_id = user,
-            price = query.supplieritem.price,
-            stock = new_stock,
-            supplieritem = SupplierItem.objects.get(id=query.supplieritem.id),
-            update_user_id = user,
-            update_datetime = timezone.now(),
-        )
-        booking.save()
+            booking = Booking(
+                amount = -1,
+                create_user_id = user,
+                price = query.supplieritem.price,
+                stock = new_stock,
+                #storageitem = query.storageitem(),
+                supplieritem = SupplierItem.objects.get(id=query.supplieritem.id),
+                update_user_id = user,
+                update_datetime = timezone.now(),
+            )
+            booking.save()
         if 'next' in request.GET:
             return redirect(request.GET.get('next'))
         else:

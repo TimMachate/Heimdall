@@ -1,7 +1,7 @@
 """
 #--------------------------------------------------------------------------------
-# Admin File from Model RequestData
-# 05.01.2024
+# Admin File from Model Supplier
+# 07.01.2024
 # Tim Machate
 #--------------------------------------------------------------------------------
 """
@@ -17,10 +17,10 @@ from django.utils import timezone
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.storagemanagementusersetting.requestdata.models import (
-    StorageManagementRequestDataOverviewUserSetting,
-    StorageManagementRequestDataListUserSetting,
-    StorageManagementRequestDataTableUserSetting,
+from storagemanagement.storagemanagementusersetting.offer.models import (
+    StorageManagementOfferOverviewUserSetting,
+    StorageManagementOfferListUserSetting,
+    StorageManagementOfferTableUserSetting,
 )
 #--------------------------------------------------------------------------------
 
@@ -28,10 +28,10 @@ from storagemanagement.storagemanagementusersetting.requestdata.models import (
 #--------------------------------------------------------------------------------
 # Admin
 #--------------------------------------------------------------------------------
-@admin.register(StorageManagementRequestDataOverviewUserSetting)
-class StorageManagementRequestDataOverviewUserSettingAdmin(admin.ModelAdmin):
+@admin.register(StorageManagementOfferOverviewUserSetting)
+class StorageManagementOfferOverviewUserSettingAdmin(admin.ModelAdmin):
     """
-    StorageManagementRequestDataOverviewUserSettingAdmin
+    StorageManagementOfferOverviewUserSettingAdmin
 
     Args:
         admin (_type_): _description_
@@ -55,10 +55,10 @@ class StorageManagementRequestDataOverviewUserSettingAdmin(admin.ModelAdmin):
         form.save_m2m()
         return obj
 #--------------------------------------------------------------------------------
-@admin.register(StorageManagementRequestDataListUserSetting)
-class StorageManagementRequestDataListUserSettingAdmin(admin.ModelAdmin):
+@admin.register(StorageManagementOfferListUserSetting)
+class StorageManagementOfferListUserSettingAdmin(admin.ModelAdmin):
     """
-    StorageManagementRequestDataListUserSettingAdmin
+    StorageManagementOfferListUserSettingAdmin
 
     Args:
         admin (_type_): _description_
@@ -82,10 +82,10 @@ class StorageManagementRequestDataListUserSettingAdmin(admin.ModelAdmin):
         form.save_m2m()
         return obj
 #--------------------------------------------------------------------------------
-@admin.register(StorageManagementRequestDataTableUserSetting)
-class StorageManagementRequestDataTableUserSettingAdmin(admin.ModelAdmin):
+@admin.register(StorageManagementOfferTableUserSetting)
+class StorageManagementOfferTableUserSettingAdmin(admin.ModelAdmin):
     """
-    StorageManagementRequestDataTableUserSettingAdmin
+    StorageManagementOfferTableUserSettingAdmin
 
     Args:
         admin (_type_): _description_

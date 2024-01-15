@@ -223,6 +223,41 @@ function requestdata_table(api_url,model) {
                             "render":function(data,type,row,meta){if (row.notice){return '<i class="fas fa-exclamation-triangle"></i>'};}
                         },
                         {
+                            "name":"url_authorize_true",
+                            "data":"url_authorize_true",
+                            "defaultContent": "",
+                            "className":"",
+                            "visible": "url_authorize_true" in dataset[0] ? true : false,
+                            "render":function(data,type,row,meta){if(row.url_authorize_true){return row.url_authorize_true};}
+                        },
+                        {
+                            "name":"url_authorize_false",
+                            "data":"url_authorize_false",
+                            "defaultContent": "",
+                            "className":"",
+                            "visible": "url_authorize_false" in dataset[0] ? true : false,
+                            "render":function(data,type,row,meta){if(row.url_authorize_false){return row.url_authorize_false};}
+                        },
+                        {
+                            "name":"url_authorize",
+                            "data":"url_authorize",
+                            "defaultContent": "",
+                            "width":"35px",
+                            "className":"",
+                            "visible": "url_authorize" in dataset[0] ? true : false,
+                            "render":function(data,type,row,meta){
+                                if(row.url_authorize){
+                                    if (row.url_authorize.url_authorize_true){
+                                        yes = '<a class="btn btn-primary" href="'+ row.url_authorize.url_authorize_true +'"><i class="fas fa-search"></i></a>'
+                                    } else {yes = ""};
+                                    if (row.url_authorize.url_authorize_false){
+                                        no = '<a class="btn btn-primary" href="'+ row.url_authorize.url_authorize_false +'"><i class="fas fa-pen"></i></a>'
+                                    } else {no = ""};
+                                    return '<div class="btn-group">'+yes+no+'</div>'
+                                }
+                            }
+                        },
+                        {
                             "name":"url_detail",
                             "data":"url_detail",
                             "defaultContent": "",
@@ -250,20 +285,26 @@ function requestdata_table(api_url,model) {
                             "render":function(data,type,row,meta){if (row.url_delete){return row.url_delete};}
                         },
                         {
-                            "name":"url_authorize_true",
-                            "data":"url_authorize_true",
+                            "name":"url_block",
+                            "data":"url_block",
                             "defaultContent": "",
+                            "width":"35px",
                             "className":"",
-                            "visible": "url_authorize_true" in dataset[0] ? true : false,
-                            "render":function(data,type,row,meta){if(row.url_authorize_true){return row.url_authorize_true};}
-                        },
-                        {
-                            "name":"url_authorize_false",
-                            "data":"url_authorize_false",
-                            "defaultContent": "",
-                            "className":"",
-                            "visible": "url_authorize_false" in dataset[0] ? true : false,
-                            "render":function(data,type,row,meta){if(row.url_authorize_false){return row.url_authorize_false};}
+                            "visible": "url_block" in dataset[0] ? true : false,
+                            "render":function(data,type,row,meta){
+                                if(row.url_block){
+                                    if (row.url_block.url_detail){
+                                        detail = '<a class="btn btn-primary" href="'+ row.url_block.url_detail +'"><i class="fas fa-search"></i></a>'
+                                    } else {detail = ""};
+                                    if (row.url_block.url_update){
+                                        update = '<a class="btn btn-primary" href="'+ row.url_block.url_update +'"><i class="fas fa-pen"></i></a>'
+                                    } else {update = ""};
+                                    if (row.url_block.url_delete){
+                                        del = '<a class="btn btn-danger" href="'+ row.url_block.url_delete +'"><i class="fas fa-trash"></i></a>'
+                                    } else {del = ""};
+                                    return '<div class="btn-group">'+detail+update+del+'</div>'
+                                }
+                            }
                         },
                     ];
                     let print = [];

@@ -52,18 +52,15 @@ from storagemanagement.storagemanagementusersetting.booking.admin import (
     StorageManagementBookingListUserSettingAdmin,
     StorageManagementBookingTableUserSettingAdmin
 )
-from storagemanagement.storagemanagementusersetting.supplier.admin import (
-    StorageManagementSupplierListUserSettingAdmin,
-    StorageManagementSupplierTableUserSettingAdmin
+from storagemanagement.storagemanagementusersetting.offer.admin import (
+    StorageManagementOfferListUserSettingAdmin,
+    StorageManagementOfferOverviewUserSettingAdmin,
+    StorageManagementOfferTableUserSettingAdmin
 )
-from storagemanagement.storagemanagementusersetting.suppliercontact.admin import (
-    StorageManagementSupplierContactListUserSettingAdmin,
-    StorageManagementSupplierContactTableUserSettingAdmin
-)
-from storagemanagement.storagemanagementusersetting.supplieritem.admin import (
-    StorageManagementSupplierItemOverviewUserSettingAdmin,
-    StorageManagementSupplierItemListUserSettingAdmin,
-    StorageManagementSupplierItemTableUserSettingAdmin
+from storagemanagement.storagemanagementusersetting.offerdata.admin import (
+    StorageManagementOfferdataListUserSettingAdmin,
+    StorageManagementOfferdataOverviewUserSettingAdmin,
+    StorageManagementOfferdataTableUserSettingAdmin
 )
 from storagemanagement.storagemanagementusersetting.requestdata.admin import (
     StorageManagementRequestDataListUserSettingAdmin,
@@ -78,5 +75,18 @@ from storagemanagement.storagemanagementusersetting.storageitem.admin import (
     StorageManagementStorageItemOverviewUserSettingAdmin,
     StorageManagementStorageItemListUserSettingAdmin,
     StorageManagementStorageItemTableUserSettingAdmin
+)
+from storagemanagement.storagemanagementusersetting.supplier.admin import (
+    StorageManagementSupplierListUserSettingAdmin,
+    StorageManagementSupplierTableUserSettingAdmin
+)
+from storagemanagement.storagemanagementusersetting.suppliercontact.admin import (
+    StorageManagementSupplierContactListUserSettingAdmin,
+    StorageManagementSupplierContactTableUserSettingAdmin
+)
+from storagemanagement.storagemanagementusersetting.supplieritem.admin import (
+    StorageManagementSupplierItemOverviewUserSettingAdmin,
+    StorageManagementSupplierItemListUserSettingAdmin,
+    StorageManagementSupplierItemTableUserSettingAdmin
 )
 #--------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 """
 #--------------------------------------------------------------------------------
-# Models File from Model storagemanagementbookingusersetting
-# 04.01.2024
+# Models File from Model storagemanagementofferdatausersetting
+# 14.01.2024
 # Tim Machate
 #--------------------------------------------------------------------------------
 """
@@ -25,17 +25,17 @@ from tools.updatedata.models import UpdateData
 #--------------------------------------------------------------------------------
 # Model
 #--------------------------------------------------------------------------------
-class StorageManagementBookingOverviewUserSetting(
+class StorageManagementOfferdataOverviewUserSetting(
     CreateData,
     UpdateData
 ):
     """
-    StorageManagementBookingOverviewUserSetting
+    StorageManagementOfferdataOverviewUserSetting
     """
 
     # api
     api = models.CharField(
-        default = 'storagemanagementAPI:booking_list',
+        default = 'storagemanagementAPI:offerdata_list',
         help_text = 'Url Adresse der API',
         max_length = 200,
         name = 'api',
@@ -93,47 +93,11 @@ class StorageManagementBookingOverviewUserSetting(
         verbose_name = 'Update-Benutzer',
     )
 
-    # supplier
     reference_number = models.BooleanField(
         default = True,
         help_text = 'Darstellung der Referenz Nummer',
         name = 'reference_number',
         verbose_name = 'Referenznummer',
-    )
-
-    supplieritem_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Lagerartikel',
-        name = 'supplieritem_name',
-        verbose_name = 'Lagerartikel',
-    )
-
-    supplieritem_reference_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Lagerartikelnummer',
-        name = 'supplieritem_reference_number',
-        verbose_name = 'Lagerartikelnummer',
-    )
-
-    supplieritem_item_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Artikelnummer',
-        name = 'supplieritem_item_number',
-        verbose_name = 'Artikelnummer',
-    )
-
-    unit = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Einheit',
-        name = 'unit',
-        verbose_name = 'Einheit',
-    )
-
-    price = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Preises',
-        name = 'price',
-        verbose_name = 'Preis',
     )
 
     url_detail = models.BooleanField(
@@ -180,11 +144,6 @@ class StorageManagementBookingOverviewUserSetting(
         field_string += "update_time," if self.update_time else ""
         field_string += "update_username," if self.update_user else ""
         field_string += "reference_number," if self.reference_number else ""
-        field_string += "supplieritem_name," if self.supplieritem_name else ""
-        field_string += "supplieritem_reference_number," if self.supplieritem_reference_number else ""
-        field_string += "supplieritem_item_number," if self.supplieritem_item_number else ""
-        field_string += "unit," if self.unit else ""
-        field_string += "price," if self.price else ""
         field_string += "url_detail," if self.url_detail else ""
         field_string += "url_update," if self.url_update else ""
         field_string += "url_delete," if self.url_delete else ""
@@ -197,7 +156,7 @@ class StorageManagementBookingOverviewUserSetting(
         name = 'user',
         null = False,
         on_delete = models.CASCADE,
-        related_name = 'storagemanagementbookingoverviewusersetting_user',
+        related_name = 'storagemanagementofferdataoverviewusersetting_user',
         to = get_user_model(),
         verbose_name = 'Benutzer',
     )
@@ -214,24 +173,24 @@ class StorageManagementBookingOverviewUserSetting(
         ordering = ['user']
         permissions = (
             (
-                'storagemanagement_booking_overview_setting',
-                'Storagemanagement Booking Overview can view Setting'
+                'storagemanagement_offerdata_overview_setting',
+                'Storagemanagement Offerdata Overview can view Setting'
             ),
         )
-        verbose_name = "Einstellung Beziehungsmanagement Buchung Übersicht"
-        verbose_name_plural = "Einstellungen Beziehungsmanagement Buchungen Übersicht"
+        verbose_name = "Einstellung Beziehungsmanagement Angebotsartikel Übersicht"
+        verbose_name_plural = "Einstellungen Beziehungsmanagement Angebotsartikel Übersicht"
 #--------------------------------------------------------------------------------
-class StorageManagementBookingListUserSetting(
+class StorageManagementOfferdataListUserSetting(
     CreateData,
     UpdateData
 ):
     """
-    StorageManagementBookingListUserSetting
+    StorageManagementOfferdataListUserSetting
     """
 
     # api
     api = models.CharField(
-        default = 'storagemanagementAPI:booking_list',
+        default = 'storagemanagementAPI:offerdata_list',
         help_text = 'Url Adresse der API',
         max_length = 200,
         name = 'api',
@@ -289,82 +248,11 @@ class StorageManagementBookingListUserSetting(
         verbose_name = 'Update-Benutzer',
     )
 
-    # supplier
     reference_number = models.BooleanField(
         default = True,
         help_text = 'Darstellung der Referenz Nummer',
         name = 'reference_number',
         verbose_name = 'Referenznummer',
-    )
-
-    storageitem_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Lagerartikel',
-        name = 'storageitem_name',
-        verbose_name = 'Lagerartikel',
-    )
-
-    storageitem_reference_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Lagerartikelnummer',
-        name = 'storageitem_reference_number',
-        verbose_name = 'Lagerartikelnummer',
-    )
-
-    supplieritem_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Artikels',
-        name = 'supplieritem_name',
-        verbose_name = 'Artikel',
-    )
-
-    supplieritem_reference_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Artikelreferenz',
-        name = 'supplieritem_reference_number',
-        verbose_name = 'Artikelreferenz',
-    )
-
-    supplieritem_item_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Artikelnummer',
-        name = 'supplieritem_item_number',
-        verbose_name = 'Artikelnummer',
-    )
-
-    supplier_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Lieferanten',
-        name = 'supplier_name',
-        verbose_name = 'Lieferant',
-    )
-
-    unit = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Einheit',
-        name = 'unit',
-        verbose_name = 'Einheit',
-    )
-
-    price = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Preises',
-        name = 'price',
-        verbose_name = 'Preis',
-    )
-
-    amount = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Menge',
-        name = 'amount',
-        verbose_name = 'Menge',
-    )
-
-    value = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Wertes',
-        name = 'value',
-        verbose_name = 'Wert',
     )
 
     stock = models.BooleanField(
@@ -425,18 +313,6 @@ class StorageManagementBookingListUserSetting(
         field_string += "update_time," if self.update_time else ""
         field_string += "update_username," if self.update_user else ""
         field_string += "reference_number," if self.reference_number else ""
-        field_string += "storageitem_name," if self.storageitem_name else ""
-        field_string += "storageitem_reference_number," if self.storageitem_reference_number else ""
-        field_string += "supplieritem_name," if self.supplieritem_name else ""
-        field_string += "supplieritem_reference_number," if self.supplieritem_reference_number else ""
-        field_string += "supplieritem_item_number," if self.supplieritem_item_number else ""
-        field_string += "supplier_name," if self.supplier_name else ""
-        field_string += "unit," if self.unit else ""
-        field_string += "price," if self.price else ""
-        field_string += "amount," if self.amount else ""
-        field_string += "value," if self.value else ""
-        field_string += "stock," if self.stock else ""
-        field_string += "notice," if self.notice else ""
         field_string += "url_detail," if self.url_detail else ""
         field_string += "url_update," if self.url_update else ""
         field_string += "url_delete," if self.url_delete else ""
@@ -449,7 +325,7 @@ class StorageManagementBookingListUserSetting(
         name = 'user',
         null = False,
         on_delete = models.CASCADE,
-        related_name = 'storagemanagementbookinglistusersetting_user',
+        related_name = 'storagemanagementofferdatalistusersetting_user',
         to = get_user_model(),
         verbose_name = 'Benutzer',
     )
@@ -466,24 +342,24 @@ class StorageManagementBookingListUserSetting(
         ordering = ['user']
         permissions = (
             (
-                'storagemanagement_booking_list_setting',
-                'Storagemanagement Booking List can view Setting'
+                'storagemanagement_offerdata_list_setting',
+                'Storagemanagement Offerdata List can view Setting'
             ),
         )
-        verbose_name = "Einstellung Beziehungsmanagement Buchung Liste"
-        verbose_name_plural = "Einstellungen Beziehungsmanagement Buchungen Liste"
+        verbose_name = "Einstellung Beziehungsmanagement Angebotsartikel Liste"
+        verbose_name_plural = "Einstellungen Beziehungsmanagement Angebotsartikel Liste"
 #--------------------------------------------------------------------------------
-class StorageManagementBookingTableUserSetting(
+class StorageManagementOfferdataTableUserSetting(
     CreateData,
     UpdateData
 ):
     """
-    StorageManagementBookingTableUserSetting
+    StorageManagementOfferdataTableUserSetting
     """
 
     # api
     api = models.CharField(
-        default = 'storagemanagementAPI:booking_list',
+        default = 'storagemanagementAPI:offerdata_list',
         help_text = 'Url Adresse der API',
         max_length = 200,
         name = 'api',
@@ -541,96 +417,11 @@ class StorageManagementBookingTableUserSetting(
         verbose_name = 'Update-Benutzer',
     )
 
-    # supplier
     reference_number = models.BooleanField(
         default = True,
         help_text = 'Darstellung der Referenz Nummer',
         name = 'reference_number',
         verbose_name = 'Referenznummer',
-    )
-
-    storageitem_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Lagerartikel',
-        name = 'storageitem_name',
-        verbose_name = 'Lagerartikel',
-    )
-
-    storageitem_reference_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Lagerartikelnummer',
-        name = 'storageitem_reference_number',
-        verbose_name = 'Lagerartikelnummer',
-    )
-
-    supplieritem_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Artikels',
-        name = 'supplieritem_name',
-        verbose_name = 'Artikel',
-    )
-
-    supplieritem_reference_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Artikelreferenz',
-        name = 'supplieritem_reference_number',
-        verbose_name = 'Artikelreferenz',
-    )
-
-    supplieritem_item_number = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Artikelnummer',
-        name = 'supplieritem_item_number',
-        verbose_name = 'Artikelnummer',
-    )
-
-    supplier_name = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Lieferanten',
-        name = 'supplier_name',
-        verbose_name = 'Lieferant',
-    )
-
-    unit = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Einheit',
-        name = 'unit',
-        verbose_name = 'Einheit',
-    )
-
-    price = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Preises',
-        name = 'price',
-        verbose_name = 'Preis',
-    )
-
-    amount = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Menge',
-        name = 'amount',
-        verbose_name = 'Menge',
-    )
-
-    value = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung des Wertes',
-        name = 'value',
-        verbose_name = 'Wert',
-    )
-
-    stock = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Lagermenge',
-        name = 'stock',
-        verbose_name = 'Lagermenge',
-    )
-
-    notice = models.BooleanField(
-        default = True,
-        help_text = 'Darstellung der Bemerkung',
-        name = 'notice',
-        verbose_name = 'Bemerkung',
     )
 
     url_detail = models.BooleanField(
@@ -677,18 +468,6 @@ class StorageManagementBookingTableUserSetting(
         field_string += "update_time," if self.update_time else ""
         field_string += "update_username," if self.update_user else ""
         field_string += "reference_number," if self.reference_number else ""
-        field_string += "storageitem_name," if self.storageitem_name else ""
-        field_string += "storageitem_reference_number," if self.storageitem_reference_number else ""
-        field_string += "supplieritem_name," if self.supplieritem_name else ""
-        field_string += "supplieritem_reference_number," if self.supplieritem_reference_number else ""
-        field_string += "supplieritem_item_number," if self.supplieritem_item_number else ""
-        field_string += "supplier_name," if self.supplier_name else ""
-        field_string += "unit," if self.unit else ""
-        field_string += "price," if self.price else ""
-        field_string += "amount," if self.amount else ""
-        field_string += "value," if self.value else ""
-        field_string += "stock," if self.stock else ""
-        field_string += "notice," if self.notice else ""
         field_string += "url_detail," if self.url_detail else ""
         field_string += "url_update," if self.url_update else ""
         field_string += "url_delete," if self.url_delete else ""
@@ -701,7 +480,7 @@ class StorageManagementBookingTableUserSetting(
         name = 'user',
         null = False,
         on_delete = models.CASCADE,
-        related_name = 'storagemanagementbookingtableusersetting_user',
+        related_name = 'storagemanagementofferdatatableusersetting_user',
         to = get_user_model(),
         verbose_name = 'Benutzer',
     )
@@ -718,10 +497,10 @@ class StorageManagementBookingTableUserSetting(
         ordering = ['user']
         permissions = (
             (
-                'storagemanagement_booking_table_setting',
-                'Storagemanagement Booking Table can view Setting'
+                'storagemanagement_offerdata_table_setting',
+                'Storagemanagement Offerdata Table can view Setting'
             ),
         )
-        verbose_name = "Einstellung Beziehungsmanagement Buchung Tabelle"
-        verbose_name_plural = "Einstellungen Beziehungsmanagement Buchungen Tabelle"
+        verbose_name = "Einstellung Beziehungsmanagement Angebotsartikel Tabelle"
+        verbose_name_plural = "Einstellungen Beziehungsmanagement Angebotsartikel Tabelle"
 #--------------------------------------------------------------------------------

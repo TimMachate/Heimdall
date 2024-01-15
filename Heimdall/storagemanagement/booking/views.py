@@ -109,19 +109,15 @@ class BookingBaseView(PermissionRequiredMixin,MainView):
             dict: contains all initial values
         """
         result = {}
-        if self.kwargs.get('supplieritem'):
-            result['supplieritem'] = SupplierItem.objects.get(slug=self.kwargs.get('supplieritem'))
-        if self.kwargs.get('storageitem'):
-            result['storageitem'] = StorageItem.objects.get(slug=self.kwargs.get('storageitem'))
-            if result['storageitem'].supplieritem:
-                result['supplieritem'] = result['storageitem'].supplieritem
-            else:
-                result['supplieritem'] = result['storageitem'].supplieritem_data.all().order_by("price").first()
-        if self.kwargs.get('amount'):
-            result['amount'] = self.kwargs.get('amount')
-        if not result:
-            result = None
-        return result
+        if self.kwargs.get("storageitem"):
+            result["storageitem"] = StorageItem.objects.get(slug=self.kwargs.get("storageitem"))
+            result["amount"] = result["storageitem"].maximum - result["storageitem"].stock_count()
+            supplieritem = result["storageitem"].supplieritem if result["storageitem"].supplieritem else None
+            supplieritem = SupplierItem.objects.filter(
+                storageitem=result["storageitem"]
+            ).order_by('price').first() if not supplieritem else supplieritem
+            result["supplieritem"] = supplieritem
+        return result if not result else None
 
     def get_context_data(self, **kwargs):
         """
@@ -406,6 +402,7 @@ class BookingCreateUpdateDetailView(BookingBaseView):
                     unload_datetime = None,
                 ).values_list('id',flat=True)[0:abs(obj.amount)]
                 Storage.objects.filter(id__in = list(storages)).update(
+                    unload = True,
                     unload_user_id = user,
                     unload_datetime = timezone.now(),
                     update_user_id = user,

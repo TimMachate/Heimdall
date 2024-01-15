@@ -93,7 +93,7 @@ class OfferDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         null = True,
         on_delete = models.CASCADE,
         related_name = 'offerdata_supplieritem',
-        to = 'storagemanagement.SupplierItemBaseModel',
+        to = 'storagemanagement.SupplierItem',
         verbose_name = 'Firmenartikel',
     )
 
@@ -170,145 +170,399 @@ class OfferData(OfferDataBaseModel):
 
     # Authorized
     def authorized_date(self):
-        return self.authorized_datetime_formated().split(" ")[0] if self.authorized_datetime else None
+        """
+        authorized_date
+
+        Returns:
+            string: authorize date from the offer item
+        """
+        obj = self.authorized_datetime
+        return self.authorized_datetime_formated().split(" ")[0] if obj else None
 
     def authorized_datetime_formated(self):
-        return self.authorized_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.authorized_datetime else None
+        """
+        authorized_datetime_formated
+
+        Returns:
+            string: authorize date time formated from the offer item
+        """
+        obj = self.authorized_datetime
+        return obj.strftime("%d.%m.%Y %H:%M:%S") if obj else None
 
     def authorized_time(self):
-        return self.authorized_datetime_formated().split(" ")[1] if self.authorized_datetime else None
+        """
+        authorized_time
+
+        Returns:
+            string: authorize time from the offer item
+        """
+        obj = self.authorized_datetime
+        return self.authorized_datetime_formated().split(" ")[1] if obj else None
 
     def authorized_username(self):
+        """
+        authorized_username
+
+        Returns:
+            string: authorize username from the offer item
+        """
         return str(self.authorized_user_id.username) if self.authorized_user_id else None
 
-    # Company
-    def company_id(self):
+    # Supplier
+    def get_supplier_object(self):
+        """
+        get_supplier_object
+
+        Returns:
+            query: contains supplier object from offer item
+        """
         if self.supplieritem:
-            result = self.supplieritem.company.id if self.supplieritem.company else None
+            result = self.supplieritem.company if self.supplieritem.company else None
         else:
             result = None
         return result
 
-    def company_name(self):
-        if self.supplieritem:
-            result = self.supplieritem.company.name if self.supplieritem.company else None
-        else:
-            result = None
+    def supplier_id(self):
+        """
+        supplier_id
+
+        Returns:
+            int: supplier id from offer item
+        """
+        result = self.get_supplier_object().id if self.get_supplier_object() else None
         return result
 
-    def company_reference_number(self):
-        if self.supplieritem:
-            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
-        else:
-            result = None
+    def supplier_name(self):
+        """
+        supplier_name
+
+        Returns:
+            string: supplier name from the offer item
+        """
+        result = self.get_supplier_object().name if self.get_supplier_object() else None
         return result
 
-    def company_slug(self):
-        if self.supplieritem:
-            result = self.supplieritem.company.slug if self.supplieritem.company else None
-        else:
-            result = None
+    def supplier_reference_number(self):
+        """
+        supplier_reference_number
+
+        Returns:
+            string: supplier reference number from the offer item
+        """
+        result = self.get_supplier_object().reference_number if self.get_supplier_object() else None
         return result
 
-    def company_url_detail(self):
-        if self.supplieritem:
-            result = self.supplieritem.company.url_detail() if self.supplieritem.company else None
-        else:
-            result = None
+    def supplier_slug(self):
+        """
+        supplier_slug
+
+        Returns:
+            string: supplier slug from the offer item
+        """
+        result = self.get_supplier_object().slug if self.get_supplier_object() else None
         return result
 
-    # Company Item
+    def supplier_url_detail(self):
+        """
+        supplier_url_detail
+
+        Returns:
+            string: url to supplier detail page from the offer item
+        """
+        result = self.get_supplier_object().url_detail() if self.get_supplier_object() else None
+        return result
+
+    # Supplier Item
+    def get_supplieritem_object(self):
+        """
+        get_supplieritem_object
+
+        Returns:
+            string: supplieritem from the offer item
+        """
+        result = self.supplieritem if self.supplieritem else None
+        return result
+
     def supplieritem_id(self):
-        result = self.supplieritem.id if self.supplieritem else None
+        """
+        supplieritem_id
+
+        Returns:
+            int: supplieritem id from the offer item
+        """
+        result = self.get_supplieritem_object().id if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_name(self):
-        result = self.supplieritem.name if self.supplieritem else None
+        """
+        supplieritem_name
+
+        Returns:
+            string: supplieritem name from the offer item
+        """
+        result = self.get_supplieritem_object().name if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_item_number(self):
-        result = self.supplieritem.item_number if self.supplieritem else None
+        """
+        supplieritem_item_number
+
+        Returns:
+            string: supplieritem item number from the offer item
+        """
+        obj = self.get_supplieritem_object()
+        result = obj.item_number if obj else None
         return result
 
     def supplieritem_reference_number(self):
-        result = self.supplieritem.reference_number if self.supplieritem else None
+        """
+        supplieritem_reference_number
+
+        Returns:
+            string: supplieritem reference number from the offer item
+        """
+        obj = self.get_supplieritem_object()
+        result = obj.reference_number if obj else None
         return result
 
     def supplieritem_slug(self):
-        result = self.supplieritem.slug if self.supplieritem else None
+        """
+        supplieritem_slug
+
+        Returns:
+            string: supplieritem slug from the offer item
+        """
+        obj = self.get_supplieritem_object()
+        result = obj.slug if obj else None
         return result
 
     def supplieritem_url_detail(self):
-        result = self.supplieritem.url_detail() if self.supplieritem else None
+        """
+        supplieritem_url_detail
+
+        Returns:
+            string: url to supplieritem detail page from the offer item
+        """
+        obj = self.get_supplieritem_object()
+        result = obj.url_detail() if obj else None
         return result
 
     # Offer
+    def get_offer_object(self):
+        """
+        get_offer_object
+
+        Returns:
+            query: contains the offer object
+        """
+        result = self.offer if self.offer else None
+        return result
+
     def offer_id(self):
-        result = self.offer.id if self.offer else None
+        """
+        offer_id
+
+        Returns:
+            int: offer from the the offer item
+        """
+        obj = self.get_offer_object()
+        result = obj.id if obj else None
         return result
 
     def offer_reference_number(self):
-        result = self.offer.reference_number if self.offer else None
+        """
+        offer_reference_number
+
+        Returns:
+            string: offer reference number from the offer item
+        """
+        obj = self.get_offer_object()
+        result = obj.reference_number if obj else None
         return result
 
     def offer_slug(self):
-        result = self.offer.slug if self.offer else None
+        """
+        offer_slug
+
+        Returns:
+            string: offer slug from the offer item
+        """
+        obj = self.get_offer_object()
+        result = obj.slug if obj else None
         return result
 
     def offer_url_detail(self):
-        result = self.offer.url_detail() if self.offer else None
+        """
+        offer_url_detail
+
+        Returns:
+            string: offer url detail from the offer item
+        """
+        obj = self.get_offer_object()
+        result = obj.url_detail() if obj else None
         return result
 
     # Storage Item
+    def get_storageitem_object(self):
+        """
+        get_storageitem_object
+
+        Returns:
+            query: contains storage item object
+        """
+        result = self.storageitem if self.storageitem else None
+        return result
+
     def storageitem_id(self):
-        return self.storageitem.id if self.storageitem else None
+        """
+        storageitem_id
+
+        Returns:
+            int: storage item id from offer item
+        """
+        obj = self.get_storageitem_object()
+        return obj.id if obj else None
 
     def storageitem_name(self):
-        return self.storageitem.name if self.storageitem else None
+        """
+        storageitem_name
+
+        Returns:
+            string: storage item name from offer item
+        """
+        obj = self.get_storageitem_object()
+        return obj.name if obj else None
 
     def storageitem_reference_number(self):
-        return self.storageitem.reference_number if self.storageitem else None
+        """
+        storageitem_reference_number
+
+        Returns:
+            string: storage item reference number from the offer item
+        """
+        obj = self.get_storageitem_object()
+        return obj.reference_number if obj else None
 
     def storageitem_slug(self):
-        return self.storageitem.slug if self.storageitem else None
- 
+        """
+        storageitem_slug
+
+        Returns:
+            string: storage item slug from the offer item
+        """
+        obj = self.get_storageitem_object()
+        return obj.slug if obj else None
+
     def storageitem_url_detail(self):
-        return self.storageitem.url_detail() if self.storageitem else None
+        """
+        storageitem_url_detail
+
+        Returns:
+            string: url to storage item detail page
+        """
+        obj = self.get_storageitem_object()
+        return obj.url_detail() if obj else None
 
     # Unit
     def unit(self):
-        result = self.supplieritem.unit if self.supplieritem else None
+        """
+        unit
+
+        Returns:
+            string: unit from the supplier item
+        """
+        obj = self.get_supplieritem_object()
+        result = obj.unit if obj else None
         return result
 
     # Urls
     def url_authorize_true(self):
+        """
+        url_authorize_true
+
+        Returns:
+            string: url to set authorization to true
+        """
         return reverse('storagemanagement:offerdata_authorize_true',kwargs={'offerdata':self.slug})
 
     def url_authorize_false(self):
+        """
+        url_authorize_false
+
+        Returns:
+            string: url to set authorization to false
+        """
         return reverse('storagemanagement:offerdata_authorize_false',kwargs={'offerdata':self.slug})
 
     def url_delete(self):
+        """
+        url_delete
+
+        Returns:
+            string: url to delete page
+        """
         return reverse('storagemanagement:offerdata_delete',kwargs={'offerdata':self.slug})
 
     def url_detail(self):
+        """
+        url_detail
+
+        Returns:
+            string: url to detail page
+        """
         return reverse('storagemanagement:offerdata_detail',kwargs={'offerdata':self.slug})
 
     def url_qrcode(self):
+        """
+        url_qrcode
+
+        Returns:
+            string: url to qrcode page
+        """
         return 'http://'+settings.HOST+self.url_detail()
 
     def url_recived(self):
+        """
+        url_recived
+
+        Returns:
+            string: url to set recived to true
+        """
         return reverse('storagemanagement:offerdata_recived',kwargs={'offerdata':self.slug})
 
     def url_sent(self):
+        """
+        url_sent
+
+        Returns:
+            string: url to set sent to true
+        """
         return reverse('storagemanagement:offerdata_sent',kwargs={'offerdata':self.slug})
 
     def url_update(self):
+        """
+        url_update
+
+        Returns:
+            string: url to update page
+        """
         return reverse('storagemanagement:offerdata_update',kwargs={'offerdata':self.slug})
 
     def __str__(self):
-        return "{}{}{}_{}".format(self.create_datetime.year,self.create_datetime.month,self.create_datetime.day,self.reference_number)
+        return "{}{}{}_{}".format(
+            self.create_datetime.year,
+            self.create_datetime.month,
+            self.create_datetime.day,
+            self.reference_number
+        )
 
     def value(self):
+        """
+        value
+
+        Returns:
+            float: value of the offer item
+        """
         result = self.price*self.amount
         return result
 

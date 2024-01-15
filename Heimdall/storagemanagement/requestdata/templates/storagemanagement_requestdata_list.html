@@ -79,11 +79,11 @@
                           <thead id="{{ model }}-head" class="thead-dark">
                               <tr id="{{ model }}-head-row2">
                                     <th scope="col"></th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Autorisiert</th>
                                     <th scope="col">Autorisiert<br>Datum</th>
                                     <th scope="col">Autorisiert<br>Zeit</th>
                                     <th scope="col">Autorisiert<br>Person</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Erstellt<br>Datum</th>
                                     <th scope="col">Erstellt<br>Zeit</th>
                                     <th scope="col">Erstellt<br>Person</th>
@@ -94,25 +94,39 @@
                                     <th scope="col">Lagerartikel</th>
                                     <th scope="col">Lagerartikel-<br>nummer</th>
                                     <th scope="col">Artikel</th>
+                                    <th scope="col">Artikelreferenz</th>
                                     <th scope="col">Artikelnummer</th>
                                     <th scope="col">Firma</th>
                                     <th scope="col">Menge</th>
                                     <th scope="col">Einheit</th>
                                     <th scope="col">Preis</th>
                                     <th scope="col">Wert</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
+                                    <th scope="col"><div class="btn btn-secondary disabled"><i class="fas fa-exclamation-triangle"></i></div></th>
                                     <th scope="col">
-                                        <a class="btn btn-success" href="{% url 'storagemanagement:requestdata_authorize_all_true' %}">
+                                        <a class="btn btn-secondary disabled" href="{% url 'storagemanagement:requestdata_authorize_all_true' %}">
                                             <i class="fas fa-check"></i>
                                         </a>
                                     </th>
                                     <th scope="col">
-                                        <a class="btn btn-danger" href="{% url 'storagemanagement:requestdata_authorize_all_false' %}">
+                                        <a class="btn btn-secondary disabled" href="{% url 'storagemanagement:requestdata_authorize_all_false' %}">
                                             <i class="fas fa-times"></i>
                                         </a>
+                                    </th>
+                                    <th scope="col">
+                                        <div class="btn-group">
+                                            <div class="btn btn-secondary disabled"><i class="fas fa-check"></i></div>
+                                            <div class="btn btn-secondary disabled"><i class="fas fa-times"></i></div>
+                                        </div>
+                                    </th>
+                                    <th scope="col"><div class="btn btn-secondary disabled"><i class="fas fa-search"></i></div></th>
+                                    <th scope="col"><div class="btn btn-secondary disabled"><i class="fas fa-pen"></i></div></th>
+                                    <th scope="col"><div class="btn btn-secondary disabled"><i class="fas fa-trash"></i></div></th>
+                                    <th scope="col">
+                                        <div class="btn-group">
+                                            <div class="btn btn-secondary disabled"><i class="fas fa-search"></i></div>
+                                            <div class="btn btn-secondary disabled"><i class="fas fa-pen"></i></div>
+                                            <div class="btn btn-secondary disabled"><i class="fas fa-trash"></i></div>
+                                        </div>
                                     </th>
                               </tr>
                           </thead>
@@ -120,8 +134,6 @@
                           <tbody id="{{ model }}-body">
                           </tbody>
                           <!-- END Table Body -->
-                          <tfoot>
-                          </tfoot>
                       </table>
                       <!-- END Tabelle -->
                   </p>

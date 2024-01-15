@@ -1,7 +1,7 @@
 """
 #--------------------------------------------------------------------------------
-# Forms File from Model RequestData
-# 05.01.2024
+# Forms File from Model Offer User Setting
+# 14.01.2024
 # Tim Machate
 #--------------------------------------------------------------------------------
 """
@@ -15,10 +15,10 @@ from django.forms import ModelForm
 #--------------------------------------------------------------------------------
 # Import necessary Models
 #--------------------------------------------------------------------------------
-from storagemanagement.storagemanagementusersetting.requestdata.models import (
-    StorageManagementRequestDataListUserSetting,
-    StorageManagementRequestDataOverviewUserSetting,
-    StorageManagementRequestDataTableUserSetting,
+from storagemanagement.storagemanagementusersetting.offer.models import (
+    StorageManagementOfferOverviewUserSetting,
+    StorageManagementOfferListUserSetting,
+    StorageManagementOfferTableUserSetting,
 )
 #--------------------------------------------------------------------------------
 
@@ -26,16 +26,16 @@ from storagemanagement.storagemanagementusersetting.requestdata.models import (
 #--------------------------------------------------------------------------------
 # Forms
 #--------------------------------------------------------------------------------
-class StorageManagementRequestDataOverviewUserSettingForm(ModelForm):
+class StorageManagementOfferOverviewUserSettingForm(ModelForm):
     """
-    StorageManagementRequestDataOverviewUserSettingForm
+    StorageManagementOfferOverviewUserSettingForm
 
     Args:
         ModelForm (_type_): _description_
     """
 
     def __init__(self, *args, **kwargs):
-        super(StorageManagementRequestDataOverviewUserSettingForm, self).__init__(*args, **kwargs)
+        super(StorageManagementOfferOverviewUserSettingForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-check-input'
 
@@ -43,19 +43,19 @@ class StorageManagementRequestDataOverviewUserSettingForm(ModelForm):
         """
         Meta Data from Form
         """
-        model = StorageManagementRequestDataOverviewUserSetting
+        model = StorageManagementOfferOverviewUserSetting
         exclude = ['api','user']
 #--------------------------------------------------------------------------------
-class StorageManagementRequestDataListUserSettingForm(ModelForm):
+class StorageManagementOfferListUserSettingForm(ModelForm):
     """
-    StorageManagementRequestDataListUserSettingForm
+    StorageManagementOfferListUserSettingForm
 
     Args:
         ModelForm (_type_): _description_
     """
 
     def __init__(self, *args, **kwargs):
-        super(StorageManagementRequestDataListUserSettingForm, self).__init__(*args, **kwargs)
+        super(StorageManagementOfferListUserSettingForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-check-input'
 
@@ -63,19 +63,19 @@ class StorageManagementRequestDataListUserSettingForm(ModelForm):
         """
         Meta Data from Form
         """
-        model = StorageManagementRequestDataListUserSetting
+        model = StorageManagementOfferListUserSetting
         exclude = ['api','user']
 #--------------------------------------------------------------------------------
-class StorageManagementRequestDataTableUserSettingForm(ModelForm):
+class StorageManagementOfferTableUserSettingForm(ModelForm):
     """
-    StorageManagementRequestDataTableUserSettingForm
+    StorageManagementOfferTableUserSettingForm
 
     Args:
         ModelForm (_type_): _description_
     """
 
     def __init__(self, *args, **kwargs):
-        super(StorageManagementRequestDataTableUserSettingForm, self).__init__(*args, **kwargs)
+        super(StorageManagementOfferTableUserSettingForm, self).__init__(*args, **kwargs)
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-check-input'
 
@@ -83,6 +83,6 @@ class StorageManagementRequestDataTableUserSettingForm(ModelForm):
         """
         Meta Data from Form
         """
-        model = StorageManagementRequestDataTableUserSetting
+        model = StorageManagementOfferTableUserSetting
         exclude = ['api','user']
 #--------------------------------------------------------------------------------

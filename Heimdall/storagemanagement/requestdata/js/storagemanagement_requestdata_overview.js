@@ -42,30 +42,30 @@ function requestdata_overview(api_url,model) {
                             }
                         },
                         {
-                            "name":"companyitem_name",
-                            "data":"companyitem_name",
+                            "name":"supplieritem_name",
+                            "data":"supplieritem_name",
                             "defaultContent": "",
                             "className":"",
-                            "visible": "companyitem_name" in dataset[0] ? true : false,
+                            "visible": "supplieritem_name" in dataset[0] ? true : false,
                             "render":function(data,type,row,meta){
-                                if(row.companyitem_name && row.companyitem_url_detail && row.companyitem_item_number){
-                                    return '<a class="link-dark text-decoration-none" href="'+row.companyitem_url_detail+'">'+row.companyitem_name+'<br>'+row.companyitem_item_number+'</a>'
+                                if(row.supplieritem_name && row.supplieritem_url_detail && row.supplieritem_item_number){
+                                    return '<a class="link-dark text-decoration-none" href="'+row.supplieritem_url_detail+'">'+row.supplieritem_name+'<br>'+row.supplieritem_item_number+'</a>'
                                 }else{
-                                    return row.companyitem_name
+                                    return row.supplieritem_name
                                 };
                             }
                         },
                         {
-                            "name":"company_name",
-                            "data":"company_name",
+                            "name":"supplier_name",
+                            "data":"supplier_name",
                             "defaultContent": "",
                             "className":"",
-                            "visible": "company_name" in dataset[0] ? true : false,
+                            "visible": "supplier_name" in dataset[0] ? true : false,
                             "render":function(data,type,row,meta){
-                                if(row.company_name && row.company_url_detail && row.company_reference_number){
-                                    return '<a class="link-dark text-decoration-none" href="'+row.company_url_detail+'">'+row.company_name+'<br>'+row.company_reference_number+'</a>'
+                                if(row.supplier_name && row.supplier_url_detail && row.supplier_reference_number){
+                                    return '<a class="link-dark text-decoration-none" href="'+row.supplier_url_detail+'">'+row.supplier_name+'<br>'+row.supplier_reference_number+'</a>'
                                 }else{
-                                    return row.company_name
+                                    return row.supplier_name
                                 };
                             }
                         },

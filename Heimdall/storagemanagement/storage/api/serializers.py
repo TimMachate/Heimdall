@@ -72,6 +72,7 @@ class StorageBaseSerializer(
 
     unit = serializers.ReadOnlyField()
 
+    unload = serializers.ReadOnlyField()
     unload_date = serializers.ReadOnlyField()
     unload_time = serializers.ReadOnlyField()
     unload_username = serializers.ReadOnlyField()

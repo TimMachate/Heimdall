@@ -2,7 +2,7 @@
 
 {% block title %}
     Angebote
-{% endblock %}
+{% endblock title %}
 
 {% block static %}
 {% load static %}
@@ -39,7 +39,7 @@
                                 Liste 1: Auflistung aller offenen Angebote
                             </caption>
                             <thead id="{{ model }}-head" class="thead-dark">
-                                <tr class="" id="{{ model }}-head-row2">
+                                <tr id="{{ model }}-head-row2">
                                       <th scope="col"></th>
                                       <th scope="col"><span class="btn btn-secondary disabled"><i class="fas fa-check"></i></span></th>
                                       <th scope="col"><span class="btn btn-secondary disabled"><i class="fas fa-question"></i></span></th>
@@ -60,12 +60,6 @@
                                       <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <!-- Table Body -->
-                            <tbody id="{{ model }}-body">
-                            </tbody>
-                            <!-- END Table Body -->
-                            <tfoot>
-                            </tfoot>
                         </table>
                         <!-- END Tabelle -->
                     </p>

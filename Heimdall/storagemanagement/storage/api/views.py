@@ -46,6 +46,7 @@ class StorageListAPIView(ListAPIView):
         'supplieritem__company__slug':['exact'],
         'supplieritem__slug':['exact'],
         #'supplieritem__storageitem__slug':['exact'],
+        'unload':['exact']
         }
     search_fields = ['supplieritem']
     pagination_class = None

@@ -85,17 +85,6 @@ class RequestDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Autorisierer',
     )
 
-    # Fields/Methodes for the ware
-    supplieritem = models.ForeignKey(
-        blank = True,
-        name = 'supplieritem',
-        null = True,
-        on_delete = models.CASCADE,
-        related_name = 'requestdata_supplieritem',
-        to = 'storagemanagement.supplierItemBaseModel',
-        verbose_name = 'Item',
-    )
-
     # Fields/Methodes for the done
     done = models.BooleanField(
         default = False,
@@ -137,6 +126,17 @@ class RequestDataBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Item',
     )
 
+    # Fields/Methodes for the ware
+    supplieritem = models.ForeignKey(
+        blank = True,
+        name = 'supplieritem',
+        null = True,
+        on_delete = models.CASCADE,
+        related_name = 'requestdata_supplieritem',
+        to = 'storagemanagement.supplieritem',
+        verbose_name = 'Item',
+    )
+
     class Meta:
         """
         Meta Data from Model
@@ -163,7 +163,8 @@ class RequestData(RequestDataBaseModel):
         Returns:
             string: date from authorization
         """
-        return self.authorized_datetime_formated().split(" ")[0] if self.authorized_datetime else None
+        obj = self.authorized_datetime
+        return self.authorized_datetime_formated().split(" ")[0] if obj else None
 
     def authorized_datetime_formated(self):
         """
@@ -172,7 +173,8 @@ class RequestData(RequestDataBaseModel):
         Returns:
             string: datetime from authorization
         """
-        return self.authorized_datetime.strftime("%d.%m.%Y %H:%M:%S") if self.authorized_datetime else None
+        obj = self.authorized_datetime
+        return obj.strftime("%d.%m.%Y %H:%M:%S") if obj else None
 
     def authorized_time(self):
         """
@@ -181,7 +183,8 @@ class RequestData(RequestDataBaseModel):
         Returns:
             string: time from authorization
         """
-        return self.authorized_datetime_formated().split(" ")[1] if self.authorized_datetime else None
+        obj = self.authorized_datetime
+        return self.authorized_datetime_formated().split(" ")[1] if obj else None
 
     def authorized_username(self):
         """
@@ -193,6 +196,16 @@ class RequestData(RequestDataBaseModel):
         return str(self.authorized_user_id.username) if self.authorized_user_id else None
 
     # Supplier
+    def get_supplier_object(self):
+        """
+        get_supplier_object
+
+        Returns:
+            query: contains supplier object
+        """
+        result = self.supplieritem.get_supplier_object() if self.supplieritem else None
+        return result
+
     def supplier_id(self):
         """
         supplier_id
@@ -462,12 +475,11 @@ class RequestData(RequestDataBaseModel):
         return result
 
     def __str__(self):
-        return "{}{}{}_{}".format(
-            self.create_datetime.year,
-            self.create_datetime.month,
-            self.create_datetime.day,
-            self.supplieritem.slug
-        )
+        y = self.create_datetime.year
+        m = self.create_datetime.month
+        d = self.create_datetime.day
+        s = self.supplieritem.slug
+        return f"{y}{m}{d}_{s}"
 
     class Meta:
         """

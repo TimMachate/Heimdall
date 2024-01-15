@@ -27,6 +27,7 @@ from storagemanagement.offer.models import Offer
 from storagemanagement.offerdata.models import OfferData
 from storagemanagement.requestdata.models import RequestData
 from storagemanagement.storagemanagementusersetting.requestdata.models import (
+    StorageManagementRequestDataOverviewUserSetting,
     StorageManagementRequestDataListUserSetting,
     StorageManagementRequestDataTableUserSetting
 )
@@ -39,6 +40,7 @@ from storagemanagement.storagemanagementusersetting.requestdata.models import (
 from storagemanagement.requestdata.forms import RequestDataForm
 from storagemanagement.storageitem.models import StorageItem
 from storagemanagement.storagemanagementusersetting.requestdata.forms import(
+    StorageManagementRequestDataOverviewUserSettingForm,
     StorageManagementRequestDataListUserSettingForm,
     StorageManagementRequestDataTableUserSettingForm
 )
@@ -48,9 +50,9 @@ from storagemanagement.storagemanagementusersetting.requestdata.forms import(
 #--------------------------------------------------------------------------------
 # Views
 #--------------------------------------------------------------------------------
-class RequestDataView(PermissionRequiredMixin,MainView):
+class RequestDataBaseView(PermissionRequiredMixin,MainView):
     """
-    RequestDataView
+    RequestDataBaseView
 
     Args:
         PermissionRequiredMixin (_type_): _description_
@@ -60,21 +62,68 @@ class RequestDataView(PermissionRequiredMixin,MainView):
         _type_: _description_
     """
 
-    permission_required = 'storagemanagement.view_requestdata'
+    form_setting = None
+    model_setting = None
 
-    template_name = 'storagemanagement_requestdata_overview.html'
-
-    def get_queryset(self):
+    def get(self, request, *args, **kwargs):
         """
-        get_queryset
+        get
+
+        Args:
+            request (_type_): _description_
 
         Returns:
             _type_: _description_
         """
-        queryset = RequestData.objects.filter(done=False)
-        return queryset
+        self.get_context_data()
+        return render(request, self.template_name, self.context)
 
-    def get_context_data(self, **kwargs):
+    def post(self,request, *args, **kwargs):
+        """
+        post
+
+        Args:
+            request (_type_): _description_
+        """
+        form = self.form_setting(
+            request.POST,
+            request.FILES,
+            instance=self.context["form_setting_queryset"]
+        )
+        user = get_user_model().objects.get(id=request.user.id)
+        if form.is_valid():
+            obj = form.save()
+            if not obj.create_user_id:
+                obj.create_user_id = user
+            obj.update_user_id = user
+            obj.update_datetime = timezone.now()
+            obj.save()
+        self.context['form'] = form
+        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+    def get_initial(self, *args, **kwargs):
+        """
+        get_initial
+
+        Returns:
+            dict: contains all initial values
+        """
+        result = {}
+        if self.kwargs.get('supplieritem'):
+            result['supplieritem'] = SupplierItem.objects.get(slug=self.kwargs.get('supplieritem'))
+        if self.kwargs.get('storageitem'):
+            result['storageitem'] = StorageItem.objects.get(slug=self.kwargs.get('storageitem'))
+            if result['storageitem'].supplieritem:
+                result['supplieritem'] = result['storageitem'].supplieritem
+            else:
+                result['supplieritem'] = result['storageitem'].supplieritem_data.all().order_by("price").first()
+        if self.kwargs.get('amount'):
+            result['amount'] = self.kwargs.get('amount')
+        if not result:
+            result = None
+        return result
+
+    def get_context_data(self, *args, **kwargs):
         """
         get_context_data
 
@@ -106,15 +155,88 @@ class RequestDataView(PermissionRequiredMixin,MainView):
             self.context['url_list'] = reverse('storagemanagement:requestdata_list')
             self.context['url_table'] = reverse('storagemanagement:requestdata_table')
             self.context['url_create'] = reverse('storagemanagement:requestdata_create')
-        # Data Url
-        self.context["fields"] = ""
-        self.context["api_data_url"] = reverse(
-            "storagemanagementAPI:storage_list"
-        )+"?values={}&done=flase".format(
-            self.context["fields"],
+        # Setting
+        if self.model_setting and self.form_setting:
+            self.context["form_setting_queryset"] = self.model_setting.objects.get_or_create(
+                user=self.request.user
+            )[0]
+            # Data Url
+            self.context["api_data_url"] = self.get_url_api(
+                queryset=self.context["form_setting_queryset"]
+            )
+            # Form
+            self.context["form_setting"] = self.form_setting(
+                instance = self.context["form_setting_queryset"]
+            )
+        else:
+            self.context["form_setting_queryset"] = None
+            self.context["api_data_url"] = None
+            self.context["form_setting"] = None
+        # Queryset
+        self.context["queryset"]= self.get_queryset()
+        return self.context
+
+    def get_queryset(self, *args, **kwargs):
+        """
+        get_queryset
+
+        Returns:
+            queryset: contains the requestdata object
+        """
+        if self.kwargs.get('requestdata'):
+            queryset = RequestData.objects.get(slug=self.kwargs.get('requestdata'))
+        else:
+            queryset = RequestData.objects.all()
+        return queryset
+
+    def get_url_api(self,queryset):
+        """
+        get_url_api
+
+        Returns:
+            string: url to api
+        """
+        url = reverse(
+            queryset.api
+        )+"?values={}".format(
+            queryset.fields(),
         )
+        return url
 #--------------------------------------------------------------------------------
-class RequestDataListView(RequestDataView):
+class RequestDataView(RequestDataBaseView):
+    """
+    RequestDataView
+
+    Args:
+        PermissionRequiredMixin (_type_): _description_
+        MainView (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+
+    permission_required = 'storagemanagement.view_requestdata'
+
+    template_name = 'storagemanagement_requestdata_overview.html'
+
+    form_setting = StorageManagementRequestDataOverviewUserSettingForm
+    model_setting = StorageManagementRequestDataOverviewUserSetting
+
+    def get(self, request, *kwargs, **args):
+        """
+        get
+
+        Args:
+            request (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
+        self.get_context_data()
+        self.context["api_data_url"] += "&done=false"
+        return render(request, self.template_name, self.context)
+#--------------------------------------------------------------------------------
+class RequestDataListView(RequestDataBaseView):
     """
     RequestDataListView
 
@@ -131,93 +253,8 @@ class RequestDataListView(RequestDataView):
 
     form_setting = StorageManagementRequestDataListUserSettingForm
     model_setting = StorageManagementRequestDataListUserSetting
-
-    def get(self, request):
-        """
-        get
-
-        Args:
-            request (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
-        self.get_context_data()
-        self.context["queryset"]= self.get_queryset()
-        return render(request, self.template_name, self.context)
-
-    def post(self,request):
-        """
-        post
-
-        Args:
-            request (_type_): _description_
-        """
-        form = self.form_setting(
-            request.POST,
-            request.FILES,
-            instance=self.context["form_setting_queryset"]
-        )
-        user = get_user_model().objects.get(id=request.user.id)
-        if form.is_valid():
-            obj = form.save()
-            if not obj.create_user_id:
-                obj.create_user_id = user
-            obj.update_user_id = user
-            obj.update_datetime = timezone.now()
-            obj.save()
-        self.context['form'] = form
-        return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
-
-    def get_queryset(self):
-        """
-        get_queryset
-
-        Returns:
-            _type_: _description_
-        """
-        queryset = RequestData.objects.all()
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        """
-        get_context_data
-
-        Returns:
-            dict: contains context data
-        """
-        super().get_context_data(**kwargs)
-        # Setting
-        self.context["form_setting_queryset"] = self.model_setting.objects.get_or_create(
-            user=self.request.user
-        )[0]
-        # Data Url
-        self.context["api_data_url"] = self.get_url_api(
-            queryset=self.context["form_setting_queryset"]
-        )
-        # Queryset
-        self.context["queryset"]= self.get_queryset()
-        # Form
-        self.context["form_setting"] = self.form_setting(
-            instance = self.context["form_setting_queryset"]
-        )
-        return self.context
-
-    def get_url_api(self,queryset):
-        """
-        get_url_api
-
-        Returns:
-            string: url to api
-        """
-        url = reverse(
-            queryset.api
-        )+"?values={}".format(
-            queryset.fields(),
-        )
-        return url
 #--------------------------------------------------------------------------------
-class RequestDataTableView(RequestDataView):
+class RequestDataTableView(RequestDataBaseView):
     """
     RequestDataTableView
 
@@ -234,69 +271,8 @@ class RequestDataTableView(RequestDataView):
 
     form_setting = StorageManagementRequestDataTableUserSettingForm
     model_setting = StorageManagementRequestDataTableUserSetting
-
-    def get(self, request):
-        """
-        get
-
-        Args:
-            request (_type_): _description_
-
-        Returns:
-            _type_: _description_
-        """
-        self.get_context_data()
-        return render(request, self.template_name, self.context)
-
-    def get_queryset(self):
-        """
-        get_queryset
-
-        Returns:
-            _type_: _description_
-        """
-        queryset = RequestData.objects.all()
-        return queryset
-
-    def get_context_data(self, **kwargs):
-        """
-        get_context_data
-
-        Returns:
-            dict: contains context data
-        """
-        super().get_context_data(**kwargs)
-        # Setting
-        self.context["form_setting_queryset"] = self.model_setting.objects.get_or_create(
-            user=self.request.user
-        )[0]
-        # Data Url
-        self.context["api_data_url"] = self.get_url_api(
-            queryset=self.context["form_setting_queryset"]
-        )
-        # Queryset
-        self.context["queryset"]= self.get_queryset()
-        # Form
-        self.context["form_setting"] = self.form_setting(
-            instance = self.context["form_setting_queryset"]
-        )
-        return self.context
-
-    def get_url_api(self,queryset):
-        """
-        get_url_api
-
-        Returns:
-            string: url to api
-        """
-        url = reverse(
-            queryset.api
-        )+"?values={}".format(
-            queryset.fields(),
-        )
-        return url
 #--------------------------------------------------------------------------------
-class RequestDataCreateUpdateDetailView(RequestDataView):
+class RequestDataCreateUpdateDetailView(RequestDataBaseView):
     """
     RequestDataCreateUpdateDetailView
 
@@ -311,7 +287,7 @@ class RequestDataCreateUpdateDetailView(RequestDataView):
 
     form_class = RequestDataForm
 
-    def get(self, request):
+    def get(self, request, *kwargs, **args):
         """
         get
 
@@ -327,31 +303,13 @@ class RequestDataCreateUpdateDetailView(RequestDataView):
             instance=self.context['queryset'],
             initial = self.get_initial()
         )
-        if self.context['queryset']:
-            self.context['form'].fields['supplieritem'].queryset = SupplierItem.objects.filter(
-                storageitem=self.context['queryset'].storageitem
-            )
+        #if self.context['queryset']:
+        #    self.context['form'].fields['supplieritem'].queryset = SupplierItem.objects.filter(
+        #        storageitem=self.context['queryset'].storageitem
+        #    )
         return render(request, self.template_name, self.context)
 
-    def get_initial(self):
-        """
-        get_initial
-
-        Returns:
-            dict: contains initial data
-        """
-        result = {}
-        if self.kwargs.get("storageitem"):
-            result["storageitem"] = StorageItem.objects.get(slug=self.kwargs.get("storageitem"))
-            result["amount"] = result["storageitem"].maximum - result["storageitem"].stock_count()
-            supplieritem = result["storageitem"].supplieritem if result["storageitem"].supplieritem else None
-            supplieritem = SupplierItem.objects.filter(
-                storageitem=result["storageitem"]
-            ).order_by('price').first() if not supplieritem else supplieritem
-            result["supplieritem"] = supplieritem
-        return result if not result else None
-
-    def post(self,request):
+    def post(self,request, *kwargs, **args):
         """
         post
 
@@ -375,7 +333,7 @@ class RequestDataCreateUpdateDetailView(RequestDataView):
                 obj.supplieritem = obj.storageitem.supplieritem
             if obj.supplieritem and not obj.storageitem:
                 obj.storageitem = obj.supplieritem.storageitem
-            if obj.storageitem != obj.supplieritem.storageitem:
+            if obj.storageitem != obj.supplieritem.get_storageitem_object():
                 obj.supplieritem = obj.storageitem.supplieritem
 
             if not self.context['queryset']:
@@ -391,7 +349,7 @@ class RequestDataCreateUpdateDetailView(RequestDataView):
         else:
             return redirect('storagemanagement:requestdata_update', requestdata=obj.slug)
 
-    def get_queryset(self):
+    def get_queryset(self, *kwargs, **args):
         """
         get_queryset
 
@@ -477,7 +435,7 @@ class RequestDataAuthorizedTrueView(PermissionRequiredMixin,MainView):
 
     permission_required = 'storagemanagement.authorize_true_requestdata'
 
-    def get(self, request):
+    def get(self, request, *kwargs, **args):
         """
         get
 
@@ -496,7 +454,7 @@ class RequestDataAuthorizedTrueView(PermissionRequiredMixin,MainView):
                 obj.authorized_user_id = user
                 obj.done = True
                 offerdatas = OfferData.objects.filter(
-                    supplieritem__supplier=obj.supplieritem.supplier
+                    supplieritem__company=obj.supplieritem.get_supplier_object()
                 ).exclude(offer__sent=True)
                 if offerdatas.exists():
                     offerdata = offerdatas.filter(supplieritem=obj.supplieritem)
@@ -551,7 +509,7 @@ class RequestDataAuthorizedFalseView(PermissionRequiredMixin,MainView):
 
     permission_required = 'storagemanagement.authorize_false_requestdata'
 
-    def get(self, request):
+    def get(self, request, *kwargs, **args):
         """
         get
 
@@ -587,7 +545,7 @@ class RequestDataAuthorizedTrueAllView(PermissionRequiredMixin,MainView):
 
     permission_required = 'storagemanagement.authorize_true_requestdata'
 
-    def get(self, request):
+    def get(self, request, *kwargs, **args):
         """
         get
 
@@ -605,7 +563,7 @@ class RequestDataAuthorizedTrueAllView(PermissionRequiredMixin,MainView):
                 obj.authorized_user_id = user
                 obj.done = True
                 offerdatas = OfferData.objects.filter(
-                    supplieritem__supplier=obj.supplieritem.supplier
+                    supplieritem__company=obj.supplieritem.get_supplier_object()
                 ).exclude(sent=True)
                 if offerdatas.exists():
                     offerdata = offerdatas.filter(supplieritem=obj.supplieritem)
@@ -660,7 +618,7 @@ class RequestDataAuthorizedFalseAllView(PermissionRequiredMixin,MainView):
 
     permission_required = 'storagemanagement.authorize_false_requestdata'
 
-    def get(self, request):
+    def get(self, request, *kwargs, **args):
         """
         get
 

@@ -157,6 +157,16 @@ class StorageItem(StorageItemBaseModel):
         return result
 
     # Fields/Methodes for the supplier
+    def get_supplier_object(self):
+        """
+        supplier
+
+        Returns:
+            query: supplier object
+        """
+        result = self.supplieritem.company if self.supplieritem else None
+        return result
+
     def supplier_data(self):
         """
         suppliers
@@ -186,10 +196,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             int: id from the supplier
         """
-        if self.supplieritem:
-            result = self.supplieritem.company.id if self.supplieritem.company else None
-        else:
-            result = None
+        result = self.get_supplier_object().id if self.get_supplier_object() else None
         return result
 
     def supplier_name(self):
@@ -199,10 +206,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: name from the supplier
         """
-        if self.supplieritem:
-            result = self.supplieritem.company.name if self.supplieritem.company else None
-        else:
-            result = None
+        result = self.get_supplier_object().name if self.get_supplier_object() else None
         return result
 
     def supplier_reference_number(self):
@@ -212,10 +216,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: reference number from the supplier
         """
-        if self.supplieritem:
-            result = self.supplieritem.company.reference_number if self.supplieritem.company else None
-        else:
-            result = None
+        result = self.get_supplier_object().reference_number if self.get_supplier_object() else None
         return result
 
     def supplier_slug(self):
@@ -225,10 +226,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: slug from the supplier
         """
-        if self.supplieritem:
-            result = self.supplieritem.company.slug if self.supplieritem.company else None
-        else:
-            result = None
+        result = self.get_supplier_object().slug if self.get_supplier_object() else None
         return result
 
     def supplier_url_detail(self):
@@ -255,6 +253,16 @@ class StorageItem(StorageItemBaseModel):
         result = queryset.count() if queryset else 0
         return result
 
+    def get_supplieritem_object(self):
+        """
+        supplieritem
+
+        Returns:
+            query: supplieritem object
+        """
+        result = self.supplieritem
+        return result
+
     def supplieritem_id(self):
         """
         supplieritem_id
@@ -262,7 +270,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             int: id from the supplieritem
         """
-        result = self.supplieritem.id if self.supplieritem else None
+        result = self.get_supplieritem_object().id if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_item_number(self):
@@ -272,7 +280,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: item number from the supplieritem
         """
-        result = self.supplieritem.item_number if self.supplieritem else None
+        result = self.get_supplieritem_object().item_number if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_name(self):
@@ -282,7 +290,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: name from the supplieritem
         """
-        result = self.supplieritem.name if self.supplieritem else None
+        result = self.get_supplieritem_object().name if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_reference_number(self):
@@ -292,7 +300,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: reference number from the supplieritem
         """
-        result = self.supplieritem.reference_number if self.supplieritem else None
+        result = self.get_supplieritem_object().reference_number if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_slug(self):
@@ -302,7 +310,7 @@ class StorageItem(StorageItemBaseModel):
         Returns:
             string: slug from supplieritem
         """
-        result = self.supplieritem.slug if self.supplieritem else None
+        result = self.get_supplieritem_object().slug if self.get_supplieritem_object() else None
         return result
 
     def supplieritem_url_detail(self):

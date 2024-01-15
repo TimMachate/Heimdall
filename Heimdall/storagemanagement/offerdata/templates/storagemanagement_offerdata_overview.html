@@ -2,7 +2,7 @@
 
 {% block title %}
     Artikel Angebote
-{% endblock %}
+{% endblock title %}
 
 {% block static %}
 {% load static %}
@@ -39,7 +39,7 @@
                                 Liste 1: Auflistung aller Artikel von offenen Angeboten
                             </caption>
                             <thead id="{{ model }}-head" class="thead-dark">
-                                <tr class="" id="{{ model }}-head-row2">
+                                <tr id="{{ model }}-head-row2">
                                       <th scope="col"></th>
                                       <th scope="col">Erstellt</th>
                                       <th scope="col">Lagerartikel</th>
@@ -62,12 +62,6 @@
                                       </th>
                                 </tr>
                             </thead>
-                            <!-- Table Body -->
-                            <tbody id="{{ model }}-body">
-                            </tbody>
-                            <!-- END Table Body -->
-                            <tfoot>
-                            </tfoot>
                         </table>
                         <!-- END Tabelle -->
                     </p>

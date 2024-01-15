@@ -14,6 +14,13 @@ function requestdata_updatedetail(api_url,model) {
                     if(dataset.storageitem_url_detail && document.getElementById('id_storageitem_url_detail')){
                         document.getElementById('id_storageitem_url_detail').setAttribute('href',dataset.storageitem_url_detail);
                     };
+                    // Supplier Item
+                    if(dataset.supplieritem_name && document.getElementById('id_supplieritem')){
+                        document.getElementById('id_supplieritem').setAttribute('value',dataset.supplieritem_name);
+                    };
+                    if(dataset.supplieritem_url_detail && document.getElementById('id_supplieritem_url_detail')){
+                        document.getElementById('id_supplieritem_url_detail').setAttribute('href',dataset.supplieritem_url_detail);
+                    };
                     // Create
                     if(dataset.create_date && dataset.create_time && document.getElementById('id_create_datetime')){
                         document.getElementById('id_create_datetime').setAttribute('value',dataset.create_date+' '+dataset.create_time);
@@ -50,19 +57,19 @@ function requestdata_updatedetail(api_url,model) {
                     if(dataset.authorized_username && document.getElementById('id_authorized_username')){
                         document.getElementById('id_authorized_username').setAttribute('value',dataset.authorized_username);
                     };
-                    // Company
-                    if(dataset.company_name && document.getElementById('id_company')){
-                        document.getElementById('id_company').setAttribute('value',dataset.company_name);
+                    // Supplier
+                    if(dataset.supplier_name && document.getElementById('id_supplier')){
+                        document.getElementById('id_supplier').setAttribute('value',dataset.supplier_name);
                     };
-                    if(dataset.company_url_detail && document.getElementById('id_company_url_detail')){
-                        document.getElementById('id_company_url_detail').setAttribute('href',dataset.company_url_detail);
+                    if(dataset.supplier_url_detail && document.getElementById('id_supplier_url_detail')){
+                        document.getElementById('id_supplier_url_detail').setAttribute('href',dataset.supplier_url_detail);
                     };
-                    // Company Item
-                    if(dataset.companyitem_name && document.getElementById('id_companyitem')){
-                        document.getElementById('id_companyitem').setAttribute('value',dataset.companyitem_name);
+                    // Supplier Item
+                    if(dataset.supplieritem_name && document.getElementById('id_supplieritem_standard')){
+                        document.getElementById('id_supplieritem_standard').setAttribute('value',dataset.supplieritem_name);
                     };
-                    if(dataset.companyitem_url_detail && document.getElementById('id_companyitem_url_detail')){
-                        document.getElementById('id_companyitem_url_detail').setAttribute('href',dataset.companyitem_url_detail);
+                    if(dataset.supplieritem_url_detail && document.getElementById('id_supplieritem_standard_url_detail')){
+                        document.getElementById('id_supplieritem_standard_url_detail').setAttribute('href',dataset.supplieritem_url_detail);
                     };
                     // Amount
                     if(dataset.amount && document.getElementById("id_amount")){

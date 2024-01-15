@@ -26,19 +26,29 @@ from storagemanagement.storage.models import Storage
 #--------------------------------------------------------------------------------
 @admin.register(Storage)
 class StorageAdmin(admin.ModelAdmin):
-    list_display = ['slug','supplieritem','booking','unload_user_id', 'unload_datetime']
+    """
+    StorageAdmin
+
+    Args:
+        admin (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    list_display = ['slug','supplieritem','booking','unload','unload_user_id', 'unload_datetime']
     search_fields = []
     list_filter = []
-    list_editable = []
+    list_editable = ['unload']
     ordering = ['-create_datetime']
     fieldsets = (
         ("Artikel", {'fields':(
-            'companyitem',
+            'supplieritem',
             )}),
         ("Buchung", {'fields':(
             'booking',
             )}),
         ("Entnahme", {'fields':(
+            'unload',
             'unload_user_id',
             'unload_datetime',
             )}),
@@ -47,14 +57,14 @@ class StorageAdmin(admin.ModelAdmin):
             )}),
     )
     inlines = []
-    def save_model(self, request, instance, form, change):
-        user = request.user 
-        instance = form.save(commit=False)
-        if not change or not instance.create_user_id:
-            instance.create_user_id = user
-        instance.update_user_id = user
-        instance.update_datetime = timezone.now()
-        instance.save()
+    def save_model(self, request, obj, form, change):
+        user = request.user
+        obj = form.save(commit=False)
+        if not change or not obj.create_user_id:
+            obj.create_user_id = user
+        obj.update_user_id = user
+        obj.update_datetime = timezone.now()
+        obj.save()
         form.save_m2m()
-        return instance
+        return obj
 #--------------------------------------------------------------------------------

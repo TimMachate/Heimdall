@@ -2,7 +2,7 @@
 
 {% block title %}
     Anfrage
-{% endblock %}
+{% endblock title %}
 
 {% block static %}
 {% load static %}
@@ -40,7 +40,7 @@
                     {% else %}
                     <a class="col-xxl-3 col-xl-3 col-lg-4 col-md-4 col-sm-12 col-12 align-self-center text-center" href="" id="id_url_qrcode" target="_blank">
                         {% load qr_code %}
-                        <img class="img-fluid" src="{% qr_url_from_text queryset.url_qrcode size='m' image_format='png' %}" alt="Link to File" id="id_image_file_url">
+                        <img class="img-fluid" width="300px" height="300px" src="{% qr_url_from_text queryset.url_qrcode size='m' image_format='png' %}" alt="Link to File" id="id_image_file_url">
                     </a>
                     {% endif %}
                     <div class="col">
@@ -74,7 +74,7 @@
                             <!-- Storage Item -->
                             <div class="mt-3">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="{{ form.storageitem.id_for_label }}"><i class="fas fa-warehouse"></i></label>
+                                    <label class="input-group-text" for="{{ form.storageitem.id_for_label }}"><i class="fas fa-boxes"></i></label>
                                     {% if 'detail' in request.resolver_match.url_name %}
                                     <input class="form-control" type="text" value="" disabled id="id_storageitem">
                                     {% else %}
@@ -90,24 +90,24 @@
                             </div>
                             <!-- END Storage Item -->
 
-                            <!-- Company Item -->
+                            <!-- Supplier Item -->
                             <div class="mt-3">
                                 <div class="input-group">
-                                    <label class="input-group-text" for="{{ form.companyitem.id_for_label }}"><i class="fas fa-warehouse"></i></label>
+                                    <label class="input-group-text" for="{{ form.supplieritem.id_for_label }}"><i class="fas fa-cubes"></i></label>
                                     {% if 'detail' in request.resolver_match.url_name %}
-                                    <input class="form-control" type="text" value="" disabled id="id_companyitem">
+                                    <input class="form-control" type="text" value="" disabled id="id_supplieritem">
                                     {% else %}
-                                    {{ form.companyitem }}
+                                    {{ form.supplieritem }}
                                     {% endif %}
                                     {% if 'create' in request.resolver_match.url_name %}
                                     {% else %}
-                                    <a href="" class="btn btn-primary input-group-text" id="id_companyitem_url_detail">
+                                    <a href="" class="btn btn-primary input-group-text" id="id_supplieritem_url_detail">
                                         <i class="fas fa-search"></i>
                                     </a>
                                     {% endif %}
                                 </div>
                             </div>
-                            <!-- END Company Item -->
+                            <!-- END Supplier Item -->
 
                             {% if 'create' in request.resolver_match.url_name or 'add' in request.resolver_match.url_name or 'remove' in request.resolver_match.url_name %}
                             {% else %}
@@ -179,8 +179,8 @@
                                     <label class="input-group-text">
                                         <i class="fas fa-industry"></i>
                                     </label>
-                                    <input class="form-control" type="text" value="" id="id_company" disabled>
-                                    <a href="" class="btn btn-primary input-group-text" id="id_company_url_detail">
+                                    <input class="form-control" type="text" value="" id="id_supplier" disabled>
+                                    <a href="" class="btn btn-primary input-group-text" id="id_supplier_url_detail">
                                         <i class="fas fa-search"></i>
                                     </a>
                                 </div>
@@ -190,17 +190,10 @@
                                     <label class="input-group-text">
                                         <i class="fas fa-cube"></i>
                                     </label>
-                                    {% if 'detail' in request.resolver_match.url_name %}
-                                    <input class="form-control" type="text" value="" id="id_companyitem" disabled>
-                                    {% else %}
-                                    {{ form.companyitem }}
-                                    {% endif %}
-                                    {% if 'create' in request.resolver_match.url_name %}
-                                    {% else %}
-                                    <a href="" class="btn btn-primary input-group-text" id="id_companyitem_url_detail">
+                                    <input class="form-control" type="text" value="" id="id_supplieritem_standard" disabled>
+                                    <a href="" class="btn btn-primary input-group-text" id="id_supplieritem_standard_url_detail">
                                         <i class="fas fa-search"></i>
                                     </a>
-                                    {% endif %}
                                 </div>
                             </div>
                         </div>

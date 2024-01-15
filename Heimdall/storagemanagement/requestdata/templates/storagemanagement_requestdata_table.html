@@ -8,6 +8,14 @@
 {% load static %}
 {% endblock static %}
 
+{% block style %}
+<style>
+    th input {
+        width:100%;
+    }
+</style>
+{% endblock style %}
+
 {% block aside %}
 {% endblock aside %}
 
@@ -79,11 +87,11 @@
                             <thead id="{{ model }}-head" class="thead-dark">
                                 <tr id="{{ model }}-head-row2">
                                     <th scope="col"></th>
-                                    <th scope="col">Status</th>
+                                    <th scope="col">Autorisiert</th>
                                     <th scope="col">Autorisiert<br>Datum</th>
                                     <th scope="col">Autorisiert<br>Zeit</th>
                                     <th scope="col">Autorisiert<br>Person</th>
-                                    <th scope="col"></th>
+                                    <th scope="col">Status</th>
                                     <th scope="col">Erstellt<br>Datum</th>
                                     <th scope="col">Erstellt<br>Zeit</th>
                                     <th scope="col">Erstellt<br>Person</th>
@@ -100,20 +108,14 @@
                                     <th scope="col">Einheit</th>
                                     <th scope="col">Preis</th>
                                     <th scope="col">Wert</th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col">
-                                        <a class="btn btn-success" href="{% url 'storagemanagement:requestdata_authorize_all_true' %}">
-                                            <i class="fas fa-check"></i>
-                                        </a>
-                                    </th>
-                                    <th scope="col">
-                                        <a class="btn btn-danger" href="{% url 'storagemanagement:requestdata_authorize_all_false' %}">
-                                            <i class="fas fa-times"></i>
-                                        </a>
-                                    </th>
+                                    <th scope="col">Bemerkung</th>
+                                    <th scope="col">Zustimmen</th>
+                                    <th scope="col">Ablehnen</th>
+                                    <th scope="col">Zustimmen/Ablehnen</th>
+                                    <th scope="col">Detail</th>
+                                    <th scope="col">Bearbeiten</th>
+                                    <th scope="col">Löschen</th>
+                                    <th scope="col">Detail/Bearbeiten/Löschen</th>
                                 </tr>
                             </thead>
                             <!-- Table Body -->
@@ -123,27 +125,29 @@
                             <tfoot>
                                 <tr class="filters" id="{{ model }}-foot-row2">
                                     <th scope="col"></th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col"><input type="text" placeholder="Datum" style="width:100%"></th>
+                                    <th scope="col">Autorisiert</th>
+                                    <th scope="col"><input type="text" placeholder="Datum"></th>
                                     <th scope="col">Autorisiert<br>Zeit</th>
-                                    <th scope="col"><input type="text" placeholder="Person" style="width:100%"></th>
-                                    <th scope="col"></th>
-                                    <th scope="col"><input type="text" placeholder="Datum" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Person"></th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col"><input type="text" placeholder="Datum"></th>
                                     <th scope="col">Erstellt<br>Zeit</th>
-                                    <th scope="col"><input type="text" placeholder="Person" style="width:100%"></th>
-                                    <th scope="col"><input type="text" placeholder="Datum" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Person"></th>
+                                    <th scope="col"><input type="text" placeholder="Datum"></th>
                                     <th scope="col">Update<br>Zeit</th>
-                                    <th scope="col"><input type="text" placeholder="Person" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Person"></th>
                                     <th scope="col">Referenz</th>
-                                    <th scope="col"><input type="text" placeholder="Lagerartikel" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Lagerartikel"></th>
                                     <th scope="col">Lagerartikel-<br>nummer</th>
-                                    <th scope="col"><input type="text" placeholder="Artikel" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Artikel"></th>
                                     <th scope="col">Artikelnummer</th>
-                                    <th scope="col"><input type="text" placeholder="Firma" style="width:100%"></th>
+                                    <th scope="col"><input type="text" placeholder="Firma"></th>
                                     <th scope="col">Menge</th>
                                     <th scope="col">Einheit</th>
                                     <th scope="col">Preis</th>
                                     <th scope="col">Wert</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>

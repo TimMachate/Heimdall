@@ -75,6 +75,16 @@ class StorageBaseModel(CreateData,ReferenceNumber,Slug,UpdateData):
         verbose_name = 'Bemerkung',
     )
 
+    # Fields/Methodes for the unload
+    unload = models.BooleanField(
+        blank = False,
+        default = False,
+        help_text = "Der Artikel wurde entnommen Ja/Nein.",
+        name = "unload",
+        null = False,
+        verbose_name = "Entnommen",
+    )
+
     unload_datetime = models.DateTimeField(
         blank = True,
         default = None,

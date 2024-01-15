@@ -46,15 +46,15 @@ class OfferAdmin(admin.ModelAdmin):
         ('Dateien', {'fields':(
             'offer_file',
             )}),
-        ('Berechtigungen', {'fields':(
+        ('Anfrage', {'fields':(
             'sent',
             ('sent_datetime','sent_user_id')
             )}),
-        ('Berechtigungen', {'fields':(
+        ('Anfrage erhalten', {'fields':(
             'recived',
             ('recived_datetime','recived_user_id')
             )}),
-        ('Berechtigungen', {'fields':(
+        ('Bestellt', {'fields':(
             'ordered',
             ('ordered_datetime','ordered_user_id')
             )}),
